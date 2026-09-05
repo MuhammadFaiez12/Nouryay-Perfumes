@@ -108,6 +108,18 @@
     [data-r="herostage"] { aspect-ratio: 5/4 !important; }
     [data-r="heroart"] { background-size: cover !important; background-position: 2% center !important; }
     [data-r="heroarrow"] { display: none !important; }
+    /* Nav collapses behind the menu button. */
+    nav[data-r="nav"] { display: none !important; }
+    [data-r="menubtn"] { display: flex !important; }
+    [data-r="shoplink"] { display: none !important; }
+    header > div:first-child { height: 64px !important; flex-wrap: nowrap !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+    header > div:first-child > div:first-child > div:first-child { font-size: 19px !important; letter-spacing: .16em !important; }
+    header > div:first-child > div:first-child > div:last-child { font-size: 7.5px !important; }
+    /* One gutter for every section, so the page reads down a single line. */
+    [data-r="sec"] { padding-top: 60px !important; padding-bottom: 60px !important; }
+    [data-house] { margin-top: 0 !important; }
+    [data-house] > div:last-child { padding: 44px clamp(20px,5vw,40px) 52px !important; }
+    [data-house] > div:first-child { min-height: 320px !important; }
     /* Heading gets its own row; sharing with the counter and arrows was
        squeezing "Nine to explore" onto three lines. */
     [data-r="sechead"] { flex-wrap: wrap; align-items: flex-start !important; gap: 16px !important; }
@@ -184,12 +196,24 @@
         <span onClick="{{ goRequest }}" style="cursor:pointer;color:var(--ink-2);transition:color .2s" style-hover="color:var(--color-text)">Order request</span>
       </nav>
       <div style="display:flex;align-items:center;gap:26px;flex-shrink:0;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase">
-        <span onClick="{{ goShop }}" style="cursor:pointer;color:var(--ink-2)" style-hover="color:var(--color-text)">Shop</span>
+        <span onClick="{{ toggleMenu }}" aria-label="Menu" data-r="menubtn" style="cursor:pointer;display:none;align-items:center;justify-content:center;width:34px;height:34px;margin-left:-6px">
+          <span style="position:relative;display:block;width:19px;height:1.5px;background:var(--color-text);box-shadow:0 -6px 0 var(--color-text),0 6px 0 var(--color-text)"></span>
+        </span>
+        <span onClick="{{ goShop }}" data-r="shoplink" style="cursor:pointer;color:var(--ink-2)" style-hover="color:var(--color-text)">Shop</span>
         <span onClick="{{ openCart }}" style="cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="color:var(--gold)">
           Bag <span style="font-variant-numeric:tabular-nums;color:var(--gold)">{{ cartCount }}</span>
         </span>
       </div>
     </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div data-r="menupanel" style="border-top:1px solid var(--rule)">
+        <div style="max-width:1320px;margin:0 auto;padding:6px clamp(20px,5vw,40px) 16px;display:flex;flex-direction:column">
+          <sc-for list="{{ menuGo }}" as="m" hint-placeholder-count="4">
+            <span onClick="{{ m.go }}" style="cursor:pointer;padding:13px 0;border-bottom:1px solid var(--rule);font-family:var(--font-ui);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)" style-hover="color:var(--gold)">{{ m.label }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
   </header>
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
@@ -228,7 +252,7 @@
         </div>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px) 0">
+      <section data-r="sec" style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px) 0">
         <div data-r="sechead" style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px)">
           <div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">The collection</div>
@@ -272,7 +296,7 @@
         </div>
       </section>
 
-      <section data-r="split" style="margin-top:120px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;grid-template-columns:.92fr 1.08fr;align-items:stretch">
+      <section data-r="split" data-house="1" style="margin-top:120px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;grid-template-columns:.92fr 1.08fr;align-items:stretch">
         <div style="position:relative;min-height:520px;background:#F1ECE3">
           <img src="assets/box.jpg" alt="Nouryah carton, Gulberg atelier" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
           <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 88%,rgba(251,249,245,.5) 100%)"></div>
@@ -299,7 +323,7 @@
         </div>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px)">
+      <section data-r="sec" style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px)">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px);margin-bottom:56px">
           <div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Specification</div>
@@ -331,7 +355,7 @@
       </section>
 
 
-      <section style="max-width:900px;margin:0 auto;padding:120px clamp(20px,5vw,40px);text-align:center">
+      <section data-r="sec" style="max-width:900px;margin:0 auto;padding:120px clamp(20px,5vw,40px);text-align:center">
         <p style="font-family:var(--font-heading);font-style:italic;font-weight:300;font-size:clamp(26px,2.6vw,34px);line-height:1.45;margin:0;text-wrap:pretty">“Oud Royale lasted a full working day and my colleagues asked twice. The specification was right to the hour.”</p>
         <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3);margin-top:32px">Ayesha T. · Lahore · Verified purchase</div>
       </section>
@@ -1266,7 +1290,7 @@ class Component extends DCLogic {
     req:{ name:'', company:'', email:'', phone:'', city:'Lahore', units:12, date:'', note:'', invoice:true, picks:['sovereign'] },
     reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:'',
     trackInput:'', trackResult:null, trackErr:'',
-    barIndex:0, slide:0, railAt:0, railTotal:9,
+    barIndex:0, slide:0, menuOpen:false, railAt:0, railTotal:9,
     giftModalOpen:true, copyLabel:'Copy', copyUrlLabel:'Copy link'
   };
 
@@ -1310,6 +1334,13 @@ class Component extends DCLogic {
     this.setState({ pid:id, gi:0, size:'50', qty:1, view:'product' });
     if (typeof window !== 'undefined') window.scrollTo(0, 0);
   }
+
+  MENU = [
+    { label:'Collection', view:'shop' },
+    { label:'Fragrance finder', view:'finder' },
+    { label:'The house', view:'story' },
+    { label:'Order request', view:'request' }
+  ];
 
   // Announcement bar rotates one line at a time, so it stays a single row on a phone.
   BAR_INTERVAL = 5200;
@@ -1628,6 +1659,12 @@ class Component extends DCLogic {
       giftMsg: giftOn ? 'Free 10 ml gift unlocked' : (netForShip > 0 ? 'Add ' + this.fmt(giftRemain) + ' for a free 10 ml gift' : 'Free 10 ml gift on orders over ' + this.fmt(this.GIFT_THRESHOLD)),
       showBar: this.props.showAnnouncementBar !== false,
       barMessage: this.barMessages()[st.barIndex % this.barMessages().length],
+      menuOpen: st.menuOpen,
+      toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
+      menuGo: this.MENU.map(m => ({
+        label: m.label,
+        go: () => { this.setState({ menuOpen:false }); if (m.view === 'shop') this.nav('shop'); else this.nav(m.view); }
+      })),
       barPrev: () => this.nudgeBar(-1),
       barNext: () => this.nudgeBar(1),
 
