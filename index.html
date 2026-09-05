@@ -67,30 +67,51 @@
   @keyframes nySlide { from { transform: translateX(30px); opacity: 0 } to { transform: translateX(0); opacity: 1 } }
   @keyframes nyFade { from { opacity: 0 } to { opacity: 1 } }
   @keyframes nyRise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+  nav[data-r="nav"]::-webkit-scrollbar { display: none; }
+  @media (max-width: 860px) {
+    [data-r="hero"], [data-r="split"], [data-r="bannerauto"], [data-r="split2"] { grid-template-columns: 1fr !important; }
+    [data-r="hero"] { min-height: auto !important; }
+    [data-r="c3"], [data-r="c4"] { grid-template-columns: repeat(2,1fr) !important; }
+    [data-r="c3"] > div { border-right: none !important; border-bottom: 1px solid var(--rule); padding: 24px 0 !important; }
+    [data-r="c3"] > div:last-child { border-bottom: none; }
+    aside[style*="position:sticky"] { position: static !important; }
+    [data-r="split"] > aside { order: -1; }
+    [data-r="bannerauto"] > div:last-child { text-align: left !important; }
+  }
+  @media (max-width: 600px) {
+    [data-r="c2"], [data-r="c3sm"], [data-r="c4"] { grid-template-columns: 1fr !important; }
+    [data-r="footer"] { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+    h1 { max-width: 100% !important; }
+  }
+  @media (max-width: 420px) {
+    [data-r="footer"] { grid-template-columns: 1fr !important; }
+  }
 </style>
 </helmet>
 
 <div style="min-height:100vh;overflow-x:hidden">
 
   <sc-if value="{{ showBar }}" hint-placeholder-val="{{ true }}">
-    <div style="border-bottom:1px solid var(--rule)">
-      <div style="max-width:1320px;margin:0 auto;padding:11px 40px;display:flex;align-items:center;justify-content:center;gap:26px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);flex-wrap:wrap">
-        <span>Free delivery over {{ freeShipLabel }}</span>
-        <span style="color:#2E2C29">/</span>
-        <span>Next-day in Lahore, Karachi, Islamabad</span>
-        <span style="color:#2E2C29">/</span>
-        <span style="color:var(--ink-2)">{{ phone }}</span>
+    <div style="background:#111114;border-bottom:1px solid var(--rule-gold)">
+      <div style="max-width:1320px;margin:0 auto;padding:13px clamp(20px,5vw,40px);display:flex;align-items:center;justify-content:center;gap:28px;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;flex-wrap:wrap;text-align:center">
+        <span style="color:var(--color-text)">Free delivery over {{ freeShipLabel }}</span>
+        <span style="color:#3A3A40">/</span>
+        <span style="color:var(--color-text)">Next-day in Lahore, Karachi, Islamabad</span>
+        <span style="color:#3A3A40">/</span>
+        <span style="color:var(--gold);font-weight:400">Limited time · free 10 ml gift over {{ giftThreshold }}</span>
+        <span style="color:#3A3A40">/</span>
+        <span style="color:var(--color-text)">{{ phone }}</span>
       </div>
     </div>
   </sc-if>
 
   <header style="position:sticky;top:0;z-index:40;background:rgba(8,8,10,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)">
-    <div style="max-width:1320px;margin:0 auto;padding:0 40px;height:78px;display:flex;align-items:center;gap:clamp(20px,3vw,56px);min-width:0">
+    <div style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,5vw,40px);height:78px;display:flex;align-items:center;gap:clamp(20px,3vw,56px);min-width:0">
       <div onClick="{{ goHome }}" style="cursor:pointer;flex-shrink:0;line-height:1">
         <div style="font-family:var(--font-heading);font-size:27px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)">Nouryah</div>
         <div style="font-family:var(--font-ui);font-size:8.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-3);margin-top:5px">Perfumes · Pakistan</div>
       </div>
-      <nav style="display:flex;align-items:center;gap:clamp(16px,2vw,34px);font-family:var(--font-ui);font-size:11.5px;letter-spacing:clamp(.08em,.4vw,.2em);text-transform:uppercase;white-space:nowrap;min-width:0;margin-right:auto">
+      <nav data-r="nav" style="display:flex;align-items:center;gap:clamp(16px,2vw,34px);font-family:var(--font-ui);font-size:11.5px;letter-spacing:clamp(.08em,.4vw,.2em);text-transform:uppercase;white-space:nowrap;min-width:0;margin-right:auto;overflow-x:auto;scrollbar-width:none">
         <span onClick="{{ goShop }}" style="cursor:pointer;color:var(--ink-2);transition:color .2s" style-hover="color:var(--color-text)">Collection</span>
         <span onClick="{{ goFinder }}" style="cursor:pointer;color:var(--ink-2);transition:color .2s" style-hover="color:var(--color-text)">Fragrance finder</span>
         <span onClick="{{ goStory }}" style="cursor:pointer;color:var(--ink-2);transition:color .2s" style-hover="color:var(--color-text)">The house</span>
@@ -107,8 +128,8 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div data-screen-label="Home">
-      <section style="position:relative;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;min-height:min(84vh,760px);border-bottom:1px solid var(--rule)">
-        <div style="position:relative;z-index:2;padding:96px 56px 96px max(40px,calc((100vw - 1320px) / 2 + 40px))">
+      <section data-r="hero" style="position:relative;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;min-height:min(84vh,760px);border-bottom:1px solid var(--rule)">
+        <div style="position:relative;z-index:2;padding:96px 56px 96px max(clamp(20px,5vw,40px),calc((100vw - 1320px) / 2 + clamp(20px,5vw,40px)))">
           <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Nine fragrances · Composed in Lahore</div>
           <h1 style="font-size:clamp(52px,5.6vw,84px);line-height:1.02;margin:26px 0 0;max-width:14ch">Drawn to the last note.</h1>
           <p style="font-size:16px;line-height:1.8;max-width:44ch;margin:28px 0 0;color:var(--ink-2);text-wrap:pretty">An independent perfume house working at 20% parfum concentration. Every composition is published with its materials, its behaviour on skin and the hours it holds — nothing withheld.</p>
@@ -120,12 +141,12 @@
         <div style="position:relative;align-self:stretch;min-height:420px">
           <img src="assets/sovereign.jpg" alt="Nouryah Sovereign eau de parfum, 50 ml" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% center">
           <div style="position:absolute;inset:0;background:linear-gradient(to right,#08080A 0%,#08080A 12%,rgba(8,8,10,.92) 30%,rgba(8,8,10,.55) 52%,rgba(8,8,10,.12) 78%,transparent 100%)"></div>
-          <div style="position:absolute;bottom:34px;right:40px;font-family:var(--font-ui);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(239,234,224,.5)">Sovereign · Amber &amp; leather</div>
+          <div style="position:absolute;bottom:34px;right:clamp(20px,5vw,40px);font-family:var(--font-ui);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(239,234,224,.5)">Sovereign · Amber &amp; leather</div>
         </div>
       </section>
 
       <section style="border-bottom:1px solid var(--rule)">
-        <div style="max-width:1320px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr)">
+        <div data-r="c3" style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,5vw,40px);display:grid;grid-template-columns:repeat(3,1fr)">
           <div style="padding:30px 34px 30px 0;border-right:1px solid var(--rule)">
             <div style="font-family:var(--font-heading);font-size:20px">Nine cities, next day</div>
             <div style="font-size:13.5px;color:var(--ink-3);margin-top:6px">Lahore, Karachi, Islamabad, Rawalpindi and beyond</div>
@@ -141,15 +162,15 @@
         </div>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:112px 40px 0">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px">
+      <section style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px) 0">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px)">
           <div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">The collection</div>
             <h2 style="font-size:clamp(34px,3.4vw,46px);line-height:1.08;margin:16px 0 0">Six to begin with</h2>
           </div>
           <span onClick="{{ goShop }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">All nine</span>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:72px 40px;padding:64px 0 0">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:72px clamp(20px,5vw,40px);padding:64px 0 0">
           <sc-for list="{{ featured }}" as="p" hint-placeholder-count="6">
             <div style="display:flex;flex-direction:column">
               <div onClick="{{ p.open }}" style="cursor:pointer;overflow:hidden;aspect-ratio:3/4;background:#0B0B0D">
@@ -157,7 +178,12 @@
               </div>
               <div style="display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-top:22px">
                 <div onClick="{{ p.open }}" style="cursor:pointer;font-family:var(--font-heading);font-size:23px;line-height:1.1">{{ p.name }}</div>
-                <div style="font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap">{{ p.priceLabel }}</div>
+                <div style="display:flex;align-items:baseline;gap:8px;white-space:nowrap">
+                  <sc-if value="{{ p.onSale }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:12px;color:var(--ink-3);text-decoration:line-through;font-variant-numeric:tabular-nums">{{ p.compareAtLabel }}</span>
+                  </sc-if>
+                  <span style="font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2)">{{ p.priceLabel }}</span>
+                </div>
               </div>
               <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">{{ p.family }} · {{ p.hours }} hours</div>
               <div style="display:flex;gap:22px;margin-top:18px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap">
@@ -169,12 +195,12 @@
         </div>
       </section>
 
-      <section style="margin-top:120px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;grid-template-columns:.92fr 1.08fr;align-items:stretch">
+      <section data-r="split" style="margin-top:120px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:grid;grid-template-columns:.92fr 1.08fr;align-items:stretch">
         <div style="position:relative;min-height:520px;background:#0B0B0D">
           <img src="assets/box.jpg" alt="Nouryah carton, Gulberg atelier" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
           <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,rgba(8,8,10,.6) 82%,#08080A 100%)"></div>
         </div>
-        <div style="padding:104px max(40px,calc((100vw - 1320px) / 2 + 40px)) 104px 72px;align-self:center">
+        <div style="padding:104px max(clamp(20px,5vw,40px),calc((100vw - 1320px) / 2 + clamp(20px,5vw,40px))) 104px 72px;align-self:center">
           <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">The house</div>
           <h2 style="font-size:clamp(32px,3.2vw,44px);line-height:1.12;margin:16px 0 0;max-width:20ch">A perfume house that shows its drawings</h2>
           <p style="font-size:16px;line-height:1.85;color:var(--ink-2);margin:26px 0 0;max-width:52ch">Nouryah began with one brief: a fragrance wardrobe a person can actually read. No secret formulas, no invented heritage — nine compositions, blended in 400-flacon batches and macerated six weeks before a single bottle is filled.</p>
@@ -196,15 +222,15 @@
         </div>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:112px 40px">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:56px">
+      <section style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px)">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px);margin-bottom:56px">
           <div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Specification</div>
             <h2 style="font-size:clamp(32px,3.2vw,44px);line-height:1.1;margin:16px 0 0">All nine, on one page</h2>
           </div>
           <p style="font-size:14px;line-height:1.8;color:var(--ink-3);max-width:38ch;margin:0">Projection, wear time and heart notes for the whole wardrobe — the sheet we hand to every stockist.</p>
         </div>
-        <table class="table">
+        <div style="overflow-x:auto"><table class="table" style="min-width:760px">
           <thead>
             <tr><th>Ref</th><th>Fragrance</th><th>Family</th><th>Heart</th><th>Projection</th><th>Hours</th><th style="text-align:right">50 ml</th><th></th></tr>
           </thead>
@@ -217,16 +243,18 @@
                 <td style="color:var(--ink-3);font-size:13.5px">{{ r.heart }}</td>
                 <td style="color:var(--ink-2);font-size:13.5px">{{ r.projectionLabel }}</td>
                 <td style="font-variant-numeric:tabular-nums;color:var(--ink-2);font-size:13.5px">{{ r.hours }}</td>
-                <td style="text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px">{{ r.priceLabel }}</td>
+                <td style="text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px">
+                  <sc-if value="{{ r.onSale }}" hint-placeholder-val="{{ false }}"><span style="color:var(--ink-3);text-decoration:line-through;margin-right:8px">{{ r.compareAtLabel }}</span></sc-if>{{ r.priceLabel }}
+                </td>
                 <td style="text-align:right;color:var(--ink-3);font-size:16px">→</td>
               </tr>
             </sc-for>
           </tbody>
-        </table>
+        </table></div>
       </section>
 
       <section style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
-        <div style="max-width:1320px;margin:0 auto;padding:96px 40px">
+        <div style="max-width:1320px;margin:0 auto;padding:96px clamp(20px,5vw,40px)">
           <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:48px;flex-wrap:wrap">
             <div>
               <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Where we deliver</div>
@@ -245,7 +273,7 @@
         </div>
       </section>
 
-      <section style="max-width:900px;margin:0 auto;padding:120px 40px;text-align:center">
+      <section style="max-width:900px;margin:0 auto;padding:120px clamp(20px,5vw,40px);text-align:center">
         <p style="font-family:var(--font-heading);font-style:italic;font-weight:300;font-size:clamp(26px,2.6vw,34px);line-height:1.45;margin:0;text-wrap:pretty">“Oud Royale lasted a full working day and my colleagues asked twice. The specification was right to the hour.”</p>
         <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3);margin-top:32px">Ayesha T. · Lahore · Verified purchase</div>
       </section>
@@ -254,9 +282,9 @@
 
   <sc-if value="{{ isShop }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Collection">
-      <section style="max-width:1320px;margin:0 auto;padding:80px 40px 0">
+      <section style="max-width:1320px;margin:0 auto;padding:80px clamp(20px,5vw,40px) 0">
         <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">The collection</div>
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-top:16px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px);margin-top:16px">
           <h1 style="font-size:clamp(40px,4.4vw,60px);line-height:1;margin:0">All nine fragrances</h1>
           <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap">{{ shownCount }} shown</div>
         </div>
@@ -276,7 +304,7 @@
         </div>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:64px 40px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:76px 40px">
+      <section style="max-width:1320px;margin:0 auto;padding:64px clamp(20px,5vw,40px) 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:76px clamp(20px,5vw,40px)">
         <sc-for list="{{ shopList }}" as="p" hint-placeholder-count="9">
           <div style="display:flex;flex-direction:column">
             <div onClick="{{ p.open }}" style="cursor:pointer;overflow:hidden;aspect-ratio:3/4;background:#0B0B0D">
@@ -284,7 +312,12 @@
             </div>
             <div style="display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-top:22px">
               <div onClick="{{ p.open }}" style="cursor:pointer;font-family:var(--font-heading);font-size:23px;line-height:1.1">{{ p.name }}</div>
-              <div style="font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap">{{ p.priceLabel }}</div>
+              <div style="display:flex;align-items:baseline;gap:8px;white-space:nowrap">
+                <sc-if value="{{ p.onSale }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:12px;color:var(--ink-3);text-decoration:line-through;font-variant-numeric:tabular-nums">{{ p.compareAtLabel }}</span>
+                </sc-if>
+                <span style="font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2)">{{ p.priceLabel }}</span>
+              </div>
             </div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">{{ p.family }} · {{ p.hours }} hours</div>
             <p style="font-size:13.5px;line-height:1.7;color:var(--ink-3);margin:12px 0 0">{{ p.heart }}</p>
@@ -296,8 +329,8 @@
         </sc-for>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:104px 40px 0">
-        <div style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:52px 0;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center">
+      <section style="max-width:1320px;margin:0 auto;padding:104px clamp(20px,5vw,40px) 0">
+        <div data-r="bannerauto" style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:52px 0;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center">
           <div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Ref. NJ-DS</div>
             <h3 style="font-size:clamp(26px,2.6vw,34px);line-height:1.15;margin:14px 0 0">Discovery set — all nine, 2 ml each</h3>
@@ -314,12 +347,12 @@
 
   <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Product">
-      <section style="max-width:1320px;margin:0 auto;padding:32px 40px 0;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px">
+      <section style="max-width:1320px;margin:0 auto;padding:32px clamp(20px,5vw,40px) 0;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px">
         <span onClick="{{ goHome }}" style="cursor:pointer" style-hover="color:var(--color-text)">Nouryah</span><span>/</span>
         <span onClick="{{ goShop }}" style="cursor:pointer" style-hover="color:var(--color-text)">Collection</span><span>/</span>
         <span style="color:var(--ink-2)">{{ pdp.name }}</span>
       </section>
-      <section style="max-width:1320px;margin:0 auto;padding:44px 40px 0;display:grid;grid-template-columns:1.06fr .94fr;gap:72px;align-items:start">
+      <section data-r="split" style="max-width:1320px;margin:0 auto;padding:44px clamp(20px,5vw,40px) 0;display:grid;grid-template-columns:1.06fr .94fr;gap:72px;align-items:start">
         <div style="display:grid;grid-template-columns:76px 1fr;gap:20px">
           <div style="display:grid;gap:12px;align-content:start">
             <sc-for list="{{ pdp.gallery }}" as="g" hint-placeholder-count="3">
@@ -338,6 +371,15 @@
             <span>{{ pdp.stockLabel }}</span>
           </div>
           <h1 style="font-size:clamp(44px,4.6vw,64px);line-height:1.02;margin:20px 0 0">{{ pdp.name }}</h1>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+            <span style="color:var(--gold);font-size:13px;letter-spacing:.05em">{{ pdp.stars }}</span>
+            <span style="font-family:var(--font-ui);font-size:12px;color:var(--ink-3)">{{ pdp.rating }} · {{ pdp.reviews }} reviews</span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:12px;margin-top:10px">
+            <span style="font-size:22px;font-variant-numeric:tabular-nums">{{ pdp.priceLabel }}</span>
+            <span style="font-size:15px;color:var(--ink-3);text-decoration:line-through;font-variant-numeric:tabular-nums">{{ pdp.compareAtLabel }}</span>
+            <span style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)">{{ pdp.discountLabel }} off</span>
+          </div>
           <div style="font-family:var(--font-heading);font-style:italic;font-size:20px;color:var(--ink-2);margin-top:12px">{{ pdp.tagline }}</div>
           <p style="font-size:16px;line-height:1.85;color:var(--ink-2);margin:26px 0 0;max-width:52ch;text-wrap:pretty">{{ pdp.desc }}</p>
 
@@ -365,7 +407,10 @@
             <sc-for list="{{ pdp.sizes }}" as="s" hint-placeholder-count="3">
               <div onClick="{{ s.pick }}" style="cursor:pointer;padding:14px 22px;border:1px solid {{ s.bd }};color:{{ s.fg }};background:{{ s.bg }};transition:all .25s" style-hover="border-color:var(--rule-gold)">
                 <div style="font-family:var(--font-ui);font-size:12px;letter-spacing:.16em;text-transform:uppercase">{{ s.label }}</div>
-                <div style="font-size:13px;font-variant-numeric:tabular-nums;opacity:.72;margin-top:4px">{{ s.priceLabel }}</div>
+                <div style="font-size:13px;font-variant-numeric:tabular-nums;opacity:.72;margin-top:4px;display:flex;gap:6px">
+                  <sc-if value="{{ s.compareAtLabel }}" hint-placeholder-val="{{ false }}"><span style="text-decoration:line-through">{{ s.compareAtLabel }}</span></sc-if>
+                  <span>{{ s.priceLabel }}</span>
+                </div>
               </div>
             </sc-for>
           </div>
@@ -383,15 +428,16 @@
             <span onClick="{{ pdp.request }}" style="cursor:pointer;color:var(--ink-3);padding-bottom:4px" style-hover="color:var(--color-text)">Order request</span>
           </div>
           <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · next working day in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad and Sialkot · two 2 ml samples included · 30-day returns on unopened flacons.</div>
+          <div style="font-size:12.5px;letter-spacing:.04em;color:var(--gold);margin-top:8px">Limited time · free 10 ml gift on orders over {{ giftThreshold }}</div>
         </div>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:120px 40px">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;border-bottom:1px solid var(--rule);padding-bottom:20px">
+      <section style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,5vw,40px)">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px);border-bottom:1px solid var(--rule);padding-bottom:20px">
           <h2 style="font-size:clamp(26px,2.6vw,34px);margin:0">Wears well with</h2>
           <span onClick="{{ goShop }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--gold)">All nine</span>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:40px;padding-top:48px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:clamp(20px,5vw,40px);padding-top:48px">
           <sc-for list="{{ pdp.related }}" as="r" hint-placeholder-count="3">
             <div onClick="{{ r.open }}" style="cursor:pointer">
               <div style="overflow:hidden;aspect-ratio:1/1;background:#0B0B0D">
@@ -411,7 +457,7 @@
 
   <sc-if value="{{ isFinder }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Fragrance finder">
-      <section style="max-width:1000px;margin:0 auto;padding:88px 40px 128px">
+      <section style="max-width:1000px;margin:0 auto;padding:88px clamp(20px,5vw,40px) 128px">
         <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Fragrance finder</div>
         <sc-if value="{{ finderOpen }}" hint-placeholder-val="{{ true }}">
           <div>
@@ -422,7 +468,7 @@
               </div>
               <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap">{{ finder.step }} of 3</div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:48px">
+            <div data-r="c2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:48px">
               <sc-for list="{{ finder.options }}" as="o" hint-placeholder-count="4">
                 <div onClick="{{ o.pick }}" style="cursor:pointer;padding:36px 34px;background:var(--color-bg);transition:background .25s" style-hover="background:#0E0E10">
                   <div style="font-family:var(--font-heading);font-size:26px;line-height:1.15">{{ o.label }}</div>
@@ -440,7 +486,7 @@
           <div style="animation:nyRise .5s cubic-bezier(.2,.7,.2,1)">
             <h1 style="font-size:clamp(34px,3.8vw,52px);line-height:1.05;margin:20px 0 10px">Your flacon</h1>
             <p style="font-size:15px;color:var(--ink-3);margin:0 0 52px">Matched on family, moment and projection across all nine.</p>
-            <div style="display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start">
+            <div data-r="split2" style="display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start">
               <div style="overflow:hidden;aspect-ratio:3/4;background:#0B0B0D">
                 <img src="{{ finder.result.img }}" alt="{{ finder.result.alt }}" style="width:100%;height:100%;object-fit:cover">
               </div>
@@ -457,7 +503,7 @@
             </div>
             <div style="margin-top:64px;border-top:1px solid var(--rule);padding-top:32px">
               <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3);margin-bottom:24px">Also worth a sample</div>
-              <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px">
+              <div data-r="c2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px">
                 <sc-for list="{{ finder.runnersUp }}" as="r" hint-placeholder-count="2">
                   <div onClick="{{ r.open }}" style="cursor:pointer;display:grid;grid-template-columns:84px 1fr;gap:22px;align-items:center">
                     <div style="overflow:hidden;aspect-ratio:1/1;background:#0B0B0D"><img src="{{ r.img }}" alt="{{ r.alt }}" style="width:100%;height:100%;object-fit:cover"></div>
@@ -469,7 +515,7 @@
                 </sc-for>
               </div>
             </div>
-            <span onClick="{{ finder.reset }}" style="display:inline-block;cursor:pointer;margin-top:40px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">Run it again</span>
+            <span onClick="{{ finder.reset }}" style="display:inline-block;cursor:pointer;margin-top:clamp(20px,5vw,40px);font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">Run it again</span>
           </div>
         </sc-if>
       </section>
@@ -478,15 +524,15 @@
 
   <sc-if value="{{ isStory }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="The house">
-      <section style="max-width:1320px;margin:0 auto;padding:88px 40px 0">
+      <section style="max-width:1320px;margin:0 auto;padding:88px clamp(20px,5vw,40px) 0">
         <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">The house file</div>
         <h1 style="font-size:clamp(44px,5.4vw,76px);line-height:1.02;margin:24px 0 0;max-width:22ch">A perfume house that shows its drawings</h1>
       </section>
-      <section style="max-width:1320px;margin:0 auto;padding:72px 40px 0;display:grid;grid-template-columns:1.1fr .9fr;gap:72px;align-items:start">
+      <section data-r="split" style="max-width:1320px;margin:0 auto;padding:72px clamp(20px,5vw,40px) 0;display:grid;grid-template-columns:1.1fr .9fr;gap:72px;align-items:start">
         <div>
           <p style="font-size:17px;line-height:1.9;color:var(--ink-2);margin:0">Nouryah was founded in 2019 in a second-floor atelier in Gulberg, Lahore, by two perfumers who had spent a decade writing formulas nobody outside the lab was allowed to read. The house exists to invert that: every composition is published with its materials, its concentration, and an honest account of how it behaves over ten hours on skin.</p>
           <p style="font-size:17px;line-height:1.9;color:var(--ink-2);margin:24px 0 0">Nine fragrances, no seasonal churn. Each is blended in 400-flacon batches, macerated for six weeks, then filled, labelled and boxed by hand. When a batch sells out it is remade to the same formula — not reformulated.</p>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:52px;padding-top:32px;border-top:1px solid var(--rule)">
+          <div data-r="c4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:52px;padding-top:32px;border-top:1px solid var(--rule)">
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">2019</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Founded</div></div>
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">400</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Per batch</div></div>
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">9</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Cities served</div></div>
@@ -497,17 +543,17 @@
           <img src="assets/box.jpg" alt="Nouryah carton, Gulberg atelier" style="width:100%;height:100%;object-fit:cover">
         </div>
       </section>
-      <section style="max-width:1320px;margin:0 auto;padding:120px 40px 0">
+      <section style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 0">
         <h2 style="font-size:clamp(28px,2.8vw,38px);margin:0 0 44px">How an order runs</h2>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)">
+        <div data-r="c4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)">
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)">One</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">You order</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Online with cash on delivery, JazzCash, Raast or card — or send an order request and we invoice.</div></div>
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Two</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">We pack</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Hand-packed in the Gulberg atelier with two 2 ml samples chosen for your order.</div></div>
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Three</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">TCS moves</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Next working day in the six metros, 2–4 days elsewhere in Pakistan.</div></div>
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Four</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">You keep or return</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">30 days on unopened flacons, prepaid label in the carton.</div></div>
         </div>
       </section>
-      <section style="max-width:1320px;margin:0 auto;padding:120px 40px 0">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
+      <section style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 0">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px);flex-wrap:wrap">
           <h2 style="font-size:clamp(28px,2.8vw,38px);margin:0">Where we deliver</h2>
           <p style="font-size:14px;line-height:1.8;color:var(--ink-3);max-width:36ch;margin:0">Nine cities on the courier list. Anywhere else in Pakistan, ask and we will quote it.</p>
         </div>
@@ -520,7 +566,7 @@
           </sc-for>
         </div>
       </section>
-      <section style="max-width:1320px;margin:0 auto;padding:120px 40px 128px">
+      <section style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 128px">
         <h2 style="font-size:clamp(28px,2.8vw,38px);margin:0 0 36px">Questions we get</h2>
         <div>
           <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
@@ -541,14 +587,14 @@
 
   <sc-if value="{{ isRequest }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Order request">
-      <section style="max-width:1320px;margin:0 auto;padding:88px 40px 128px">
+      <section style="max-width:1320px;margin:0 auto;padding:88px clamp(20px,5vw,40px) 128px">
         <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Order request</div>
         <sc-if value="{{ reqOpen }}" hint-placeholder-val="{{ true }}">
-          <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:start;margin-top:20px">
+          <div data-r="split" style="display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:start;margin-top:20px">
             <div>
               <h1 style="font-size:clamp(38px,4.2vw,58px);line-height:1.04;margin:0;max-width:20ch">Order without paying online</h1>
               <p style="font-size:16px;line-height:1.85;color:var(--ink-2);margin:24px 0 48px;max-width:56ch">For gifting, corporate volume, hotel amenities or bespoke engraving: send the request and a person in Lahore answers within one working day with a written quote and an invoice option.</p>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+              <div data-r="c2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
                 <div class="field"><label>Full name</label><input class="input" value="{{ req.name }}" onChange="{{ setR.name }}" placeholder="Ayesha Tariq"></div>
                 <div class="field"><label>Company (optional)</label><input class="input" value="{{ req.company }}" onChange="{{ setR.company }}" placeholder="Pearl-Continental Hotels"></div>
                 <div class="field"><label>Email</label><input class="input" type="email" value="{{ req.email }}" onChange="{{ setR.email }}" placeholder="ayesha@company.pk"></div>
@@ -571,7 +617,7 @@
               </div>
               <div class="field" style="margin-top:32px"><label>Anything else — engraving, gift wrap, delivery window</label><textarea class="input" value="{{ req.note }}" onChange="{{ setR.note }}" placeholder="40 flacons, gold foil engraving “ANNUAL DINNER 2026”, delivered to Gulberg before 12 December." style="min-height:96px;resize:vertical"></textarea></div>
               <label class="radio" style="margin-top:28px;color:var(--ink-2)"><input type="checkbox" checked="{{ req.invoice }}" onChange="{{ setR.invoice }}"><span class="dot"></span><span style="font-size:14px">Send me an invoice (net 14 days, NTN required)</span></label>
-              <div style="display:flex;align-items:center;gap:24px;margin-top:40px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:24px;margin-top:clamp(20px,5vw,40px);flex-wrap:wrap">
                 <button class="btn btn-primary btn-lg" onClick="{{ submitRequest }}" disabled="{{ reqInvalid }}">Send order request</button>
                 <span style="font-size:13px;color:var(--ink-3)">{{ reqHint }}</span>
               </div>
@@ -595,7 +641,14 @@
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)">Request {{ reqNo }} logged</div>
             <h1 style="font-size:clamp(36px,4vw,54px);line-height:1.06;margin:20px 0 20px">We have it. Answer within one working day.</h1>
             <p style="font-size:16.5px;line-height:1.85;color:var(--ink-2);margin:0">A confirmation is on its way to {{ req.email }}. Your quote will list {{ reqSelectedLabel }} at {{ req.units }} units for delivery to {{ req.city }}, with the volume tier applied.</p>
-            <div style="display:flex;align-items:center;gap:28px;margin-top:44px">
+            <div style="margin-top:36px;padding:20px 22px;border:1px solid var(--rule)">
+              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">Notify the atelier</div>
+              <div style="display:flex;flex-wrap:wrap;gap:20px;margin-top:14px">
+                <a href="{{ whatsappHref }}" target="_blank" rel="noopener" style="font-family:var(--font-ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule-gold);padding-bottom:4px">Send to {{ phone }} on WhatsApp</a>
+                <a href="{{ notifyHref }}" style="font-family:var(--font-ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--color-text)">Email a copy to {{ notifyEmail }}</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:28px;margin-top:32px">
               <button class="btn btn-primary" onClick="{{ goShop }}">Browse the collection</button>
               <span onClick="{{ resetRequest }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">Send another</span>
             </div>
@@ -607,7 +660,7 @@
 
   <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Checkout">
-      <section style="max-width:1220px;margin:0 auto;padding:80px 40px 128px;display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start">
+      <section data-r="split" style="max-width:1220px;margin:0 auto;padding:80px clamp(20px,5vw,40px) 128px;display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start">
         <div>
           <h1 style="font-size:clamp(36px,4vw,52px);line-height:1;margin:0">Checkout</h1>
           <div style="display:flex;align-items:center;margin:48px 0 56px;border-top:1px solid var(--rule)">
@@ -622,14 +675,14 @@
           <sc-if value="{{ atStep1 }}" hint-placeholder-val="{{ true }}">
             <div style="animation:nyFade .35s ease">
               <h2 style="font-size:28px;margin:0 0 36px">Contact &amp; delivery address</h2>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+              <div data-r="c2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
                 <div class="field"><label>Email</label><input class="input" type="email" value="{{ form.email }}" onChange="{{ setF.email }}" placeholder="name@email.pk"></div>
                 <div class="field"><label>Mobile</label><input class="input" value="{{ form.phone }}" onChange="{{ setF.phone }}" placeholder="0300 000 0000"></div>
                 <div class="field"><label>First name</label><input class="input" value="{{ form.first }}" onChange="{{ setF.first }}" placeholder="Ayesha"></div>
                 <div class="field"><label>Last name</label><input class="input" value="{{ form.last }}" onChange="{{ setF.last }}" placeholder="Tariq"></div>
               </div>
               <div class="field" style="margin-top:32px"><label>Street address</label><input class="input" value="{{ form.address }}" onChange="{{ setF.address }}" placeholder="House 24-C, Block M, Gulberg III"></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 150px;gap:32px;margin-top:32px">
+              <div data-r="c3sm" style="display:grid;grid-template-columns:1fr 1fr 150px;gap:32px;margin-top:32px">
                 <div class="field"><label>City</label>
                   <select class="input" value="{{ form.city }}" onChange="{{ setF.city }}">
                     <sc-for list="{{ cityOptions }}" as="c" hint-placeholder-count="9"><option value="{{ c.name }}">{{ c.name }}</option></sc-for>
@@ -691,17 +744,49 @@
                 <div style="border-top:1px solid var(--rule)"></div>
               </div>
               <sc-if value="{{ cardSelected }}" hint-placeholder-val="{{ false }}">
-                <div style="display:grid;grid-template-columns:1fr 130px 130px;gap:32px;margin-top:36px">
-                  <div class="field"><label>Card number</label><input class="input" value="{{ form.card }}" onChange="{{ setF.card }}" placeholder="4242 4242 4242 4242"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
+                  <div class="field"><label>Name on card</label><input class="input" value="{{ form.cardName }}" onChange="{{ setF.cardName }}" placeholder="Ayesha Tariq"></div>
+                  <div class="field"><label>Card number</label><input class="input" value="{{ form.card }}" onChange="{{ setF.card }}" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+                </div>
+                <div data-r="c3sm" style="display:grid;grid-template-columns:1fr 130px 130px;gap:32px;margin-top:20px">
+                  <div></div>
                   <div class="field"><label>Expiry</label><input class="input" value="{{ form.exp }}" onChange="{{ setF.exp }}" placeholder="09 / 29"></div>
-                  <div class="field"><label>CVC</label><input class="input" value="{{ form.cvc }}" onChange="{{ setF.cvc }}" placeholder="123"></div>
+                  <div class="field"><label>CVC</label><input class="input" value="{{ form.cvc }}" onChange="{{ setF.cvc }}" placeholder="123" maxlength="4"></div>
                 </div>
               </sc-if>
+              <sc-if value="{{ walletSelected }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
+                  <div class="field"><label>Wallet</label>
+                    <select class="input" value="{{ form.wallet }}" onChange="{{ setF.wallet }}">
+                      <option value="JazzCash">JazzCash</option>
+                      <option value="Easypaisa">Easypaisa</option>
+                    </select>
+                  </div>
+                  <div class="field"><label>Wallet mobile number</label><input class="input" value="{{ form.walletNumber }}" onChange="{{ setF.walletNumber }}" placeholder="03XX XXXXXXX"></div>
+                </div>
+                <div style="font-size:13px;line-height:1.75;color:var(--ink-3);margin-top:16px">We'll send a payment request to this number. Approve it in the {{ form.wallet }} app to confirm the order.</div>
+              </sc-if>
+              <sc-if value="{{ bankSelected }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
+                  <div class="field"><label>Your bank</label>
+                    <select class="input" value="{{ form.bankName }}" onChange="{{ setF.bankName }}">
+                      <option value="HBL">HBL</option><option value="UBL">UBL</option><option value="Meezan Bank">Meezan Bank</option><option value="Allied Bank">Allied Bank</option><option value="Bank Alfalah">Bank Alfalah</option><option value="MCB">MCB</option><option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="field"><label>Account title</label><input class="input" value="{{ form.bankTitle }}" onChange="{{ setF.bankTitle }}" placeholder="Ayesha Tariq"></div>
+                </div>
+                <div style="margin-top:20px;padding:18px 20px;border:1px solid var(--rule)">
+                  <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Transfer to</div>
+                  <div style="font-size:14.5px;line-height:1.9;margin-top:10px">Nouryah Perfumes (Pvt) Ltd<br>IBAN: PK36 MEZN 0001 2300 4567 890<br>Meezan Bank, Gulberg Branch, Lahore</div>
+                </div>
+                <div class="field" style="margin-top:20px"><label>Transaction ID / reference number</label><input class="input" value="{{ form.txnId }}" onChange="{{ setF.txnId }}" placeholder="From your bank's transfer receipt"></div>
+              </sc-if>
               <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:36px;max-width:62ch">By placing the order you accept the sale terms and the 30-day return right on unopened flacons. Card and wallet payments are captured on dispatch, never before.</div>
-              <div style="display:flex;align-items:center;gap:28px;margin-top:40px">
-                <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" style="flex:1">Place order · {{ totalLabel }}</button>
+              <div style="display:flex;align-items:center;gap:28px;margin-top:clamp(20px,5vw,40px)">
+                <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" disabled="{{ payInvalid }}" style="flex:1">Place order · {{ totalLabel }}</button>
                 <span onClick="{{ prevStep }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap" style-hover="color:var(--color-text)">Back</span>
               </div>
+              <div style="font-size:12.5px;color:var(--ink-3);margin-top:12px">{{ payHint }}</div>
             </div>
           </sc-if>
         </div>
@@ -727,11 +812,16 @@
           <sc-if value="{{ promoShown }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:12.5px;color:var(--gold);margin-top:10px">{{ promoMsg }}</div>
           </sc-if>
+          <sc-if value="{{ giftEligible }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:22px;padding:14px 16px;border:1px solid var(--rule-gold);background:rgba(201,160,92,.06);font-size:13px;color:var(--gold)">Free 10 ml travel size included with this order</div>
+          </sc-if>
+          <sc-if value="{{ giftClose }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:22px;font-size:12.5px;color:var(--ink-3)">Add {{ giftRemain }} more for a free 10 ml gift</div>
+          </sc-if>
           <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--rule);display:grid;gap:12px;font-size:14px">
             <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">Subtotal</span><span style="font-variant-numeric:tabular-nums">{{ subtotalLabel }}</span></div>
             <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">Discount</span><span style="font-variant-numeric:tabular-nums">{{ discountLabel }}</span></div>
             <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--ink-3)">Delivery · {{ shipName }}</span><span style="font-variant-numeric:tabular-nums;white-space:nowrap">{{ shipLabel }}</span></div>
-            <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">GST 18% (included)</span><span style="font-variant-numeric:tabular-nums">{{ vatLabel }}</span></div>
           </div>
           <div style="margin-top:22px;padding-top:20px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline">
             <span style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Total</span>
@@ -745,9 +835,32 @@
 
   <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Order confirmed">
-      <section style="max-width:1060px;margin:0 auto;padding:88px 40px 128px;animation:nyRise .55s cubic-bezier(.2,.7,.2,1)">
-        <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)">Order {{ order.no }} confirmed</div>
-        <h1 style="font-size:clamp(42px,4.8vw,68px);line-height:1.02;margin:22px 0 20px">Thank you, {{ order.first }}.</h1>
+      <section style="max-width:1060px;margin:0 auto;padding:88px clamp(20px,5vw,40px) 128px;animation:nyRise .55s cubic-bezier(.2,.7,.2,1)">
+        <div style="display:flex;align-items:center;gap:12px;font-family:var(--font-ui);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)">
+          <span style="width:7px;height:7px;background:var(--gold);border-radius:50%"></span>
+          Your order has been sent successfully
+        </div>
+        <h1 style="font-size:clamp(42px,4.8vw,68px);line-height:1.02;margin:22px 0 0">Thank you, {{ order.first }}.</h1>
+        <sc-if value="{{ order.giftWrap }}" hint-placeholder-val="{{ false }}">
+          <div style="display:inline-block;margin-top:12px;padding:5px 12px;border:1px solid var(--rule-gold);font-family:var(--font-ui);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)">Gift order — price omitted from packing slip</div>
+        </sc-if>
+        <div style="display:inline-flex;align-items:center;gap:18px;margin-top:22px;padding:14px 22px;border:1px solid var(--rule-gold);background:rgba(201,160,92,.06)">
+          <div>
+            <div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Tracking number</div>
+            <div style="font-family:var(--font-heading);font-size:24px;letter-spacing:.04em;margin-top:2px">{{ order.no }}</div>
+          </div>
+          <span onClick="{{ copyOrderNo }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule-gold);padding-bottom:3px">{{ copyLabel }}</span>
+        </div>
+        <div style="margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:18px">
+          <a href="{{ trackingUrl }}" target="_blank" rel="noopener" style="font-family:var(--font-ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Track your order →</a>
+          <span onClick="{{ copyTrackingUrl }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">{{ copyUrlLabel }}</span>
+        </div>
+        <sc-if value="{{ order.emailSent }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:18px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2)">
+            <span style="width:6px;height:6px;background:var(--gold);border-radius:50%"></span>
+            Confirmation sent to {{ order.email }}
+          </div>
+        </sc-if>
         <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }} — tracking follows by SMS to {{ order.phone }}.</p>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:56px;padding-top:28px;border-top:1px solid var(--rule)">
           <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)">Now</div><div style="font-family:var(--font-heading);font-size:21px;margin-top:10px">Order placed</div></div>
@@ -755,7 +868,7 @@
           <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">In transit</div><div style="font-family:var(--font-heading);font-size:21px;margin-top:10px">With the courier</div></div>
           <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">{{ order.eta }}</div><div style="font-family:var(--font-heading);font-size:21px;margin-top:10px">Delivered</div></div>
         </div>
-        <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:56px;margin-top:72px;align-items:start">
+        <div data-r="split" style="display:grid;grid-template-columns:1.15fr .85fr;gap:56px;margin-top:72px;align-items:start">
           <div>
             <h2 style="font-size:26px;margin:0 0 24px">What is coming</h2>
             <table class="table">
@@ -770,6 +883,9 @@
                   </tr>
                 </sc-for>
                 <tr><td style="color:var(--ink-3)">2 × 2 ml samples</td><td style="color:var(--ink-3);font-size:13.5px">Sample</td><td style="font-size:13.5px">2</td><td style="text-align:right;color:var(--gold);font-size:13.5px">Free</td></tr>
+                <sc-if value="{{ order.gift }}" hint-placeholder-val="{{ false }}">
+                  <tr><td style="color:var(--ink-3)">10 ml travel size</td><td style="color:var(--ink-3);font-size:13.5px">Gift</td><td style="font-size:13.5px">1</td><td style="text-align:right;color:var(--gold);font-size:13.5px">Free</td></tr>
+                </sc-if>
               </tbody>
             </table>
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:24px;padding-top:20px;border-top:1px solid var(--rule)">
@@ -792,7 +908,7 @@
   </sc-if>
 
   <footer style="border-top:1px solid var(--rule);background:#0B0B0D">
-    <div style="max-width:1320px;margin:0 auto;padding:80px 40px 36px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px">
+    <div data-r="footer" style="max-width:1320px;margin:0 auto;padding:80px clamp(20px,5vw,40px) 36px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px">
       <div>
         <div style="font-family:var(--font-heading);font-size:30px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);line-height:1">Nouryah</div>
         <div style="font-family:var(--font-ui);font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Perfumes · Lahore, Pakistan</div>
@@ -836,7 +952,7 @@
         </div>
       </div>
     </div>
-    <div style="max-width:1320px;margin:0 auto;padding:24px 40px 44px;border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:28px;font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);flex-wrap:wrap">
+    <div style="max-width:1320px;margin:0 auto;padding:24px clamp(20px,5vw,40px) 44px;border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:28px;font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);flex-wrap:wrap">
       <span>© 2026 Nouryah Perfumes · NTN 7412563-8 · Gulberg III, Lahore</span>
       <span style="display:flex;gap:18px;white-space:nowrap"><span>COD</span><span>JazzCash</span><span>Easypaisa</span><span>Raast</span><span>Visa</span><span>Mastercard</span></span>
     </div>
@@ -869,6 +985,7 @@
               <div style="height:1px;background:rgba(255,255,255,.12);margin-top:12px">
                 <div style="height:1px;background:var(--gold);width:{{ shipPct }}%;transition:width .35s ease"></div>
               </div>
+              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:14px">{{ giftMsg }}</div>
             </div>
             <div style="flex:1;overflow-y:auto;padding:0 30px">
               <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
@@ -912,6 +1029,20 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{ giftModalOpen }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div onClick="{{ closeGiftModal }}" style="position:absolute;inset:0;background:rgba(0,0,0,.78);animation:nyFade .3s ease"></div>
+      <div style="position:relative;width:440px;max-width:100%;background:#0E0E10;border:1px solid var(--rule-gold);padding:48px 40px 40px;text-align:center;animation:nyRise .38s cubic-bezier(.2,.7,.2,1)">
+        <span onClick="{{ closeGiftModal }}" style="position:absolute;top:16px;right:18px;cursor:pointer;font-size:17px;color:var(--ink-3);line-height:1" style-hover="color:var(--gold)">✕</span>
+        <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)">Limited time</div>
+        <h2 style="font-size:34px;line-height:1.15;margin:18px 0 0">Free 10&nbsp;ml gift on orders over {{ giftThreshold }}</h2>
+        <p style="font-size:14.5px;line-height:1.75;color:var(--ink-2);margin:16px 0 0">Spend {{ giftThreshold }} or more and a 10&nbsp;ml travel size is added to your order automatically — no code needed.</p>
+        <button class="btn btn-primary btn-lg" onClick="{{ closeGiftModalShop }}" style="margin-top:28px;width:100%">Shop the collection</button>
+        <span onClick="{{ closeGiftModal }}" style="display:inline-block;cursor:pointer;margin-top:16px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">Continue browsing</span>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:70;background:#111114;border:1px solid var(--rule-gold);padding:16px 26px;display:flex;align-items:center;gap:22px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;animation:nyRise .3s cubic-bezier(.2,.7,.2,1)">
       <span>{{ toast }}</span>
@@ -923,6 +1054,7 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;freeShipThreshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5000,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:30000,&quot;step&quot;:500,&quot;unit&quot;:&quot;PKR&quot;,&quot;section&quot;:&quot;Commerce&quot;},&quot;showAnnouncementBar&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Commerce&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;PKR&quot;,&quot;options&quot;:[&quot;PKR&quot;,&quot;USD&quot;,&quot;AED&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Commerce&quot;}}">
 class Component extends DCLogic {
   PHONE = '0334 820 0192';
+  NOTIFY_EMAIL = 'Muhammadfaiez979@gmail.com';
 
   CITIES = [
     { name:'Lahore', speed:'Next day' },
@@ -937,40 +1069,40 @@ class Component extends DCLogic {
   ];
 
   products = [
-    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Amber', tagline:'Amber & leather', price:14900, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign.jpg',
+    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Amber', tagline:'Amber & leather', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign.jpg', rating:4.8, reviews:212,
       top:'Calabrian bergamot, black pepper', heart:'Leather, cinnamon, Turkish rose', base:'Amber, labdanum, vanilla absolute',
       desc:'The house signature. A dark amber built on tanned leather and a rose that refuses to sweeten it — the flacon that convinced us to publish the formulas.' },
-    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud & saffron', price:18900, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale.jpg',
+    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud & saffron', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale.jpg', rating:4.9, reviews:301,
       top:'Saffron, nutmeg', heart:'Laotian oud, rose damascena, patchouli', base:'Agarwood, amber, white musk',
       desc:'The most concentrated composition in the house: real Laotian oud carried by saffron, then held for half a day by agarwood and amber. Two sprays is the whole dose.' },
-    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Amber', tagline:'Tobacco & golden amber', price:14900, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph.jpg',
+    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Amber', tagline:'Tobacco & golden amber', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph.jpg', rating:4.7, reviews:158,
       top:'Grapefruit, cardamom', heart:'Tobacco leaf, honey, davana', base:'Golden amber, tonka bean, cedar',
       desc:'Honeyed tobacco over a warm amber floor. Worn for the meeting you intend to win — it is read across a room and remembered afterwards.' },
-    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Green fig & vetiver', price:12900, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy.jpg',
+    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Green fig & vetiver', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy.jpg', rating:4.6, reviews:97,
       top:'Green fig, bergamot', heart:'Haitian vetiver, iris', base:'Oakmoss, cedar, ambrette',
       desc:'Cool green woods with the bitter snap of fig leaf. The one to wear five days a week — structured, quiet, never anonymous.' },
-    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Woody', tagline:'Incense & sea mineral', price:12900, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse.jpg',
+    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Woody', tagline:'Incense & sea mineral', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse.jpg', rating:4.7, reviews:84,
       top:'Sea mineral, juniper', heart:'Frankincense, blue cypress', base:'Ambergris, vetiver, oakmoss',
       desc:'Cold incense over a mineral wash — smoke read through sea air. Composed for the last blue hour before a winter evening turns.' },
-    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Iris & violet', price:11900, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur.jpg',
+    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Iris & violet', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur.jpg', rating:4.5, reviews:76,
       top:'Violet leaf, pear', heart:'Florentine iris, peony, orris butter', base:'Sandalwood, musk, benzoin',
       desc:'Powdered iris with a green violet edge, resting on sandalwood. Floral without a single sugared note.' },
-    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Peony & rose', price:10900, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush.jpg',
+    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Peony & rose', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush.jpg', rating:4.8, reviews:264,
       top:'Lychee, pink pepper', heart:'Peony, Turkish rose, magnolia', base:'Cashmere wood, white musk',
       desc:'A bright rose held close to the skin. The easiest first bottle in the house — and the one most often bought twice.' },
-    { id:'azure', ref:'NJ-08', name:'Azure', family:'Aquatic', tagline:'Bergamot & sea salt', price:10900, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure.jpg',
+    { id:'azure', ref:'NJ-08', name:'Azure', family:'Aquatic', tagline:'Bergamot & sea salt', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure.jpg', rating:4.6, reviews:139,
       top:'Sicilian bergamot, sea salt', heart:'Neroli, jasmine, sage', base:'White amber, driftwood, moss',
       desc:'Sea air off the Makran coast in July. Sharp citrus, a clean floral heart, and driftwood underneath so it never turns soapy.' },
-    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Cotton & white musk', price:9500, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk.jpg',
+    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Cotton & white musk', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk.jpg', rating:4.9, reviews:188,
       top:'Cotton flower, bergamot', heart:'White musk, lily of the valley', base:'Blond cedar, vanilla, ambrette',
       desc:'Skin, laundered. The quietest sheet in the set and the one people lean in to identify.' }
   ];
 
-  DISCOVERY = 4500;
+  DISCOVERY = 2900;
+  GIFT_THRESHOLD = 3000;
   SHIP = [
     { key:'standard', label:'TCS · nationwide', detail:'Tracked, 2–4 working days, to your door', price:350 },
-    { key:'express', label:'Leopards · next day', detail:'Next working day in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Sialkot', price:650 },
-    { key:'pickup', label:'Atelier pickup · Lahore', detail:'Gulberg III, ready in two hours', price:0 }
+    { key:'express', label:'Leopards · next day', detail:'Next working day in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Sialkot', price:650 }
   ];
   PAY = [
     { key:'Cash on delivery', label:'Cash on delivery', detail:'Pay the rider when the parcel reaches you', badge:'Most used' },
@@ -994,9 +1126,11 @@ class Component extends DCLogic {
     fStep:1, fAns:{}, fDone:false,
     faqOpen:0,
     step:1, ship:'standard', pay:'Cash on delivery', promo:'', promoInput:'', promoMsg:'',
-    form:{ email:'', phone:'', first:'', last:'', address:'', zip:'', city:'Lahore', province:'Punjab', note:'', gift:false, card:'', exp:'', cvc:'' },
+    form:Object.assign({ email:'', phone:'', first:'', last:'', address:'', zip:'', city:'Lahore', province:'Punjab', note:'', gift:false,
+      card:'', exp:'', cvc:'', cardName:'', wallet:'JazzCash', walletNumber:'', bankName:'HBL', bankTitle:'', txnId:'' }),
     req:{ name:'', company:'', email:'', phone:'', city:'Lahore', units:12, date:'', note:'', invoice:true, picks:['sovereign'] },
-    reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:''
+    reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:'',
+    giftModalOpen:true, copyLabel:'Copy', copyUrlLabel:'Copy link'
   };
 
   fmt(n) {
@@ -1011,7 +1145,7 @@ class Component extends DCLogic {
     return [
       { key:'50', label:'50 ml', price:p.price, name:'50 ml flacon' },
       { key:'10', label:'10 ml', price:Math.round(p.price * 0.34 / 100) * 100, name:'10 ml travel' },
-      { key:'2',  label:'2 ml',  price:750, name:'2 ml sample' }
+      { key:'2',  label:'2 ml',  price:350, name:'2 ml sample' }
     ];
   }
   projLabel(n) { return n >= 3 ? 'Strong' : n === 2 ? 'Moderate' : 'Intimate'; }
@@ -1060,7 +1194,7 @@ class Component extends DCLogic {
     const net = sub - discount;
     const ship = (net >= this.threshold() && opt.key !== 'express') ? 0 : opt.price;
     const total = net + ship;
-    return { sub, discount, ship, total, opt, vat: Math.round(total * 18 / 118) };
+    return { sub, discount, ship, total, opt };
   }
   score(p) {
     const a = this.state.fAns;
@@ -1081,7 +1215,9 @@ class Component extends DCLogic {
     const pcard = (p) => ({
       id:p.id, ref:p.ref, name:p.name, family:p.family, tagline:p.tagline, hours:p.hours,
       heart:p.heart, img:p.img, alt:'Nouryah ' + p.name + ' eau de parfum, 50 ml',
-      priceLabel:this.fmt(p.price), projectionLabel:this.projLabel(p.proj),
+      priceLabel:this.fmt(p.price), compareAtLabel:this.fmt(p.compareAt), onSale:p.compareAt > p.price,
+      discountLabel:Math.round((1 - p.price / p.compareAt) * 100) + '%',
+      projectionLabel:this.projLabel(p.proj),
       open: () => { this.setState({ pid:p.id, gi:0, size:'50', qty:1, view:'product' }); if (typeof window !== 'undefined') window.scrollTo(0, 0); },
       quickAdd: () => this.add(p.id, '50', 1)
     });
@@ -1130,12 +1266,13 @@ class Component extends DCLogic {
     const reqEstimate = reqPicks.length ? reqPicks.reduce((t, id) => t + this.find(id).price, 0) / reqPicks.length * reqUnits : 0;
     const tier = reqUnits >= 50 ? 'Tier 3 · −22%' : reqUnits >= 24 ? 'Tier 2 · −15%' : reqUnits >= 10 ? 'Tier 1 · −8%' : 'Retail';
     const reqValid = st.req.name.trim() && /.+@.+\..+/.test(st.req.email) && reqPicks.length > 0 && reqUnits > 0;
+    const reqSelectedLabel = reqPicks.length ? reqPicks.map(id => this.find(id).name).join(', ') : 'None selected';
 
     const f = st.form;
     const step1ok = /.+@.+\..+/.test(f.email) && f.first.trim() && f.last.trim() && f.address.trim() && f.city.trim();
 
     const setF = {};
-    ['email','phone','first','last','address','zip','city','province','note','card','exp','cvc'].forEach(k => {
+    ['email','phone','first','last','address','zip','city','province','note','card','exp','cvc','cardName','wallet','walletNumber','bankName','bankTitle','txnId'].forEach(k => {
       setF[k] = (e) => this.setState({ form:{ ...this.state.form, [k]:e.target.value } });
     });
     setF.gift = (e) => this.setState({ form:{ ...this.state.form, gift:e.target.checked } });
@@ -1154,11 +1291,33 @@ class Component extends DCLogic {
       go: () => { if (i + 1 < st.step || step1ok) this.setState({ step:i + 1 }); }
     }));
 
+    let payValid = true, payHintMsg = '';
+    if (st.pay === 'Card') {
+      payValid = (f.cardName || '').trim() && (f.card || '').replace(/\s/g, '').length >= 15 && (f.exp || '').trim() && (f.cvc || '').trim().length >= 3;
+      payHintMsg = 'Name on card, a valid card number, expiry and CVC are required.';
+    } else if (st.pay === 'JazzCash / Easypaisa') {
+      payValid = /^0?3\d{9}$/.test((f.walletNumber || '').replace(/[\s-]/g, ''));
+      payHintMsg = 'Enter the mobile number linked to your ' + (f.wallet || 'wallet') + '.';
+    } else if (st.pay === 'Bank transfer') {
+      payValid = (f.bankTitle || '').trim() && (f.txnId || '').trim();
+      payHintMsg = 'Account title and the transaction ID from your transfer receipt are required.';
+    }
+
     const netForShip = m.sub - m.discount;
     const remain = Math.max(0, this.threshold() - netForShip);
+    const giftOn = netForShip >= this.GIFT_THRESHOLD;
+    const giftRemain = Math.max(0, this.GIFT_THRESHOLD - netForShip);
 
     return {
       phone: this.PHONE,
+      giftModalOpen: st.giftModalOpen,
+      closeGiftModal: () => this.setState({ giftModalOpen:false }),
+      closeGiftModalShop: () => { this.setState({ giftModalOpen:false }); this.nav('shop'); },
+      giftThreshold: this.fmt(this.GIFT_THRESHOLD),
+      giftEligible: giftOn,
+      giftClose: !giftOn && netForShip > 0,
+      giftRemain: this.fmt(giftRemain),
+      giftMsg: giftOn ? 'Free 10 ml gift unlocked' : (netForShip > 0 ? 'Add ' + this.fmt(giftRemain) + ' for a free 10 ml gift' : 'Free 10 ml gift on orders over ' + this.fmt(this.GIFT_THRESHOLD)),
       showBar: this.props.showAnnouncementBar !== false,
       freeShipLabel: this.fmt(this.threshold()),
       cities: this.CITIES.map(c => ({ name:c.name, speed:c.speed, fg: c.speed === 'Next day' ? GOLD : INK3 })),
@@ -1201,17 +1360,20 @@ class Component extends DCLogic {
 
       pdp: {
         name:p.name, ref:p.ref, family:p.family, tagline:p.tagline, desc:p.desc,
+        rating:p.rating, reviews:p.reviews, stars:'★★★★★'.slice(0, Math.round(p.rating)) + '☆☆☆☆☆'.slice(0, 5 - Math.round(p.rating)),
         top:p.top, heart:p.heart, base:p.base, hours:p.hours,
         projectionLabel:this.projLabel(p.proj), stockLabel:'In stock · batch 07',
         activeImg:gallery[st.gi].src, alt:'Nouryah ' + p.name + ' eau de parfum, 50 ml',
         gallery:gallery.map((g, i) => ({ src:g.src, alt:g.alt, op: i === st.gi ? 1 : 0.42, pick: () => this.setState({ gi:i }) })),
         sizes:sizes.map(s => ({
           label:s.label, priceLabel:this.fmt(s.price),
+          compareAtLabel: s.key === '50' ? this.fmt(p.compareAt) : null,
           bd: st.size === s.key ? GOLD : 'rgba(255,255,255,.18)',
           fg: st.size === s.key ? GOLD : TEXT,
           bg: st.size === s.key ? 'rgba(201,160,92,.07)' : 'transparent',
           pick: () => this.setState({ size:s.key })
         })),
+        compareAtLabel:this.fmt(p.compareAt), discountLabel:Math.round((1 - p.price / p.compareAt) * 100) + '%',
         qty:st.qty,
         inc: () => this.setState({ qty:st.qty + 1 }),
         dec: () => this.setState({ qty:Math.max(1, st.qty - 1) }),
@@ -1265,11 +1427,29 @@ class Component extends DCLogic {
           this.setState({ req:{ ...this.state.req, picks } });
         }
       })),
-      reqSelectedLabel: reqPicks.length ? reqPicks.map(id => this.find(id).name).join(', ') : 'None selected',
+      reqSelectedLabel,
       reqEstimateLabel: this.fmt(reqEstimate),
       reqTier: tier,
       reqInvalid: !reqValid,
       reqHint: reqValid ? 'A person in Lahore answers within one working day.' : 'Name, a valid email, one fragrance and a unit count are required.',
+      notifyEmail: this.NOTIFY_EMAIL,
+      notifyHref: (() => {
+        const no = st.reqNo || '';
+        const subject = 'Order request ' + no + ' — ' + (st.req.name || 'Customer');
+        const body = 'Order request ' + no + '\nName: ' + st.req.name + '\nCompany: ' + (st.req.company || '—') +
+          '\nEmail: ' + st.req.email + '\nPhone: ' + st.req.phone + '\nDeliver to: ' + st.req.city +
+          '\nFragrances: ' + reqSelectedLabel + '\nUnits: ' + st.req.units + '\nVolume tier: ' + tier +
+          '\nIndicative list: ' + this.fmt(reqEstimate) + '\nNeeded by: ' + (st.req.date || '—') +
+          '\nNote: ' + (st.req.note || '—') + '\nInvoice requested: ' + (st.req.invoice ? 'Yes' : 'No');
+        return 'mailto:' + this.NOTIFY_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      })(),
+      whatsappHref: (() => {
+        const digits = this.PHONE.replace(/\D/g, '');
+        const no = st.reqNo || '';
+        const text = 'New order request ' + no + ' from ' + (st.req.name || 'a customer') + ' (' + st.req.phone + '): ' +
+          reqSelectedLabel + ', ' + st.req.units + ' units, deliver to ' + st.req.city + '.';
+        return 'https://wa.me/92' + digits.replace(/^0/, '') + '?text=' + encodeURIComponent(text);
+      })(),
       submitRequest: () => {
         if (!reqValid) return;
         this.setState({ reqSent:true, reqNo:'RQ-' + (2600 + Math.floor(Math.random() * 900)) });
@@ -1282,7 +1462,7 @@ class Component extends DCLogic {
       atStep1: st.step === 1, atStep2: st.step === 2, atStep3: st.step === 3,
       step1Invalid: !step1ok,
       step1Hint: step1ok ? 'City checked against the courier’s serviceable list.' : 'Email, name, street and city are required.',
-      nextStep: () => { if (st.step === 1 && !step1ok) return; this.setState({ step:Math.min(3, st.step + 1) }); window.scrollTo(0, 0); },
+      nextStep: () => { if (st.step === 1 && !step1ok) return; if (st.cart.length === 0) { this.nav('shop'); return; } this.setState({ step:Math.min(3, st.step + 1) }); window.scrollTo(0, 0); },
       prevStep: () => this.setState({ step:Math.max(1, st.step - 1) }),
       shipOptions: this.SHIP.map(s => {
         const free = s.price === 0 || (netForShip >= this.threshold() && s.key !== 'express');
@@ -1304,12 +1484,15 @@ class Component extends DCLogic {
         pick: () => this.setState({ pay:x.key })
       })),
       cardSelected: st.pay === 'Card',
+      walletSelected: st.pay === 'JazzCash / Easypaisa',
+      bankSelected: st.pay === 'Bank transfer',
+      payInvalid: !payValid,
+      payHint: payValid ? '' : payHintMsg,
       lines: st.cart.map((l, i) => this.lineOf(l, i)),
       subtotalLabel:this.fmt(m.sub),
       discountLabel: m.discount ? '− ' + this.fmt(m.discount) : '—',
       shipLabel: m.ship === 0 ? 'Free' : this.fmt(m.ship),
       shipName: m.opt.label,
-      vatLabel:this.fmt(m.vat),
       totalLabel:this.fmt(m.total),
       shipPct: Math.min(100, Math.round((netForShip / this.threshold()) * 100)),
       shipProgressMsg: remain > 0 ? 'Add ' + this.fmt(remain) + ' for free delivery' : 'Free delivery unlocked',
@@ -1320,21 +1503,43 @@ class Component extends DCLogic {
         if (code === 'NOURYAH10') this.setState({ promo:code, promoMsg:'NOURYAH10 applied — 10% off the order.' });
         else this.setState({ promo:'', promoMsg:code ? 'That code is not active. Try NOURYAH10.' : '' });
       },
+      cartHasItems: st.cart.length > 0,
       placeOrder: () => {
+        if (!payValid || st.cart.length === 0) return;
         const lines = st.cart.map((l, i) => this.lineOf(l, i));
+        const no = 'NJ-' + (48200 + Math.floor(Math.random() * 700));
+        const trackingCode = no + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
         this.setState({
           order:{
-            no:'NJ-' + (48200 + Math.floor(Math.random() * 700)),
+            no, trackingCode,
             first:f.first || 'friend', last:f.last, email:f.email, phone:f.phone || this.PHONE,
             address:f.address, zip:f.zip, city:f.city, province:f.province,
-            shipName:m.opt.label, pay:st.pay, totalLabel:this.fmt(m.total), lines,
-            eta: st.ship === 'express' ? 'Tomorrow' : st.ship === 'pickup' ? 'In two hours' : 'Within 4 days'
+            shipName:m.opt.label, pay:st.pay, totalLabel:this.fmt(m.total), lines, gift:giftOn, giftWrap:!!f.gift,
+            eta: st.ship === 'express' ? 'Tomorrow' : 'Within 4 days',
+            emailSent:true
           },
           cart:[], view:'confirm', cartOpen:false
         });
         window.scrollTo(0, 0);
       },
-      order: st.order || { no:'', first:'', last:'', email:'', phone:'', address:'', zip:'', city:'', province:'', shipName:'', pay:'', totalLabel:'', lines:[], eta:'' },
+      order: st.order || { no:'', trackingCode:'', first:'', last:'', email:'', phone:'', address:'', zip:'', city:'', province:'', shipName:'', pay:'', totalLabel:'', lines:[], eta:'', gift:false, giftWrap:false, emailSent:false },
+      trackingUrl: st.order ? ('https://nouryah.pk/track/' + st.order.trackingCode) : '',
+      copyLabel: st.copyLabel,
+      copyOrderNo: () => {
+        const no = (st.order && st.order.no) || '';
+        if (navigator.clipboard && no) navigator.clipboard.writeText(no).catch(() => {});
+        this.setState({ copyLabel:'Copied' });
+        clearTimeout(this._ct);
+        this._ct = setTimeout(() => this.setState({ copyLabel:'Copy' }), 1800);
+      },
+      copyUrlLabel: st.copyUrlLabel,
+      copyTrackingUrl: () => {
+        const url = st.order ? ('https://nouryah.pk/track/' + st.order.trackingCode) : '';
+        if (navigator.clipboard && url) navigator.clipboard.writeText(url).catch(() => {});
+        this.setState({ copyUrlLabel:'Copied' });
+        clearTimeout(this._cu);
+        this._cu = setTimeout(() => this.setState({ copyUrlLabel:'Copy link' }), 1800);
+      },
 
       newsInput: st.newsInput,
       setNews: (e) => this.setState({ newsInput:e.target.value }),
