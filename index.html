@@ -75,6 +75,10 @@
   @keyframes nyRise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
   nav[data-r="nav"]::-webkit-scrollbar { display: none; }
   [data-r="collrail"]::-webkit-scrollbar { display: none; }
+  [data-r="pimg"] .pswap { opacity: 0; transition: opacity .55s ease; pointer-events: none; }
+  [data-r="pimg"]:hover .pswap { opacity: 1; }
+  [data-r="pimg"]:hover img { transform: scale(1.05); }
+  @media (hover: none) { [data-r="pimg"] .pswap { display: none; } }
   [data-r="collrail"] { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { [data-r="collrail"] { scroll-behavior: auto; } }
   @media (max-width: 860px) {
@@ -258,8 +262,9 @@
         <div data-r="collrail" style="display:flex;gap:clamp(18px,2.2vw,34px);padding:56px 0 8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch">
           <sc-for list="{{ railCards }}" as="p" hint-placeholder-count="9">
             <div data-r="collcard" style="flex:0 0 clamp(236px,25vw,296px);display:flex;flex-direction:column;scroll-snap-align:start">
-              <div onClick="{{ p.open }}" style="cursor:pointer;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
-                <img src="{{ p.img }}" alt="{{ p.alt }}" style="width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.05)">
+              <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
+                <img src="{{ p.img }}" alt="{{ p.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)">
+                <div class="pswap" role="presentation" style="position:absolute;inset:0;background-image:url({{ p.img2 }});background-size:cover;background-position:center"></div>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px">
                 <div onClick="{{ p.open }}" style="cursor:pointer;font-family:var(--font-heading);font-size:23px;line-height:1.1">{{ p.name }}</div>
@@ -1227,31 +1232,31 @@ class Component extends DCLogic {
   ];
 
   products = [
-    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Amber', tagline:'Amber & leather', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign.jpg', rating:4.8, reviews:212,
+    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Amber', tagline:'Amber & leather', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign-studio.jpg', img2:'assets/sovereign.jpg', rating:4.8, reviews:212,
       top:'Calabrian bergamot, black pepper', heart:'Leather, cinnamon, Turkish rose', base:'Amber, labdanum, vanilla absolute',
       desc:'The house signature. A dark amber built on tanned leather and a rose that refuses to sweeten it — the flacon that convinced us to publish the formulas.' },
-    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud & saffron', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale.jpg', rating:4.9, reviews:301,
+    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud & saffron', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale-studio.jpg', img2:'assets/oud-royale.jpg', rating:4.9, reviews:301,
       top:'Saffron, nutmeg', heart:'Laotian oud, rose damascena, patchouli', base:'Agarwood, amber, white musk',
       desc:'The most concentrated composition in the house: real Laotian oud carried by saffron, then held for half a day by agarwood and amber. Two sprays is the whole dose.' },
-    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Amber', tagline:'Tobacco & golden amber', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph.jpg', rating:4.7, reviews:158,
+    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Amber', tagline:'Tobacco & golden amber', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph-studio.jpg', img2:'assets/triumph.jpg', rating:4.7, reviews:158,
       top:'Grapefruit, cardamom', heart:'Tobacco leaf, honey, davana', base:'Golden amber, tonka bean, cedar',
       desc:'Honeyed tobacco over a warm amber floor. Worn for the meeting you intend to win — it is read across a room and remembered afterwards.' },
-    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Green fig & vetiver', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy.jpg', rating:4.6, reviews:97,
+    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Green fig & vetiver', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy-studio.jpg', img2:'assets/legacy.jpg', rating:4.6, reviews:97,
       top:'Green fig, bergamot', heart:'Haitian vetiver, iris', base:'Oakmoss, cedar, ambrette',
       desc:'Cool green woods with the bitter snap of fig leaf. The one to wear five days a week — structured, quiet, never anonymous.' },
-    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Woody', tagline:'Incense & sea mineral', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse.jpg', rating:4.7, reviews:84,
+    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Woody', tagline:'Incense & sea mineral', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse-studio.jpg', img2:'assets/eclipse.jpg', rating:4.7, reviews:84,
       top:'Sea mineral, juniper', heart:'Frankincense, blue cypress', base:'Ambergris, vetiver, oakmoss',
       desc:'Cold incense over a mineral wash — smoke read through sea air. Composed for the last blue hour before a winter evening turns.' },
-    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Iris & violet', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur.jpg', rating:4.5, reviews:76,
+    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Iris & violet', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur-studio.jpg', img2:'assets/fleur.jpg', rating:4.5, reviews:76,
       top:'Violet leaf, pear', heart:'Florentine iris, peony, orris butter', base:'Sandalwood, musk, benzoin',
       desc:'Powdered iris with a green violet edge, resting on sandalwood. Floral without a single sugared note.' },
-    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Peony & rose', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush.jpg', rating:4.8, reviews:264,
+    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Peony & rose', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush-studio.jpg', img2:'assets/blush.jpg', rating:4.8, reviews:264,
       top:'Lychee, pink pepper', heart:'Peony, Turkish rose, magnolia', base:'Cashmere wood, white musk',
       desc:'A bright rose held close to the skin. The easiest first bottle in the house — and the one most often bought twice.' },
-    { id:'azure', ref:'NJ-08', name:'Azure', family:'Aquatic', tagline:'Bergamot & sea salt', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure.jpg', rating:4.6, reviews:139,
+    { id:'azure', ref:'NJ-08', name:'Azure', family:'Aquatic', tagline:'Bergamot & sea salt', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure-studio.jpg', img2:'assets/azure.jpg', rating:4.6, reviews:139,
       top:'Sicilian bergamot, sea salt', heart:'Neroli, jasmine, sage', base:'White amber, driftwood, moss',
       desc:'Sea air off the Makran coast in July. Sharp citrus, a clean floral heart, and driftwood underneath so it never turns soapy.' },
-    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Cotton & white musk', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk.jpg', rating:4.9, reviews:188,
+    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Cotton & white musk', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk-studio.jpg', img2:'assets/white-musk.jpg', rating:4.9, reviews:188,
       top:'Cotton flower, bergamot', heart:'White musk, lily of the valley', base:'Blond cedar, vanilla, ambrette',
       desc:'Skin, laundered. The quietest sheet in the set and the one people lean in to identify.' }
   ];
@@ -1307,14 +1312,14 @@ class Component extends DCLogic {
 
   HERO_SLIDES = [
     {
-      img:'assets/sovereign.jpg', pos:'72% center',
+      img:'assets/sovereign-studio.jpg', img2:'assets/sovereign.jpg', pos:'center',
       eyebrow:'Nine fragrances · Composed in Lahore',
       title:'Drawn to the last note.',
       text:'An independent perfume house working at 20% parfum concentration. Every composition is published with its materials, its behaviour on skin and the hours it holds — nothing withheld.',
       cta:'Shop the collection', go:'shop', caption:'Sovereign · Amber & leather'
     },
     {
-      img:'assets/oud-royale.jpg', pos:'60% center',
+      img:'assets/oud-royale-studio.jpg', img2:'assets/oud-royale.jpg', pos:'center',
       eyebrow:'NJ-02 · Oud · 10–12 hours',
       title:'Laotian oud, held all day.',
       text:'Rose damascena and patchouli over a Laotian oud heart. The longest wear in the wardrobe, and the one people ask about.',
@@ -1328,7 +1333,7 @@ class Component extends DCLogic {
       cta:'Shop the discovery set', go:'shop', caption:'Discovery set · 9 × 2 ml'
     },
     {
-      img:'assets/fleur.jpg', pos:'55% center',
+      img:'assets/fleur-studio.jpg', img2:'assets/fleur.jpg', pos:'center',
       eyebrow:'Florentine iris · Peony · Orris butter',
       title:'The florals, kept quiet.',
       text:'Fleur and Blush sit close to the skin at intimate projection — composed for rooms where you would rather be remembered than announced.',
@@ -1564,7 +1569,7 @@ class Component extends DCLogic {
 
     const pcard = (p) => ({
       id:p.id, ref:p.ref, name:p.name, family:p.family, tagline:p.tagline, hours:p.hours,
-      heart:p.heart, img:p.img, alt:'Nouryah ' + p.name + ' eau de parfum, 50 ml',
+      heart:p.heart, img:p.img, img2:p.img2 || p.img, alt:'Nouryah ' + p.name + ' eau de parfum, 50 ml',
       priceLabel:this.fmt(p.price), compareAtLabel:this.fmt(p.compareAt), onSale:p.compareAt > p.price,
       discountLabel:Math.round((1 - p.price / p.compareAt) * 100) + '%',
       projectionLabel:this.projLabel(p.proj),
