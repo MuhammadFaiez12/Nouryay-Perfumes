@@ -38,7 +38,7 @@
   p { font-weight: 300; }
   a { color: var(--color-text); text-decoration: none; }
   a:hover { color: var(--gold); }
-  img { display: block; }
+  img { display: block; max-width: 100%; }
   .btn { border-radius: 0; border-width: 1px; font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; min-height: 0; padding: 15px 26px; transition: background .25s ease, color .25s ease, border-color .25s ease; }
   .btn-primary { background: var(--gold); color: #14110A; border-color: var(--gold); }
   .btn-primary:hover { background: #D9B474; border-color: #D9B474; }
@@ -85,6 +85,28 @@
     [data-r="footer"] { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
     h1 { max-width: 100% !important; }
   }
+  @media (max-width: 760px) {
+    /* Brand and bag share row one; the links take a full row below and wrap,
+       so no nav item hides behind a sideways scroll. */
+    header > div { height: auto !important; flex-wrap: wrap; row-gap: 12px; padding-top: 14px !important; padding-bottom: 12px !important; }
+    header > div > div:first-child { margin-right: auto; }
+    header > div > div:first-child > div:first-child { font-size: 21px !important; letter-spacing: .18em !important; }
+    nav[data-r="nav"] { order: 3; width: 100%; margin-right: 0 !important; flex-wrap: wrap; overflow-x: visible !important; white-space: normal !important; gap: 12px 18px !important; font-size: 11px !important; letter-spacing: .1em !important; }
+    [data-r="bar"] { font-size: 10px !important; letter-spacing: .12em !important; min-height: 40px !important; }
+    /* The runtime rewrites inline styles with spaces after the colons, so each
+       of these matches both the authored and the normalised spelling. */
+    /* Step timelines on the confirmation and tracking screens. */
+    [style*="grid-template-columns:repeat(4,1fr)"]:not([data-r]),
+    [style*="grid-template-columns: repeat(4, 1fr)"]:not([data-r]) { grid-template-columns: repeat(2,1fr) !important; gap: 22px !important; }
+    /* Fixed label columns collapse instead of squeezing the value. */
+    [style*="grid-template-columns:190px 1fr"],
+    [style*="grid-template-columns: 190px 1fr"],
+    [style*="grid-template-columns:180px 1fr"],
+    [style*="grid-template-columns: 180px 1fr"] { grid-template-columns: 1fr !important; gap: 6px !important; }
+    /* Payment marks wrap instead of running off the footer. */
+    span[style*="gap:18px"][style*="white-space:nowrap"],
+    span[style*="gap: 18px"][style*="white-space: nowrap"] { flex-wrap: wrap; white-space: normal !important; gap: 10px 14px !important; }
+  }
   @media (max-width: 420px) {
     [data-r="footer"] { grid-template-columns: 1fr !important; }
   }
@@ -94,15 +116,11 @@
 <div style="min-height:100vh;overflow-x:hidden">
 
   <sc-if value="{{ showBar }}" hint-placeholder-val="{{ true }}">
-    <div style="background:#111114;border-bottom:1px solid var(--rule-gold)">
-      <div style="max-width:1320px;margin:0 auto;padding:13px clamp(20px,5vw,40px);display:flex;align-items:center;justify-content:center;gap:28px;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;flex-wrap:wrap;text-align:center">
-        <span style="color:var(--color-text)">Free delivery over {{ freeShipLabel }}</span>
-        <span style="color:#3A3A40">/</span>
-        <span style="color:var(--color-text)">Next-day in Lahore, Karachi, Islamabad</span>
-        <span style="color:#3A3A40">/</span>
-        <span style="color:var(--gold);font-weight:400">Limited time · free 10 ml gift over {{ giftThreshold }}</span>
-        <span style="color:#3A3A40">/</span>
-        <span style="color:var(--color-text)">{{ phone }}</span>
+    <div style="background:var(--gold);color:#14110A">
+      <div data-r="bar" style="max-width:1320px;margin:0 auto;padding:0 clamp(8px,3vw,40px);display:flex;align-items:center;gap:6px;min-height:44px;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase">
+        <span onClick="{{ barPrev }}" style="cursor:pointer;flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;opacity:.6;transition:opacity .2s" style-hover="opacity:1">&#8249;</span>
+        <div style="flex:1;min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ barMessage }}</div>
+        <span onClick="{{ barNext }}" style="cursor:pointer;flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;opacity:.6;transition:opacity .2s" style-hover="opacity:1">&#8250;</span>
       </div>
     </div>
   </sc-if>
@@ -1196,12 +1214,35 @@ class Component extends DCLogic {
     req:{ name:'', company:'', email:'', phone:'', city:'Lahore', units:12, date:'', note:'', invoice:true, picks:['sovereign'] },
     reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:'',
     trackInput:'', trackResult:null, trackErr:'',
+    barIndex:0,
     giftModalOpen:true, copyLabel:'Copy', copyUrlLabel:'Copy link'
   };
 
   // Orders are kept on the customer's own device so the tracking screen still
   // works after a refresh. There is no server-side order store, so a code can
   // only be looked up from the browser that placed the order.
+  // Announcement bar rotates one line at a time, so it stays a single row on a phone.
+  BAR_INTERVAL = 5200;
+  barMessages() {
+    return [
+      'Free delivery over ' + this.fmt(this.threshold()),
+      'Next-day in Lahore, Karachi, Islamabad',
+      'Limited time · free 10 ml gift over ' + this.fmt(this.GIFT_THRESHOLD),
+      'Order by phone · ' + this.PHONE
+    ];
+  }
+
+  startBarTimer() {
+    clearInterval(this._barTimer);
+    this._barTimer = setInterval(() => this.stepBar(1), this.BAR_INTERVAL);
+  }
+  stepBar(delta) {
+    const n = this.barMessages().length;
+    this.setState({ barIndex: (this.state.barIndex + delta + n) % n });
+  }
+  // A manual click restarts the dwell so the timer cannot immediately override it.
+  nudgeBar(delta) { this.stepBar(delta); this.startBarTimer(); }
+
   ORDER_STORE = 'nouryah.orders';
 
   readOrders() {
@@ -1237,6 +1278,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     if (typeof window === 'undefined') return;
+    this.startBarTimer();
     const m = /[#&/]track=([A-Za-z0-9-]+)/.exec(window.location.hash || '');
     if (m) this.trackFor(m[1]);
   }
@@ -1452,6 +1494,9 @@ class Component extends DCLogic {
       giftRemain: this.fmt(giftRemain),
       giftMsg: giftOn ? 'Free 10 ml gift unlocked' : (netForShip > 0 ? 'Add ' + this.fmt(giftRemain) + ' for a free 10 ml gift' : 'Free 10 ml gift on orders over ' + this.fmt(this.GIFT_THRESHOLD)),
       showBar: this.props.showAnnouncementBar !== false,
+      barMessage: this.barMessages()[st.barIndex % this.barMessages().length],
+      barPrev: () => this.nudgeBar(-1),
+      barNext: () => this.nudgeBar(1),
       freeShipLabel: this.fmt(this.threshold()),
       cities: this.CITIES.map(c => ({ name:c.name, speed:c.speed, fg: c.speed === 'Next day' ? GOLD : INK3 })),
       footerCities: this.CITIES,
