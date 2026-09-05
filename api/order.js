@@ -230,6 +230,61 @@ async function send({ to, subject, html, text, replyTo }) {
   return true;
 }
 
+// ─── WhatsApp (Meta Cloud API) ───────────────────────────────────────────────
+//
+// Business-initiated messages must use a template Meta has approved; free-form
+// text only reaches someone who messaged you in the last 24 hours. Set
+// WHATSAPP_TEMPLATE_NAME once your template is approved — without it this falls
+// back to plain text, which is fine for testing but will be rejected for
+// customers who have never messaged the business number.
+
+const WA_VERSION = process.env.WHATSAPP_API_VERSION || 'v21.0';
+// The business number shown at the top of the storefront: 0334 820 0192.
+const SHOP_WA = process.env.WHATSAPP_SHOP_NUMBER || '923348200192';
+
+// Pakistani numbers as typed into the checkout ("0300 1234567", "+92 300 …",
+// "300…") normalised to the digits-only E.164 form the Cloud API expects.
+function toE164Pk(raw) {
+  const d = String(raw == null ? '' : raw).replace(/\D/g, '');
+  if (!d) return null;
+  if (d.startsWith('92') && d.length === 12) return d;
+  if (d.startsWith('0') && d.length === 11) return '92' + d.slice(1);
+  if (d.length === 10 && d.startsWith('3')) return '92' + d;
+  return null; // not a number we can address with confidence — skip rather than guess
+}
+
+function waConfigured() {
+  return !!(process.env.WHATSAPP_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID);
+}
+
+async function sendWhatsApp({ to, template, params, text }) {
+  const body = template
+    ? {
+        messaging_product: 'whatsapp', to, type: 'template',
+        template: {
+          name: template,
+          language: { code: process.env.WHATSAPP_TEMPLATE_LANG || 'en' },
+          components: [{ type: 'body', parameters: params.map(p => ({ type: 'text', text: String(p || '—') })) }]
+        }
+      }
+    : { messaging_product: 'whatsapp', to, type: 'text', text: { body: text } };
+
+  const r = await fetch(`https://graph.facebook.com/${WA_VERSION}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!r.ok) {
+    const detail = await r.text().catch(() => '');
+    throw new Error(`WhatsApp ${r.status}: ${detail.slice(0, 300)}`);
+  }
+  return true;
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -293,9 +348,49 @@ module.exports = async function handler(req, res) {
   const customerSent = customer.status === 'fulfilled';
   const shopSent = shop.status === 'fulfilled';
 
-  if (!customerSent && !shopSent) {
-    return res.status(502).json({ error: 'Could not send order mail', customerSent, shopSent });
+  // WhatsApp is best-effort and never affects the response status: a customer
+  // who has a working receipt should not see an error because Meta rejected a
+  // template. Failures are logged for the operator instead.
+  const whatsapp = { customer: false, shop: false, skipped: !waConfigured() };
+  if (waConfigured()) {
+    const who = isRequest ? data.name : [data.first, data.last].filter(Boolean).join(' ');
+    const summary = isRequest
+      ? `${label} ${data.no}: ${data.fragrances || '—'}, ${data.units || '—'} units for ${data.city || '—'}.`
+      : `${label} ${data.no}: ${data.lines.map(l => `${l.name} x${l.qty}`).join(', ')} — ${data.totalLabel}.`;
+
+    const custNumber = toE164Pk(data.phone);
+    const custParams = [who || 'there', data.no, isRequest ? (data.units || '—') : data.totalLabel, isRequest ? (data.city || '—') : (data.eta || '—')];
+    const shopParams = [data.no, who || 'Customer', isRequest ? (data.units || '—') : data.totalLabel, data.city || '—'];
+
+    const jobs = [];
+    if (custNumber) {
+      jobs.push(['customer', sendWhatsApp({
+        to: custNumber,
+        template: process.env.WHATSAPP_TEMPLATE_NAME,
+        params: custParams,
+        text: `Thank you ${who || ''}. ${summary} We will confirm delivery shortly. — Nouryah`
+      })]);
+    } else if (data.phone) {
+      console.error('Skipping customer WhatsApp — unrecognised number:', data.phone);
+    }
+    jobs.push(['shop', sendWhatsApp({
+      to: SHOP_WA,
+      template: process.env.WHATSAPP_SHOP_TEMPLATE_NAME || process.env.WHATSAPP_TEMPLATE_NAME,
+      params: shopParams,
+      text: `New ${summary} Contact: ${data.phone || '—'} / ${data.email}`
+    })]);
+
+    const results = await Promise.allSettled(jobs.map(j => j[1]));
+    results.forEach((r, i) => {
+      const key = jobs[i][0];
+      if (r.status === 'fulfilled') whatsapp[key] = true;
+      else console.error(`WhatsApp to ${key} failed:`, r.reason);
+    });
   }
 
-  return res.status(200).json({ ok: true, customerSent, shopSent });
+  if (!customerSent && !shopSent) {
+    return res.status(502).json({ error: 'Could not send order mail', customerSent, shopSent, whatsapp });
+  }
+
+  return res.status(200).json({ ok: true, customerSent, shopSent, whatsapp });
 };

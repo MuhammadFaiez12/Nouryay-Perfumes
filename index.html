@@ -834,6 +834,68 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{ isTrack }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Track order">
+      <section style="max-width:900px;margin:0 auto;padding:88px clamp(20px,5vw,40px) 128px;animation:nyRise .55s cubic-bezier(.2,.7,.2,1)">
+        <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Order status</div>
+        <h1 style="font-size:clamp(36px,4vw,52px);line-height:1.05;margin:18px 0 0">Track your order</h1>
+        <p style="font-size:15.5px;line-height:1.8;color:var(--ink-2);margin:18px 0 0;max-width:56ch">Enter the order number from your confirmation. Orders are stored on the device they were placed from, so use the same browser.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;margin-top:34px">
+          <div class="field" style="flex:1;min-width:240px">
+            <label>Order or tracking number</label>
+            <input class="input" value="{{ trackInput }}" onChange="{{ setTrackInput }}" placeholder="NJ-48304" style="width:100%">
+          </div>
+          <button class="btn btn-primary" onClick="{{ doTrack }}">Track</button>
+        </div>
+        <sc-if value="{{ trackHasErr }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:14px;line-height:1.7;color:#C98A5C;margin:20px 0 0;max-width:56ch">{{ trackErr }}</p>
+        </sc-if>
+        <sc-if value="{{ trackFound }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:46px;border-top:1px solid var(--rule);padding-top:34px">
+            <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:baseline;justify-content:space-between">
+              <div>
+                <div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Order</div>
+                <div style="font-family:var(--font-heading);font-size:28px;margin-top:4px">{{ tracked.no }}</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Placed</div>
+                <div style="font-size:14.5px;color:var(--ink-2);margin-top:6px">{{ trackedPlaced }}</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:40px;padding-top:26px;border-top:1px solid var(--rule)">
+              <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)">Done</div><div style="font-family:var(--font-heading);font-size:19px;margin-top:10px">Order placed</div></div>
+              <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">Within 24 h</div><div style="font-family:var(--font-heading);font-size:19px;margin-top:10px">Packed &amp; sealed</div></div>
+              <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">In transit</div><div style="font-family:var(--font-heading);font-size:19px;margin-top:10px">With the courier</div></div>
+              <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">{{ tracked.eta }}</div><div style="font-family:var(--font-heading);font-size:19px;margin-top:10px">Delivered</div></div>
+            </div>
+            <table class="table" style="width:100%;margin-top:44px">
+              <thead><tr><th>Item</th><th>Format</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead>
+              <tbody>
+                <sc-for list="{{ trackedLines }}" as="row" hint-placeholder-count="2">
+                  <tr>
+                    <td>{{ row.name }}</td>
+                    <td style="color:var(--ink-3)">{{ row.sizeLabel }}</td>
+                    <td style="color:var(--ink-3)">{{ row.qty }}</td>
+                    <td style="text-align:right">{{ row.totalLabel }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:26px;margin-top:40px;padding-top:26px;border-top:1px solid var(--rule)">
+              <div><div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Total</div><div style="font-size:15px;margin-top:7px">{{ tracked.totalLabel }}</div></div>
+              <div><div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Payment</div><div style="font-size:15px;margin-top:7px">{{ tracked.pay }}</div></div>
+              <div><div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Courier</div><div style="font-size:15px;margin-top:7px">{{ tracked.shipName }}</div></div>
+              <div><div style="font-family:var(--font-ui);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)">Delivering to</div><div style="font-size:15px;margin-top:7px">{{ trackedAddress }}</div></div>
+            </div>
+          </div>
+        </sc-if>
+        <div style="margin-top:48px">
+          <span onClick="{{ goShop }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Continue browsing</span>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Order confirmed">
       <section style="max-width:1060px;margin:0 auto;padding:88px clamp(20px,5vw,40px) 128px;animation:nyRise .55s cubic-bezier(.2,.7,.2,1)">
@@ -853,7 +915,7 @@
           <span onClick="{{ copyOrderNo }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule-gold);padding-bottom:3px">{{ copyLabel }}</span>
         </div>
         <div style="margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:18px">
-          <a href="{{ trackingUrl }}" target="_blank" rel="noopener" style="font-family:var(--font-ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Track your order →</a>
+          <span onClick="{{ goTrack }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Track your order →</span>
           <span onClick="{{ copyTrackingUrl }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">{{ copyUrlLabel }}</span>
         </div>
         <sc-if value="{{ order.emailSent }}" hint-placeholder-val="{{ true }}">
@@ -945,6 +1007,7 @@
       <div>
         <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3)">Help</div>
         <div style="display:grid;gap:14px;margin-top:22px;font-size:14.5px;color:var(--ink-2)">
+          <span onClick="{{ openTrack }}" style="cursor:pointer" style-hover="color:var(--color-text)">Track your order</span>
           <span onClick="{{ goStory }}" style="cursor:pointer" style-hover="color:var(--color-text)">Delivery &amp; tracking</span>
           <span onClick="{{ goStory }}" style="cursor:pointer" style-hover="color:var(--color-text)">Returns &amp; exchanges</span>
           <span onClick="{{ goStory }}" style="cursor:pointer" style-hover="color:var(--color-text)">Questions we get</span>
@@ -1131,8 +1194,51 @@ class Component extends DCLogic {
       card:'', exp:'', cvc:'', cardName:'', wallet:'JazzCash', walletNumber:'', bankName:'HBL', bankTitle:'', txnId:'' }),
     req:{ name:'', company:'', email:'', phone:'', city:'Lahore', units:12, date:'', note:'', invoice:true, picks:['sovereign'] },
     reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:'',
+    trackInput:'', trackResult:null, trackErr:'',
     giftModalOpen:true, copyLabel:'Copy', copyUrlLabel:'Copy link'
   };
+
+  // Orders are kept on the customer's own device so the tracking screen still
+  // works after a refresh. There is no server-side order store, so a code can
+  // only be looked up from the browser that placed the order.
+  ORDER_STORE = 'nouryah.orders';
+
+  readOrders() {
+    try { return JSON.parse(localStorage.getItem(this.ORDER_STORE) || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  saveOrder(order) {
+    try {
+      const all = this.readOrders();
+      const { lines, ...rest } = order;
+      all[order.trackingCode] = {
+        ...rest,
+        placedAt: new Date().toISOString(),
+        lines: (lines || []).map(l => ({ name:l.name, sizeLabel:l.sizeLabel, qty:l.qty, totalLabel:l.totalLabel }))
+      };
+      localStorage.setItem(this.ORDER_STORE, JSON.stringify(all));
+    } catch (e) { /* private mode or quota — tracking simply will not resolve later */ }
+  }
+  findOrder(code) {
+    const key = String(code || '').trim().toUpperCase();
+    if (!key) return null;
+    const all = this.readOrders();
+    if (all[key]) return all[key];
+    return Object.values(all).find(o => String(o.no || '').toUpperCase() === key) || null;
+  }
+  trackFor(code) {
+    const found = this.findOrder(code);
+    this.setState({
+      view:'track', cartOpen:false, trackInput:code, trackResult:found,
+      trackErr: found ? '' : 'No order found with that number on this device. Tracking links only open on the device the order was placed from.'
+    });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+  componentDidMount() {
+    if (typeof window === 'undefined') return;
+    const m = /[#&/]track=([A-Za-z0-9-]+)/.exec(window.location.hash || '');
+    if (m) this.trackFor(m[1]);
+  }
 
   fmt(n) {
     const c = this.props.currency || 'PKR';
@@ -1551,12 +1657,28 @@ class Component extends DCLogic {
           eta: st.ship === 'express' ? 'Tomorrow' : 'Within 4 days',
           emailSent:false
         };
+        this.saveOrder(order);
         this.setState({ order, cart:[], view:'confirm', cartOpen:false });
         window.scrollTo(0, 0);
         this.mailOrder(order);
       },
       order: st.order || { no:'', trackingCode:'', first:'', last:'', email:'', phone:'', address:'', zip:'', city:'', province:'', shipName:'', pay:'', totalLabel:'', lines:[], eta:'', gift:false, giftWrap:false, emailSent:false },
-      trackingUrl: st.order ? ('https://nouryah.pk/track/' + st.order.trackingCode) : '',
+      // In-app tracking. The old link pointed at https://nouryah.pk/track/… —
+      // a domain that does not resolve, so it could never have worked.
+      isTrack: v === 'track',
+      goTrack: () => this.trackFor(st.order ? st.order.trackingCode : ''),
+      openTrack: () => { this.setState({ view:'track', cartOpen:false, trackErr:'' }); window.scrollTo(0, 0); },
+      trackInput: st.trackInput,
+      setTrackInput: (e) => this.setState({ trackInput:e.target.value }),
+      doTrack: () => this.trackFor(st.trackInput),
+      trackErr: st.trackErr,
+      trackHasErr: !!st.trackErr,
+      trackFound: !!st.trackResult,
+      tracked: st.trackResult || { no:'', trackingCode:'', first:'', email:'', phone:'', address:'', city:'', province:'', zip:'', shipName:'', pay:'', totalLabel:'', eta:'', lines:[], placedAt:'' },
+      trackedPlaced: st.trackResult && st.trackResult.placedAt ? new Date(st.trackResult.placedAt).toLocaleString() : '',
+      trackedAddress: st.trackResult ? [st.trackResult.address, st.trackResult.city, st.trackResult.province, st.trackResult.zip].filter(Boolean).join(', ') : '',
+      trackedLines: (st.trackResult && st.trackResult.lines) || [],
+      trackingUrl: st.order ? (window.location.origin + window.location.pathname + '#track=' + st.order.trackingCode) : '',
       copyLabel: st.copyLabel,
       copyOrderNo: () => {
         const no = (st.order && st.order.no) || '';
@@ -1567,7 +1689,7 @@ class Component extends DCLogic {
       },
       copyUrlLabel: st.copyUrlLabel,
       copyTrackingUrl: () => {
-        const url = st.order ? ('https://nouryah.pk/track/' + st.order.trackingCode) : '';
+        const url = st.order ? (window.location.origin + window.location.pathname + '#track=' + st.order.trackingCode) : '';
         if (navigator.clipboard && url) navigator.clipboard.writeText(url).catch(() => {});
         this.setState({ copyUrlLabel:'Copied' });
         clearTimeout(this._cu);
