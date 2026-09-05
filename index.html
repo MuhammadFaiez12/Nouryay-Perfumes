@@ -181,7 +181,7 @@
       <section data-r="heroslider" style="position:relative;min-height:min(84vh,760px);overflow:hidden;border-bottom:1px solid var(--rule)">
         <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="4">
           <div style="position:absolute;inset:0;opacity:{{ sl.opacity }};transition:opacity .9s ease">
-            <img src="{{ sl.img }}" alt="{{ sl.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ sl.pos }}">
+            <div role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;background-image:url({{ sl.img }});background-size:cover;background-position:{{ sl.pos }};background-repeat:no-repeat"></div>
             <div style="position:absolute;inset:0;background:linear-gradient(to right,#08080A 0%,rgba(8,8,10,.95) 22%,rgba(8,8,10,.72) 46%,rgba(8,8,10,.28) 74%,rgba(8,8,10,.06) 100%)"></div>
             <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,10,.86) 0%,rgba(8,8,10,.35) 34%,transparent 62%)"></div>
           </div>
@@ -988,7 +988,17 @@
             Confirmation sent to {{ order.email }}
           </div>
         </sc-if>
-        <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }} — tracking follows by SMS to {{ order.phone }}.</p>
+        <sc-if value="{{ order.emailSent }}" hint-placeholder-val="{{ true }}">
+          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }} — tracking follows by SMS to {{ order.phone }}.</p>
+        </sc-if>
+        <sc-if value="{{ orderMailFailed }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">Your order is recorded. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }}.</p>
+          <div style="margin-top:22px;border:1px solid var(--rule-gold);background:rgba(201,160,92,.07);padding:18px 22px;max-width:60ch">
+            <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">One more step</div>
+            <p style="font-size:14.5px;line-height:1.75;color:var(--ink-2);margin:9px 0 0">We could not email your receipt just now. Send us the order below on WhatsApp and we will confirm it by hand — your order number is {{ order.no }}.</p>
+            <a href="{{ orderWaHref }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;font-family:var(--font-ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule-gold);padding-bottom:4px">Send this order on WhatsApp →</a>
+          </div>
+        </sc-if>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:56px;padding-top:28px;border-top:1px solid var(--rule)">
           <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)">Now</div><div style="font-family:var(--font-heading);font-size:21px;margin-top:10px">Order placed</div></div>
           <div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">Within 24 h</div><div style="font-family:var(--font-heading);font-size:21px;margin-top:10px">Packed &amp; sealed</div></div>
@@ -1457,7 +1467,7 @@ class Component extends DCLogic {
       lines:order.lines.map(l => ({ name:l.name, sizeLabel:l.sizeLabel, qty:l.qty, totalLabel:l.totalLabel }))
     }).then(ok => {
       const cur = this.state.order;
-      if (ok && cur && cur.no === order.no) this.setState({ order:{ ...cur, emailSent:true } });
+      if (cur && cur.no === order.no) this.setState({ order:{ ...cur, emailSent: !!ok, mailChecked: true } });
     });
   }
   money() {
@@ -1625,6 +1635,18 @@ class Component extends DCLogic {
         else if (go === 'finder') this.nav('finder');
         else this.openProduct(go);
       },
+      orderMailFailed: !!(st.order && st.order.mailChecked && !st.order.emailSent),
+      orderWaHref: (() => {
+        const o = st.order;
+        if (!o) return '';
+        const items = (o.lines || []).map(l => l.name + ' ' + (l.sizeLabel || '') + ' x' + l.qty).join(', ');
+        const text = 'Order ' + o.no + ' — ' + [o.first, o.last].filter(Boolean).join(' ') +
+          '\nItems: ' + items +
+          '\nTotal: ' + o.totalLabel +
+          '\nDeliver to: ' + [o.address, o.city, o.province].filter(Boolean).join(', ') +
+          '\nPhone: ' + o.phone + '\nEmail: ' + o.email;
+        return 'https://wa.me/92' + this.PHONE.replace(/[^0-9]/g, '').replace(/^0/, '') + '?text=' + encodeURIComponent(text);
+      })(),
       heroPrev: () => this.nudgeHero(-1),
       heroNext: () => this.nudgeHero(1),
       freeShipLabel: this.fmt(this.threshold()),
@@ -1823,7 +1845,7 @@ class Component extends DCLogic {
       placeOrder: () => {
         if (!payValid || st.cart.length === 0) return;
         const lines = st.cart.map((l, i) => this.lineOf(l, i));
-        const no = 'NJ-' + (48200 + Math.floor(Math.random() * 700));
+        const no = 'NJ-' + Date.now().toString(36).toUpperCase();
         const trackingCode = no + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
         const order = {
           no, trackingCode,
