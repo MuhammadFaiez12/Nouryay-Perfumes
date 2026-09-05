@@ -74,6 +74,9 @@
   @keyframes nyFade { from { opacity: 0 } to { opacity: 1 } }
   @keyframes nyRise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
   nav[data-r="nav"]::-webkit-scrollbar { display: none; }
+  [data-r="collrail"]::-webkit-scrollbar { display: none; }
+  [data-r="collrail"] { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { [data-r="collrail"] { scroll-behavior: auto; } }
   @media (max-width: 860px) {
     [data-r="split"], [data-r="bannerauto"], [data-r="split2"] { grid-template-columns: 1fr !important; }
     [data-r="c3"], [data-r="c4"] { grid-template-columns: repeat(2,1fr) !important; }
@@ -98,6 +101,11 @@
     /* Stack the hero, image first, and keep it short enough to read without scrolling. */
     [data-r="herogrid"] { grid-template-columns: 1fr !important; min-height: 0 !important; gap: 22px !important; padding: 24px clamp(20px,5vw,40px) 36px !important; }
     [data-r="heropanel"] { height: 290px !important; }
+    /* One card and a hint of the next, so it reads as swipeable. */
+    [data-r="collcard"] { flex: 0 0 74vw !important; }
+    [data-r="collrail"] { gap: 16px !important; padding-top: 36px !important; }
+    /* Touch users swipe; the arrows would only crowd the header. */
+    [data-r="railctl"] > div { display: none !important; }
     [data-r="herogrid"] > div:last-child { order: -1; }
     [data-r="herocap"] h1 { font-size: clamp(32px,8.2vw,44px) !important; max-width: 100% !important; }
     [data-r="herocap"] p { font-size: 15px !important; }
@@ -236,17 +244,24 @@
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px)">
           <div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">The collection</div>
-            <h2 style="font-size:clamp(34px,3.4vw,46px);line-height:1.08;margin:16px 0 0">Six to begin with</h2>
+            <h2 style="font-size:clamp(34px,3.4vw,46px);line-height:1.08;margin:16px 0 0">Nine to explore</h2>
           </div>
-          <span onClick="{{ goShop }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">All nine</span>
+          <div data-r="railctl" style="display:flex;align-items:center;gap:18px;flex-shrink:0">
+            <span style="font-family:var(--font-ui);font-size:11px;letter-spacing:.2em;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap">{{ railPosLabel }}</span>
+            <div style="display:flex;gap:8px">
+              <span onClick="{{ railPrev }}" aria-label="Previous products" style="cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule);color:var(--color-text);font-size:19px;line-height:1;transition:border-color .2s,color .2s" style-hover="color:var(--gold);border-color:var(--rule-gold)">&#8249;</span>
+              <span onClick="{{ railNext }}" aria-label="Next products" style="cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule);color:var(--color-text);font-size:19px;line-height:1;transition:border-color .2s,color .2s" style-hover="color:var(--gold);border-color:var(--rule-gold)">&#8250;</span>
+            </div>
+            <span onClick="{{ goShop }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">All nine</span>
+          </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:72px clamp(20px,5vw,40px);padding:64px 0 0">
-          <sc-for list="{{ featured }}" as="p" hint-placeholder-count="6">
-            <div style="display:flex;flex-direction:column">
-              <div onClick="{{ p.open }}" style="cursor:pointer;overflow:hidden;aspect-ratio:3/4;background:#F1ECE3">
+        <div data-r="collrail" style="display:flex;gap:clamp(18px,2.2vw,34px);padding:56px 0 8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+          <sc-for list="{{ railCards }}" as="p" hint-placeholder-count="9">
+            <div data-r="collcard" style="flex:0 0 clamp(236px,25vw,296px);display:flex;flex-direction:column;scroll-snap-align:start">
+              <div onClick="{{ p.open }}" style="cursor:pointer;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
                 <img src="{{ p.img }}" alt="{{ p.alt }}" style="width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.05)">
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-top:22px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:18px">
                 <div onClick="{{ p.open }}" style="cursor:pointer;font-family:var(--font-heading);font-size:23px;line-height:1.1">{{ p.name }}</div>
                 <div style="display:flex;align-items:baseline;gap:8px;white-space:nowrap">
                   <sc-if value="{{ p.onSale }}" hint-placeholder-val="{{ false }}">
@@ -1274,7 +1289,7 @@ class Component extends DCLogic {
     req:{ name:'', company:'', email:'', phone:'', city:'Lahore', units:12, date:'', note:'', invoice:true, picks:['sovereign'] },
     reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:'',
     trackInput:'', trackResult:null, trackErr:'',
-    barIndex:0, slide:0,
+    barIndex:0, slide:0, railAt:0, railTotal:9,
     giftModalOpen:true, copyLabel:'Copy', copyUrlLabel:'Copy link'
   };
 
@@ -1348,6 +1363,45 @@ class Component extends DCLogic {
     ];
   }
 
+  // Product rail. Native horizontal scrolling with snap points does the work,
+  // so the arrows only nudge scrollLeft by one card and the browser handles
+  // momentum, touch and keyboard for free.
+  rail() {
+    return typeof document === 'undefined' ? null : document.querySelector('[data-r="collrail"]');
+  }
+  railStep() {
+    const el = this.rail();
+    if (!el) return 320;
+    const card = el.firstElementChild;
+    const gap = parseFloat(getComputedStyle(el).columnGap || '0') || 0;
+    return card ? card.getBoundingClientRect().width + gap : 320;
+  }
+  railScroll(dir) {
+    const el = this.rail();
+    if (!el) return;
+    const step = this.railStep();
+    const total = el.children.length || 1;
+    // How many whole cards fit, so the last page stops flush instead of
+    // scrolling into empty space.
+    const perView = Math.max(1, Math.floor((el.clientWidth + 1) / step));
+    const maxIndex = Math.max(0, total - perView);
+    const next = Math.max(0, Math.min(maxIndex, this.state.railAt + dir));
+    el.scrollLeft = next * step;
+    // The glide itself is CSS scroll-behavior. The counter reads from the
+    // index we asked for, not from a position that is still animating.
+    this._railLock = Date.now() + 700;
+    this.setState({ railAt: next, railTotal: total });
+  }
+  syncRail(el) {
+    if (!el) return;
+    if (this._railLock && Date.now() < this._railLock) return;
+    const step = this.railStep();
+    const total = el.children.length || 1;
+    const at = Math.max(0, Math.min(step ? Math.round(el.scrollLeft / step) : 0, total - 1));
+    if (at !== this.state.railAt || total !== this.state.railTotal) {
+      this.setState({ railAt: at, railTotal: total });
+    }
+  }
   startBarTimer() {
     clearInterval(this._barTimer);
     this._barTimer = setInterval(() => this.stepBar(1), this.BAR_INTERVAL);
@@ -1396,6 +1450,10 @@ class Component extends DCLogic {
     if (typeof window === 'undefined') return;
     this.startBarTimer();
     this.startHeroTimer();
+    document.addEventListener('scroll', (e) => {
+      const el = e.target;
+      if (el && el.getAttribute && el.getAttribute('data-r') === 'collrail') this.syncRail(el);
+    }, true);
     const m = /[#&/]track=([A-Za-z0-9-]+)/.exec(window.location.hash || '');
     if (m) this.trackFor(m[1]);
   }
@@ -1679,6 +1737,10 @@ class Component extends DCLogic {
       closeCart: () => this.setState({ cartOpen:false }),
 
       featured: this.products.slice(0, 6).map(pcard),
+      railCards: this.products.map(pcard),
+      railPrev: () => this.railScroll(-1),
+      railNext: () => this.railScroll(1),
+      railPosLabel: String(Math.min(st.railAt + 1, st.railTotal)).padStart(2, '0') + ' / ' + String(st.railTotal).padStart(2, '0'),
       allRows: this.products.map(pcard),
       shopList: list.map(pcard),
       shownCount: list.length,
