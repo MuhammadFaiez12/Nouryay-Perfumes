@@ -1184,6 +1184,31 @@ class Component extends DCLogic {
     if (q <= 0) cart.splice(i, 1); else cart[i].qty = q;
     this.setState({ cart });
   }
+  // Order mail goes through /api/order so the provider key stays server-side.
+  // Resolves false rather than throwing — a mail failure must not break the
+  // confirmation screen the customer is already looking at.
+  postMail(payload) {
+    return fetch('/api/order', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify(payload)
+    }).then(r => r.ok).catch(() => false);
+  }
+  // The confirmation screen only claims a receipt was sent once the send confirms.
+  mailOrder(order) {
+    this.postMail({
+      type:'order',
+      no:order.no, trackingCode:order.trackingCode,
+      first:order.first, last:order.last, email:order.email, phone:order.phone,
+      address:order.address, zip:order.zip, city:order.city, province:order.province,
+      shipName:order.shipName, pay:order.pay, totalLabel:order.totalLabel,
+      eta:order.eta, giftWrap:order.giftWrap,
+      lines:order.lines.map(l => ({ name:l.name, sizeLabel:l.sizeLabel, qty:l.qty, totalLabel:l.totalLabel }))
+    }).then(ok => {
+      const cur = this.state.order;
+      if (ok && cur && cur.no === order.no) this.setState({ order:{ ...cur, emailSent:true } });
+    });
+  }
   money() {
     const sub = this.state.cart.reduce((t, l) => {
       if (l.pid === 'discovery') return t + this.DISCOVERY * l.qty;
@@ -1453,8 +1478,16 @@ class Component extends DCLogic {
       })(),
       submitRequest: () => {
         if (!reqValid) return;
-        this.setState({ reqSent:true, reqNo:'RQ-' + (2600 + Math.floor(Math.random() * 900)) });
+        const no = 'RQ-' + (2600 + Math.floor(Math.random() * 900));
+        this.setState({ reqSent:true, reqNo:no });
         window.scrollTo(0, 0);
+        this.postMail({
+          type:'request', no,
+          name:st.req.name, company:st.req.company, email:st.req.email, phone:st.req.phone,
+          city:st.req.city, picks:reqPicks.map(id => this.find(id).name), units:st.req.units,
+          tier, estimate:this.fmt(reqEstimate), date:st.req.date, note:st.req.note,
+          invoice:!!st.req.invoice
+        });
       },
       resetRequest: () => this.setState({ reqSent:false }),
 
@@ -1510,18 +1543,17 @@ class Component extends DCLogic {
         const lines = st.cart.map((l, i) => this.lineOf(l, i));
         const no = 'NJ-' + (48200 + Math.floor(Math.random() * 700));
         const trackingCode = no + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
-        this.setState({
-          order:{
-            no, trackingCode,
-            first:f.first || 'friend', last:f.last, email:f.email, phone:f.phone || this.PHONE,
-            address:f.address, zip:f.zip, city:f.city, province:f.province,
-            shipName:m.opt.label, pay:st.pay, totalLabel:this.fmt(m.total), lines, gift:giftOn, giftWrap:!!f.gift,
-            eta: st.ship === 'express' ? 'Tomorrow' : 'Within 4 days',
-            emailSent:true
-          },
-          cart:[], view:'confirm', cartOpen:false
-        });
+        const order = {
+          no, trackingCode,
+          first:f.first || 'friend', last:f.last, email:f.email, phone:f.phone || this.PHONE,
+          address:f.address, zip:f.zip, city:f.city, province:f.province,
+          shipName:m.opt.label, pay:st.pay, totalLabel:this.fmt(m.total), lines, gift:giftOn, giftWrap:!!f.gift,
+          eta: st.ship === 'express' ? 'Tomorrow' : 'Within 4 days',
+          emailSent:false
+        };
+        this.setState({ order, cart:[], view:'confirm', cartOpen:false });
         window.scrollTo(0, 0);
+        this.mailOrder(order);
       },
       order: st.order || { no:'', trackingCode:'', first:'', last:'', email:'', phone:'', address:'', zip:'', city:'', province:'', shipName:'', pay:'', totalLabel:'', lines:[], eta:'', gift:false, giftWrap:false, emailSent:false },
       trackingUrl: st.order ? ('https://nouryah.pk/track/' + st.order.trackingCode) : '',
