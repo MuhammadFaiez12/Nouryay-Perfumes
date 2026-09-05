@@ -74,6 +74,33 @@
   @keyframes nyFade { from { opacity: 0 } to { opacity: 1 } }
   @keyframes nyRise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
   nav[data-r="nav"]::-webkit-scrollbar { display: none; }
+
+  /* Category ticker. The track holds the list twice, so shifting it by half
+     its width loops seamlessly. */
+  @keyframes nyTicker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  [data-r="ticktrack"] { animation: nyTicker 38s linear infinite; }
+  [data-r="ticker"]:hover [data-r="ticktrack"] { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) { [data-r="ticktrack"] { animation: none; } }
+
+  /* Add to bag rises out of the card on hover; pointer-less devices never see
+     it, so it is switched off rather than sitting permanently over the image. */
+  [data-r="pimg"] .pquick { opacity: 0; transform: translateY(8px); transition: opacity .28s ease, transform .28s ease; }
+  [data-r="pimg"]:hover .pquick { opacity: 1; transform: translateY(0); }
+  [data-r="pimg"] .pquick:hover { background: var(--gold); color: #FFFFFF; }
+  @media (hover: none) { [data-r="pimg"] .pquick { display: none; } }
+
+  /* Footer runs dark, so the ink tokens are re-pointed inside it rather than
+     rewriting every inline style in the markup. */
+  footer, footer p, footer span, footer div, footer a { color: rgba(239,234,224,.74); }
+  footer [style*="color:var(--ink-3)"], footer [style*="color: var(--ink-3)"] { color: rgba(239,234,224,.5) !important; }
+  footer [style*="color:var(--ink-2)"], footer [style*="color: var(--ink-2)"] { color: rgba(239,234,224,.82) !important; }
+  footer [style*="color:var(--color-text)"], footer [style*="color: var(--color-text)"] { color: #EFEAE0 !important; }
+  footer [style*="color:var(--gold)"], footer [style*="color: var(--gold)"] { color: #C9A05C !important; }
+  footer [style*="border-top"], footer [style*="border-bottom"] { border-color: rgba(255,255,255,.12) !important; }
+  footer .input { color: #EFEAE0; border-bottom-color: rgba(255,255,255,.24); }
+  footer .input::placeholder { color: rgba(239,234,224,.42); }
+  footer .input:hover { border-bottom-color: rgba(255,255,255,.4); }
+  footer span[style*="cursor:pointer"]:hover { color: #C9A05C; }
   [data-r="collrail"]::-webkit-scrollbar { display: none; }
   [data-r="pimg"] .pswap { opacity: 0; transition: opacity .55s ease; pointer-events: none; }
   [data-r="pimg"]:hover .pswap { opacity: 1; }
@@ -116,6 +143,8 @@
     header > div:first-child > div:first-child > div:first-child { font-size: 19px !important; letter-spacing: .16em !important; }
     header > div:first-child > div:first-child > div:last-child { font-size: 7.5px !important; }
     /* One gutter for every section, so the page reads down a single line. */
+    [data-r="ticktrack"] { font-size: 10px !important; letter-spacing: .22em !important; padding: 12px 0 !important; }
+    [data-r="ticktrack"] span[style*="padding:0 26px"], [data-r="ticktrack"] span[style*="padding: 0 26px"] { padding: 0 16px !important; }
     [data-r="sec"] { padding-top: 60px !important; padding-bottom: 60px !important; }
     [data-house] { margin-top: 0 !important; }
     [data-house] > div:last-child { padding: 44px clamp(20px,5vw,40px) 52px !important; }
@@ -235,20 +264,14 @@
         </div>
       </section>
 
-      <section style="border-bottom:1px solid var(--rule)">
-        <div data-r="c3" style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,5vw,40px);display:grid;grid-template-columns:repeat(3,1fr)">
-          <div style="padding:30px 34px 30px 0;border-right:1px solid var(--rule)">
-            <div style="font-family:var(--font-heading);font-size:20px">Nine cities, next day</div>
-            <div style="font-size:13.5px;color:var(--ink-3);margin-top:6px">Lahore, Karachi, Islamabad, Rawalpindi and beyond</div>
-          </div>
-          <div style="padding:30px 34px;border-right:1px solid var(--rule)">
-            <div style="font-family:var(--font-heading);font-size:20px">Two samples, always</div>
-            <div style="font-size:13.5px;color:var(--ink-3);margin-top:6px">Chosen against what you ordered, never at random</div>
-          </div>
-          <div style="padding:30px 0 30px 34px">
-            <div style="font-family:var(--font-heading);font-size:20px">Refilled, not replaced</div>
-            <div style="font-size:13.5px;color:var(--ink-3);margin-top:6px">Bring the flacon back to Gulberg and refill at −25%</div>
-          </div>
+      <section data-r="ticker" style="border-bottom:1px solid var(--rule);background:var(--color-surface);overflow:hidden">
+        <div data-r="ticktrack" style="display:flex;width:max-content;align-items:center;padding:14px 0;font-family:var(--font-ui);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap">
+          <sc-for list="{{ tickerItems }}" as="t" hint-placeholder-count="10">
+            <span style="display:flex;align-items:center"><span style="padding:0 26px">{{ t.label }}</span><span style="color:var(--gold);font-size:7px">&#9670;</span></span>
+          </sc-for>
+          <sc-for list="{{ tickerItems }}" as="t" hint-placeholder-count="10">
+            <span aria-hidden="true" style="display:flex;align-items:center"><span style="padding:0 26px">{{ t.label }}</span><span style="color:var(--gold);font-size:7px">&#9670;</span></span>
+          </sc-for>
         </div>
       </section>
 
@@ -273,6 +296,7 @@
               <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
                 <img src="{{ p.img }}" alt="{{ p.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)">
                 <div class="pswap" role="presentation" style="position:absolute;inset:0;background-image:url({{ p.img2 }});background-size:cover;background-position:center"></div>
+                <span onClick="{{ p.quickAdd }}" class="pquick" style="position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;padding:12px 0;background:var(--color-text);color:var(--color-bg);font-family:var(--font-ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">Add to bag</span>
                 <sc-if value="{{ p.onSale }}" hint-placeholder-val="{{ true }}">
                   <span style="position:absolute;z-index:2;top:12px;left:12px;background:var(--gold);color:#FFFFFF;font-family:var(--font-ui);font-size:10px;letter-spacing:.14em;padding:5px 9px">&#8722;{{ p.discountLabel }}</span>
                 </sc-if>
@@ -392,6 +416,7 @@
             <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
               <img src="{{ p.img }}" alt="{{ p.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)">
               <div class="pswap" role="presentation" style="position:absolute;inset:0;background-image:url({{ p.img2 }});background-size:cover;background-position:center"></div>
+              <span onClick="{{ p.quickAdd }}" class="pquick" style="position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;padding:12px 0;background:var(--color-text);color:var(--color-bg);font-family:var(--font-ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">Add to bag</span>
               <sc-if value="{{ p.onSale }}" hint-placeholder-val="{{ true }}">
                 <span style="position:absolute;z-index:2;top:12px;left:12px;background:var(--gold);color:#FFFFFF;font-family:var(--font-ui);font-size:10px;letter-spacing:.14em;padding:5px 9px">&#8722;{{ p.discountLabel }}</span>
               </sc-if>
@@ -1065,7 +1090,7 @@
     </div>
   </sc-if>
 
-  <footer style="border-top:1px solid var(--rule);background:#F1ECE3">
+  <footer style="border-top:1px solid rgba(255,255,255,.10);background:#191510">
     <div data-r="footer" style="max-width:1320px;margin:0 auto;padding:80px clamp(20px,5vw,40px) 36px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px">
       <div>
         <div style="font-family:var(--font-heading);font-size:30px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);line-height:1">Nouryah</div>
@@ -1335,6 +1360,10 @@ class Component extends DCLogic {
     if (typeof window !== 'undefined') window.scrollTo(0, 0);
   }
 
+  // Categories for the scrolling ticker, drawn from the actual catalogue
+  // rather than invented — the nine fragrances span these six families.
+  TICKER = ['Eau de parfum', 'Oud', 'Amber', 'Woody', 'Florals', 'Aquatic', 'Musk', 'Discovery set', 'Travel sprays', 'Refill programme'];
+
   MENU = [
     { label:'Collection', view:'shop' },
     { label:'Fragrance finder', view:'finder' },
@@ -1558,7 +1587,7 @@ class Component extends DCLogic {
       discountLabel:Math.round((1 - p.price / p.compareAt) * 100) + '%',
       projectionLabel:this.projLabel(p.proj),
       open: () => { this.setState({ pid:p.id, gi:0, size:'50', qty:1, view:'product' }); if (typeof window !== 'undefined') window.scrollTo(0, 0); },
-      quickAdd: () => this.add(p.id, '50', 1)
+      quickAdd: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.add(p.id, '50', 1); }
     });
 
     let list = st.family === 'All' ? this.products.slice() : this.products.filter(p => p.family === st.family);
@@ -1659,6 +1688,7 @@ class Component extends DCLogic {
       giftMsg: giftOn ? 'Free 10 ml gift unlocked' : (netForShip > 0 ? 'Add ' + this.fmt(giftRemain) + ' for a free 10 ml gift' : 'Free 10 ml gift on orders over ' + this.fmt(this.GIFT_THRESHOLD)),
       showBar: this.props.showAnnouncementBar !== false,
       barMessage: this.barMessages()[st.barIndex % this.barMessages().length],
+      tickerItems: this.TICKER.map(t => ({ label: t })),
       menuOpen: st.menuOpen,
       toggleMenu: () => this.setState({ menuOpen: !st.menuOpen }),
       menuGo: this.MENU.map(m => ({
