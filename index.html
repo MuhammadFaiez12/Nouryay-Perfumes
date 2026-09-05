@@ -71,8 +71,7 @@
   @keyframes nyRise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
   nav[data-r="nav"]::-webkit-scrollbar { display: none; }
   @media (max-width: 860px) {
-    [data-r="hero"], [data-r="split"], [data-r="bannerauto"], [data-r="split2"] { grid-template-columns: 1fr !important; }
-    [data-r="hero"] { min-height: auto !important; }
+    [data-r="split"], [data-r="bannerauto"], [data-r="split2"] { grid-template-columns: 1fr !important; }
     [data-r="c3"], [data-r="c4"] { grid-template-columns: repeat(2,1fr) !important; }
     [data-r="c3"] > div { border-right: none !important; border-bottom: 1px solid var(--rule); padding: 24px 0 !important; }
     [data-r="c3"] > div:last-child { border-bottom: none; }
@@ -92,6 +91,16 @@
     header > div > div:first-child { margin-right: auto; }
     header > div > div:first-child > div:first-child { font-size: 21px !important; letter-spacing: .18em !important; }
     nav[data-r="nav"] { order: 3; width: 100%; margin-right: 0 !important; flex-wrap: wrap; overflow-x: visible !important; white-space: normal !important; gap: 12px 18px !important; font-size: 11px !important; letter-spacing: .1em !important; }
+    [data-r="heroslider"], [data-r="herocap"] { min-height: 560px !important; }
+    [data-r="herocap"] { padding: 72px clamp(20px,5vw,40px) 96px !important; }
+    [data-r="herocap"] h1 { font-size: clamp(34px,8.6vw,48px) !important; max-width: 100% !important; }
+    [data-r="herocap"] p { font-size: 15px !important; }
+    /* Arrows would sit on top of the copy on a narrow screen; the dots and a
+       swipe-sized tap target on the pips carry navigation instead. */
+    [data-r="heroarrow"] { display: none !important; }
+    [data-r="herocaption"] { display: none !important; }
+    [data-r="barspacer"] { display: none !important; }
+    [data-r="barsocial"] { gap: 0 !important; }
     [data-r="bar"] { font-size: 10px !important; letter-spacing: .12em !important; min-height: 40px !important; }
     /* The runtime rewrites inline styles with spaces after the colons, so each
        of these matches both the authored and the normalised spelling. */
@@ -118,9 +127,30 @@
   <sc-if value="{{ showBar }}" hint-placeholder-val="{{ true }}">
     <div style="background:var(--gold);color:#14110A">
       <div data-r="bar" style="max-width:1320px;margin:0 auto;padding:0 clamp(8px,3vw,40px);display:flex;align-items:center;gap:6px;min-height:44px;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase">
+        <div data-r="barsocial" style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+          <a href="{{ waHref }}" target="_blank" rel="noopener" aria-label="WhatsApp" style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#14110A;opacity:.72;transition:opacity .2s" style-hover="opacity:1">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;display:block"><path d="M12 3.2a8.7 8.7 0 0 0-7.6 13.1l-1 4.3 4.4-1A8.7 8.7 0 1 0 12 3.2zm0 1.9a6.8 6.8 0 1 1-3.5 12.6l-.3-.2-2.6.6.6-2.5-.2-.3A6.8 6.8 0 0 1 12 5.1zm3.9 8.1c-.2-.1-1.2-.6-1.4-.7-.2-.1-.3-.1-.5.1l-.6.7c-.1.1-.2.2-.4.1a5.5 5.5 0 0 1-2.7-2.4c-.1-.2 0-.3.1-.4l.4-.5.1-.3v-.3l-.6-1.4c-.2-.4-.3-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.7.7-.7 1.8s.8 2.1.9 2.2a7.9 7.9 0 0 0 3.1 2.8c1.1.4 1.5.5 2 .4.3 0 1.1-.4 1.2-.9.2-.5.2-.9.1-1z"/></svg>
+          </a>
+          <sc-if value="{{ hasInstagram }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ instagramHref }}" target="_blank" rel="noopener" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#14110A;opacity:.72;transition:opacity .2s" style-hover="opacity:1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:16px;height:16px;display:block"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </sc-if>
+          <sc-if value="{{ hasFacebook }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ facebookHref }}" target="_blank" rel="noopener" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#14110A;opacity:.72;transition:opacity .2s" style-hover="opacity:1">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;display:block"><path d="M13.4 21v-7.5h2.5l.38-2.9H13.4V8.74c0-.84.23-1.41 1.44-1.41h1.54V4.74c-.27-.04-1.18-.12-2.24-.12-2.22 0-3.74 1.36-3.74 3.85v2.15H7.9v2.9h2.5V21h3z"/></svg>
+            </a>
+          </sc-if>
+          <sc-if value="{{ hasTiktok }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ tiktokHref }}" target="_blank" rel="noopener" aria-label="TikTok" style="display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#14110A;opacity:.72;transition:opacity .2s" style-hover="opacity:1">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;display:block"><path d="M16.4 3h-2.9v12.1a2.4 2.4 0 1 1-2-2.37V9.8a5.4 5.4 0 1 0 4.9 5.37V9.1a6.3 6.3 0 0 0 3.6 1.15V7.35A3.6 3.6 0 0 1 16.4 3z"/></svg>
+            </a>
+          </sc-if>
+        </div>
         <span onClick="{{ barPrev }}" style="cursor:pointer;flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;opacity:.6;transition:opacity .2s" style-hover="opacity:1">&#8249;</span>
         <div style="flex:1;min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ barMessage }}</div>
         <span onClick="{{ barNext }}" style="cursor:pointer;flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;opacity:.6;transition:opacity .2s" style-hover="opacity:1">&#8250;</span>
+        <div data-r="barspacer" style="flex-shrink:0;width:112px"></div>
       </div>
     </div>
   </sc-if>
@@ -148,21 +178,36 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div data-screen-label="Home">
-      <section data-r="hero" style="position:relative;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;min-height:min(84vh,760px);border-bottom:1px solid var(--rule)">
-        <div style="position:relative;z-index:2;padding:96px 56px 96px max(clamp(20px,5vw,40px),calc((100vw - 1320px) / 2 + clamp(20px,5vw,40px)))">
-          <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Nine fragrances · Composed in Lahore</div>
-          <h1 style="font-size:clamp(52px,5.6vw,84px);line-height:1.02;margin:26px 0 0;max-width:14ch">Drawn to the last note.</h1>
-          <p style="font-size:16px;line-height:1.8;max-width:44ch;margin:28px 0 0;color:var(--ink-2);text-wrap:pretty">An independent perfume house working at 20% parfum concentration. Every composition is published with its materials, its behaviour on skin and the hours it holds — nothing withheld.</p>
-          <div style="display:flex;align-items:center;gap:32px;margin-top:44px;flex-wrap:wrap">
-            <button class="btn btn-primary btn-lg" onClick="{{ goShop }}">Shop the collection</button>
-            <span onClick="{{ goFinder }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Find your scent</span>
+      <section data-r="heroslider" style="position:relative;min-height:min(84vh,760px);overflow:hidden;border-bottom:1px solid var(--rule)">
+        <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="4">
+          <div style="position:absolute;inset:0;opacity:{{ sl.opacity }};transition:opacity .9s ease">
+            <img src="{{ sl.img }}" alt="{{ sl.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ sl.pos }}">
+            <div style="position:absolute;inset:0;background:linear-gradient(to right,#08080A 0%,rgba(8,8,10,.95) 22%,rgba(8,8,10,.72) 46%,rgba(8,8,10,.28) 74%,rgba(8,8,10,.06) 100%)"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,10,.86) 0%,rgba(8,8,10,.35) 34%,transparent 62%)"></div>
+          </div>
+        </sc-for>
+
+        <div data-r="herocap" style="position:relative;z-index:3;max-width:1320px;margin:0 auto;padding:96px clamp(20px,5vw,40px) 104px;display:flex;flex-direction:column;justify-content:center;min-height:min(84vh,760px)">
+          <div style="max-width:56ch">
+            <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)">{{ heroEyebrow }}</div>
+            <h1 style="font-size:clamp(40px,5.6vw,84px);line-height:1.02;margin:22px 0 0;max-width:15ch">{{ heroTitle }}</h1>
+            <p style="font-size:16px;line-height:1.8;max-width:46ch;margin:26px 0 0;color:var(--ink-2);text-wrap:pretty">{{ heroText }}</p>
+            <div style="display:flex;align-items:center;gap:30px;margin-top:40px;flex-wrap:wrap">
+              <button class="btn btn-primary btn-lg" onClick="{{ heroGo }}">{{ heroCta }}</button>
+              <span onClick="{{ goFinder }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Find your scent</span>
+            </div>
           </div>
         </div>
-        <div style="position:relative;align-self:stretch;min-height:420px">
-          <img src="assets/sovereign.jpg" alt="Nouryah Sovereign eau de parfum, 50 ml" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% center">
-          <div style="position:absolute;inset:0;background:linear-gradient(to right,#08080A 0%,#08080A 12%,rgba(8,8,10,.92) 30%,rgba(8,8,10,.55) 52%,rgba(8,8,10,.12) 78%,transparent 100%)"></div>
-          <div style="position:absolute;bottom:34px;right:clamp(20px,5vw,40px);font-family:var(--font-ui);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(239,234,224,.5)">Sovereign · Amber &amp; leather</div>
+
+        <span onClick="{{ heroPrev }}" aria-label="Previous slide" data-r="heroarrow" style="position:absolute;z-index:4;left:14px;top:50%;transform:translateY(-50%);cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule);background:rgba(8,8,10,.4);color:var(--color-text);font-size:22px;line-height:1;transition:border-color .2s,color .2s" style-hover="color:var(--gold);border-color:var(--rule-gold)">&#8249;</span>
+        <span onClick="{{ heroNext }}" aria-label="Next slide" data-r="heroarrow" style="position:absolute;z-index:4;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule);background:rgba(8,8,10,.4);color:var(--color-text);font-size:22px;line-height:1;transition:border-color .2s,color .2s" style-hover="color:var(--gold);border-color:var(--rule-gold)">&#8250;</span>
+
+        <div style="position:absolute;z-index:4;left:clamp(20px,5vw,40px);bottom:34px;display:flex;align-items:center;gap:8px">
+          <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="4">
+            <span onClick="{{ d.go }}" style="cursor:pointer;height:3px;width:{{ d.w }};background:{{ d.bg }};transition:width .3s ease,background .3s ease"></span>
+          </sc-for>
         </div>
+        <div data-r="herocaption" style="position:absolute;z-index:4;bottom:30px;right:clamp(20px,5vw,40px);font-family:var(--font-ui);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(239,234,224,.55)">{{ heroCaption }}</div>
       </section>
 
       <section style="border-bottom:1px solid var(--rule)">
@@ -1214,13 +1259,69 @@ class Component extends DCLogic {
     req:{ name:'', company:'', email:'', phone:'', city:'Lahore', units:12, date:'', note:'', invoice:true, picks:['sovereign'] },
     reqSent:false, reqNo:'', order:null, newsInput:'', newsMsg:'',
     trackInput:'', trackResult:null, trackErr:'',
-    barIndex:0,
+    barIndex:0, slide:0,
     giftModalOpen:true, copyLabel:'Copy', copyUrlLabel:'Copy link'
   };
 
   // Orders are kept on the customer's own device so the tracking screen still
   // works after a refresh. There is no server-side order store, so a code can
   // only be looked up from the browser that placed the order.
+  // Social profiles shown in the top bar. Paste the full profile URL for each;
+  // an icon with an empty string here is simply not rendered. WhatsApp is built
+  // from PHONE above, so it works without any extra configuration.
+  SOCIAL = {
+    facebook: '',
+    instagram: '',
+    tiktok: ''
+  };
+
+  HERO_SLIDES = [
+    {
+      img:'assets/sovereign.jpg', pos:'72% center',
+      eyebrow:'Nine fragrances · Composed in Lahore',
+      title:'Drawn to the last note.',
+      text:'An independent perfume house working at 20% parfum concentration. Every composition is published with its materials, its behaviour on skin and the hours it holds — nothing withheld.',
+      cta:'Shop the collection', go:'shop', caption:'Sovereign · Amber & leather'
+    },
+    {
+      img:'assets/oud-royale.jpg', pos:'60% center',
+      eyebrow:'NJ-02 · Oud · 10–12 hours',
+      title:'Laotian oud, held all day.',
+      text:'Rose damascena and patchouli over a Laotian oud heart. The longest wear in the wardrobe, and the one people ask about.',
+      cta:'Explore Oud Royale', go:'oud-royale', caption:'Oud Royale · Strong projection'
+    },
+    {
+      img:'assets/box.jpg', pos:'center',
+      eyebrow:'Two samples with every order',
+      title:'Nine to try before you commit.',
+      text:'The discovery set carries all nine at 2 ml — enough to live with each one properly before choosing your 50 ml flacon.',
+      cta:'Shop the discovery set', go:'shop', caption:'Discovery set · 9 × 2 ml'
+    },
+    {
+      img:'assets/fleur.jpg', pos:'55% center',
+      eyebrow:'Florentine iris · Peony · Orris butter',
+      title:'The florals, kept quiet.',
+      text:'Fleur and Blush sit close to the skin at intimate projection — composed for rooms where you would rather be remembered than announced.',
+      cta:'Find your scent', go:'finder', caption:'Fleur · Floral'
+    }
+  ];
+  HERO_INTERVAL = 6000;
+
+  startHeroTimer() {
+    clearInterval(this._heroTimer);
+    this._heroTimer = setInterval(() => this.stepHero(1), this.HERO_INTERVAL);
+  }
+  stepHero(delta) {
+    const n = this.HERO_SLIDES.length;
+    this.setState({ slide: (this.state.slide + delta + n) % n });
+  }
+  nudgeHero(delta) { this.stepHero(delta); this.startHeroTimer(); }
+  goSlide(i) { this.setState({ slide: i }); this.startHeroTimer(); }
+  openProduct(id) {
+    this.setState({ pid:id, gi:0, size:'50', qty:1, view:'product' });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+
   // Announcement bar rotates one line at a time, so it stays a single row on a phone.
   BAR_INTERVAL = 5200;
   barMessages() {
@@ -1279,6 +1380,7 @@ class Component extends DCLogic {
   componentDidMount() {
     if (typeof window === 'undefined') return;
     this.startBarTimer();
+    this.startHeroTimer();
     const m = /[#&/]track=([A-Za-z0-9-]+)/.exec(window.location.hash || '');
     if (m) this.trackFor(m[1]);
   }
@@ -1497,6 +1599,34 @@ class Component extends DCLogic {
       barMessage: this.barMessages()[st.barIndex % this.barMessages().length],
       barPrev: () => this.nudgeBar(-1),
       barNext: () => this.nudgeBar(1),
+
+      hasFacebook: !!this.SOCIAL.facebook,  facebookHref: this.SOCIAL.facebook,
+      hasInstagram: !!this.SOCIAL.instagram, instagramHref: this.SOCIAL.instagram,
+      hasTiktok: !!this.SOCIAL.tiktok,      tiktokHref: this.SOCIAL.tiktok,
+      waHref: 'https://wa.me/92' + this.PHONE.replace(/[^0-9]/g, '').replace(/^0/, ''),
+
+      heroLayers: this.HERO_SLIDES.map((sl, i) => ({
+        img: sl.img, pos: sl.pos, alt: 'Nouryah — ' + sl.caption,
+        opacity: i === st.slide ? '1' : '0'
+      })),
+      heroDots: this.HERO_SLIDES.map((sl, i) => ({
+        go: () => this.goSlide(i),
+        bg: i === st.slide ? 'var(--gold)' : 'rgba(239,234,224,.32)',
+        w: i === st.slide ? '26px' : '8px'
+      })),
+      heroEyebrow: this.HERO_SLIDES[st.slide].eyebrow,
+      heroTitle:   this.HERO_SLIDES[st.slide].title,
+      heroText:    this.HERO_SLIDES[st.slide].text,
+      heroCta:     this.HERO_SLIDES[st.slide].cta,
+      heroCaption: this.HERO_SLIDES[st.slide].caption,
+      heroGo: () => {
+        const go = this.HERO_SLIDES[st.slide].go;
+        if (go === 'shop') this.nav('shop');
+        else if (go === 'finder') this.nav('finder');
+        else this.openProduct(go);
+      },
+      heroPrev: () => this.nudgeHero(-1),
+      heroNext: () => this.nudgeHero(1),
       freeShipLabel: this.fmt(this.threshold()),
       cities: this.CITIES.map(c => ({ name:c.name, speed:c.speed, fg: c.speed === 'Next day' ? GOLD : INK3 })),
       footerCities: this.CITIES,
