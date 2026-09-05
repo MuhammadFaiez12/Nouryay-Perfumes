@@ -102,23 +102,12 @@
     header > div > div:first-child { margin-right: auto; }
     header > div > div:first-child > div:first-child { font-size: 21px !important; letter-spacing: .18em !important; }
     nav[data-r="nav"] { order: 3; width: 100%; margin-right: 0 !important; flex-wrap: wrap; overflow-x: visible !important; white-space: normal !important; gap: 12px 18px !important; font-size: 11px !important; letter-spacing: .1em !important; }
-    /* Stack the hero, image first, and keep it short enough to read without scrolling. */
-    [data-r="herogrid"] { grid-template-columns: 1fr !important; min-height: 0 !important; gap: 22px !important; padding: 24px clamp(20px,5vw,40px) 36px !important; }
-    [data-r="heropanel"] { height: 290px !important; }
-    /* One card and a hint of the next, so it reads as swipeable. */
-    [data-r="collcard"] { flex: 0 0 74vw !important; }
-    [data-r="collrail"] { gap: 16px !important; padding-top: 36px !important; }
-    /* Touch users swipe; the arrows would only crowd the header. */
-    [data-r="railctl"] > div { display: none !important; }
-    [data-r="herogrid"] > div:last-child { order: -1; }
-    [data-r="herocap"] h1 { font-size: clamp(32px,8.2vw,44px) !important; max-width: 100% !important; }
-    [data-r="herocap"] p { font-size: 15px !important; }
-    /* Arrows would sit on top of the copy on a narrow screen; the dots and a
-       swipe-sized tap target on the pips carry navigation instead. */
+    /* A 2:1 banner at phone width is only ~195px tall and its composed
+       lettering becomes unreadable. Crop to the side the logo, headline and
+       call to action sit on, which keeps them legible and the bottle in frame. */
+    [data-r="herostage"] { aspect-ratio: 5/4 !important; }
+    [data-r="heroart"] { background-size: cover !important; background-position: 2% center !important; }
     [data-r="heroarrow"] { display: none !important; }
-    [data-r="herocaption"] { display: none !important; }
-    [data-r="barspacer"] { display: none !important; }
-    [data-r="barsocial"] { gap: 0 !important; }
     [data-r="bar"] { font-size: 10px !important; letter-spacing: .12em !important; min-height: 40px !important; }
     /* The runtime rewrites inline styles with spaces after the colons, so each
        of these matches both the authored and the normalised spelling. */
@@ -196,35 +185,21 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div data-screen-label="Home">
-      <section data-r="heroslider" style="position:relative;border-bottom:1px solid var(--rule);background:var(--color-bg)">
-        <div data-r="herogrid" style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:clamp(28px,4vw,64px);padding:clamp(36px,4.5vw,60px) clamp(20px,5vw,40px);min-height:min(70vh,600px)">
-          <div data-r="herocap">
-            <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)">{{ heroEyebrow }}</div>
-            <h1 style="font-size:clamp(38px,4.6vw,68px);line-height:1.04;margin:20px 0 0;max-width:15ch">{{ heroTitle }}</h1>
-            <p style="font-size:16px;line-height:1.8;max-width:46ch;margin:22px 0 0;color:var(--ink-2);text-wrap:pretty">{{ heroText }}</p>
-            <div style="display:flex;align-items:center;gap:28px;margin-top:34px;flex-wrap:wrap">
-              <button class="btn btn-primary btn-lg" onClick="{{ heroGo }}">{{ heroCta }}</button>
-              <span onClick="{{ goFinder }}" style="cursor:pointer;font-family:var(--font-ui);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:5px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Find your scent</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:34px">
-              <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="4">
-                <span onClick="{{ d.go }}" style="cursor:pointer;height:3px;width:{{ d.w }};background:{{ d.bg }};transition:width .3s ease,background .3s ease"></span>
-              </sc-for>
-            </div>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
-            <div data-r="heropanel" style="position:relative;height:clamp(300px,38vw,430px);background:var(--color-surface);border:1px solid var(--rule)">
-              <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="4">
-                <div role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:16px;background-image:url({{ sl.img }});background-size:contain;background-position:center;background-repeat:no-repeat;opacity:{{ sl.opacity }};transition:opacity .7s ease"></div>
-              </sc-for>
-            </div>
-            <div data-r="herocaption" style="text-align:center;font-family:var(--font-ui);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3)">{{ heroCaption }}</div>
-          </div>
+      <section data-r="heroslider" aria-roledescription="carousel" style="position:relative;border-bottom:1px solid var(--rule);overflow:hidden">
+        <div data-r="herostage" onClick="{{ heroGo }}" role="link" aria-label="{{ heroAlt }}" style="position:relative;width:100%;aspect-ratio:2/1;cursor:pointer">
+          <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="5">
+            <div data-r="heroart" role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;z-index:{{ sl.z }};opacity:{{ sl.opacity }};transition:opacity .8s ease;background-color:{{ sl.bg }};background-image:url({{ sl.img }});background-size:contain;background-position:center;background-repeat:no-repeat"></div>
+          </sc-for>
         </div>
 
-        <span onClick="{{ heroPrev }}" aria-label="Previous slide" data-r="heroarrow" style="position:absolute;z-index:4;left:12px;top:50%;transform:translateY(-50%);cursor:pointer;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule);background:rgba(255,255,255,.82);color:var(--color-text);font-size:21px;line-height:1;transition:border-color .2s,color .2s" style-hover="color:var(--gold);border-color:var(--rule-gold)">&#8249;</span>
-        <span onClick="{{ heroNext }}" aria-label="Next slide" data-r="heroarrow" style="position:absolute;z-index:4;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule);background:rgba(255,255,255,.82);color:var(--color-text);font-size:21px;line-height:1;transition:border-color .2s,color .2s" style-hover="color:var(--gold);border-color:var(--rule-gold)">&#8250;</span>
+        <span onClick="{{ heroPrev }}" aria-label="Previous slide" data-r="heroarrow" style="position:absolute;z-index:5;left:14px;top:50%;transform:translateY(-50%);cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.55);background:rgba(20,17,10,.34);color:#FFFFFF;font-size:21px;line-height:1;transition:background .2s,border-color .2s" style-hover="background:rgba(20,17,10,.6);border-color:#FFFFFF">&#8249;</span>
+        <span onClick="{{ heroNext }}" aria-label="Next slide" data-r="heroarrow" style="position:absolute;z-index:5;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.55);background:rgba(20,17,10,.34);color:#FFFFFF;font-size:21px;line-height:1;transition:background .2s,border-color .2s" style-hover="background:rgba(20,17,10,.6);border-color:#FFFFFF">&#8250;</span>
+
+        <div data-r="herodots" style="position:absolute;z-index:5;left:0;right:0;bottom:18px;display:flex;justify-content:center;align-items:center;gap:8px">
+          <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="5">
+            <span onClick="{{ d.go }}" style="cursor:pointer;height:3px;width:{{ d.w }};background:{{ d.bg }};transition:width .3s ease,background .3s ease"></span>
+          </sc-for>
+        </div>
       </section>
 
       <section style="border-bottom:1px solid var(--rule)">
@@ -1311,34 +1286,16 @@ class Component extends DCLogic {
   };
 
   HERO_SLIDES = [
-    {
-      img:'assets/sovereign-studio.jpg', img2:'assets/sovereign.jpg', pos:'center',
-      eyebrow:'Nine fragrances · Composed in Lahore',
-      title:'Drawn to the last note.',
-      text:'An independent perfume house working at 20% parfum concentration. Every composition is published with its materials, its behaviour on skin and the hours it holds — nothing withheld.',
-      cta:'Shop the collection', go:'shop', caption:'Sovereign · Amber & leather'
-    },
-    {
-      img:'assets/oud-royale-studio.jpg', img2:'assets/oud-royale.jpg', pos:'center',
-      eyebrow:'NJ-02 · Oud · 10–12 hours',
-      title:'Laotian oud, held all day.',
-      text:'Rose damascena and patchouli over a Laotian oud heart. The longest wear in the wardrobe, and the one people ask about.',
-      cta:'Explore Oud Royale', go:'oud-royale', caption:'Oud Royale · Strong projection'
-    },
-    {
-      img:'assets/box.jpg', pos:'center',
-      eyebrow:'Two samples with every order',
-      title:'Nine to try before you commit.',
-      text:'The discovery set carries all nine at 2 ml — enough to live with each one properly before choosing your 50 ml flacon.',
-      cta:'Shop the discovery set', go:'shop', caption:'Discovery set · 9 × 2 ml'
-    },
-    {
-      img:'assets/fleur-studio.jpg', img2:'assets/fleur.jpg', pos:'center',
-      eyebrow:'Florentine iris · Peony · Orris butter',
-      title:'The florals, kept quiet.',
-      text:'Fleur and Blush sit close to the skin at intimate projection — composed for rooms where you would rather be remembered than announced.',
-      cta:'Find your scent', go:'finder', caption:'Fleur · Floral'
-    }
+    { img:'assets/hero-legacy.jpg',    bg:'#4C321A', go:'shop',
+      alt:'Nouryah Legacy — more than a fragrance, a story that lasts. Discover the collection.' },
+    { img:'assets/hero-sovereign.jpg', bg:'#583B27', go:'sovereign',
+      alt:'Sovereign extrait de parfum — inspired by heritage, crafted for today.' },
+    { img:'assets/hero-azure.jpg',     bg:'#778696', go:'azure',
+      alt:'Azure — a scent inspired by natural beauty. Fresh, elegant, timeless.' },
+    { img:'assets/hero-blush.jpg',     bg:'#99645B', go:'blush',
+      alt:'Blush — beauty lives in every moment. Grace, elegance, you.' },
+    { img:'assets/hero-triumph.jpg',   bg:'#795C44', go:'triumph',
+      alt:'Triumph — a scent beyond time. Inspired by heritage, crafted for tomorrow.' }
   ];
   HERO_INTERVAL = 6000;
 
@@ -1684,37 +1641,22 @@ class Component extends DCLogic {
       waHref: 'https://wa.me/92' + this.PHONE.replace(/[^0-9]/g, '').replace(/^0/, ''),
 
       heroLayers: this.HERO_SLIDES.map((sl, i) => ({
-        img: sl.img, pos: sl.pos, alt: 'Nouryah — ' + sl.caption,
-        opacity: i === st.slide ? '1' : '0'
+        img: sl.img, bg: sl.bg, alt: sl.alt,
+        opacity: i === st.slide ? '1' : '0',
+        z: i === st.slide ? '2' : '1'
       })),
       heroDots: this.HERO_SLIDES.map((sl, i) => ({
         go: () => this.goSlide(i),
-        bg: i === st.slide ? 'var(--gold)' : 'rgba(26,23,18,.30)',
+        bg: i === st.slide ? 'var(--gold)' : 'rgba(255,255,255,.55)',
         w: i === st.slide ? '26px' : '8px'
       })),
-      heroEyebrow: this.HERO_SLIDES[st.slide].eyebrow,
-      heroTitle:   this.HERO_SLIDES[st.slide].title,
-      heroText:    this.HERO_SLIDES[st.slide].text,
-      heroCta:     this.HERO_SLIDES[st.slide].cta,
-      heroCaption: this.HERO_SLIDES[st.slide].caption,
+      heroAlt: this.HERO_SLIDES[st.slide].alt,
       heroGo: () => {
         const go = this.HERO_SLIDES[st.slide].go;
         if (go === 'shop') this.nav('shop');
         else if (go === 'finder') this.nav('finder');
         else this.openProduct(go);
       },
-      orderMailFailed: !!(st.order && st.order.mailChecked && !st.order.emailSent),
-      orderWaHref: (() => {
-        const o = st.order;
-        if (!o) return '';
-        const items = (o.lines || []).map(l => l.name + ' ' + (l.sizeLabel || '') + ' x' + l.qty).join(', ');
-        const text = 'Order ' + o.no + ' — ' + [o.first, o.last].filter(Boolean).join(' ') +
-          '\nItems: ' + items +
-          '\nTotal: ' + o.totalLabel +
-          '\nDeliver to: ' + [o.address, o.city, o.province].filter(Boolean).join(', ') +
-          '\nPhone: ' + o.phone + '\nEmail: ' + o.email;
-        return 'https://wa.me/92' + this.PHONE.replace(/[^0-9]/g, '').replace(/^0/, '') + '?text=' + encodeURIComponent(text);
-      })(),
       heroPrev: () => this.nudgeHero(-1),
       heroNext: () => this.nudgeHero(1),
       freeShipLabel: this.fmt(this.threshold()),
