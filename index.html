@@ -829,7 +829,7 @@
                   </div>
                   <div class="field"><label>Wallet mobile number</label><input class="input" value="{{ form.walletNumber }}" onChange="{{ setF.walletNumber }}" placeholder="03XX XXXXXXX"></div>
                 </div>
-                <div style="font-size:13px;line-height:1.75;color:var(--ink-3);margin-top:16px">We'll send a payment request to this number. Approve it in the {{ form.wallet }} app to confirm the order.</div>
+                <div style="font-size:13px;line-height:1.75;color:var(--ink-3);margin-top:16px">We will contact you on this number to settle the {{ form.wallet }} transfer before the parcel is dispatched.</div>
               </sc-if>
               <sc-if value="{{ bankSelected }}" hint-placeholder-val="{{ false }}">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
@@ -989,7 +989,7 @@
           </div>
         </sc-if>
         <sc-if value="{{ order.emailSent }}" hint-placeholder-val="{{ true }}">
-          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }} — tracking follows by SMS to {{ order.phone }}.</p>
+          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }} — track it any time with your order number.</p>
         </sc-if>
         <sc-if value="{{ orderMailFailed }}" hint-placeholder-val="{{ false }}">
           <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">Your order is recorded. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }}.</p>
