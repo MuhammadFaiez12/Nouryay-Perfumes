@@ -574,7 +574,7 @@
             <span onClick="{{ pdp.buyNow }}" style="cursor:pointer;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Buy now · cash on delivery</span>
             <span onClick="{{ pdp.request }}" style="cursor:pointer;color:var(--ink-3);padding-bottom:4px" style-hover="color:var(--color-text)">Order request</span>
           </div>
-          <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · next working day in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad and Sialkot · two 10 ml samples included · 30-day returns on unopened flacons.</div>
+          <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · delivered all over Pakistan · two 10 ml samples included · 30-day returns on unopened flacons.</div>
           <div style="font-size:12.5px;letter-spacing:.04em;color:var(--gold);margin-top:8px">Limited time · free 10 ml gift on orders over {{ giftThreshold }}</div>
         </div>
       </section>
@@ -682,7 +682,7 @@
           <div data-r="c4" style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:52px;padding-top:32px;border-top:1px solid var(--rule)">
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">2019</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Founded</div></div>
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">400</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Per batch</div></div>
-            <div><div style="font-size:26px;font-variant-numeric:tabular-nums">9</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Cities served</div></div>
+            <div><div style="font-size:26px;font-variant-numeric:tabular-nums">9</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Fragrances</div></div>
             
           </div>
         </div>
@@ -702,15 +702,7 @@
       <section style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 0">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(20px,5vw,40px);flex-wrap:wrap">
           <h2 style="font-size:clamp(28px,2.8vw,38px);margin:0">Where we deliver</h2>
-          <p style="font-size:14px;line-height:1.8;color:var(--ink-3);max-width:36ch;margin:0">Nine cities on the courier list. Anywhere else in Pakistan, ask and we will quote it.</p>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:44px">
-          <sc-for list="{{ cities }}" as="c" hint-placeholder-count="9">
-            <div style="background:var(--color-bg);padding:24px 26px">
-              <div style="font-family:var(--font-heading);font-size:23px;line-height:1.1">{{ c.name }}</div>
-              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:{{ c.fg }};margin-top:10px">{{ c.speed }}</div>
-            </div>
-          </sc-for>
+          <p style="font-size:14px;line-height:1.8;color:var(--ink-3);max-width:36ch;margin:0">We deliver all over Pakistan, tracked to your door.</p>
         </div>
       </section>
       <section style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 128px">
@@ -1156,7 +1148,7 @@
       <div>
         <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3)">Delivering to</div>
         <div style="display:grid;gap:14px;margin-top:22px;font-size:14.5px;color:var(--ink-2)">
-          <sc-for list="{{ footerCities }}" as="c" hint-placeholder-count="9"><span>{{ c.name }}</span></sc-for>
+          <span>All over Pakistan</span>
         </div>
       </div>
       <div>
@@ -1321,7 +1313,7 @@ class Component extends DCLogic {
   GIFT_THRESHOLD = 3000;
   SHIP = [
     { key:'standard', label:'TCS · nationwide', detail:'Tracked, 2–4 working days, to your door', price:300 },
-    { key:'express', label:'Leopards · next day', detail:'Next working day in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Sialkot', price:650 }
+    { key:'express', label:'Leopards · next day', detail:'Next working day, all over Pakistan', price:650 }
   ];
   PAY = [
     { key:'Cash on delivery', label:'Cash on delivery', detail:'Pay the rider when the parcel reaches you', badge:'Most used' },
@@ -1331,9 +1323,9 @@ class Component extends DCLogic {
   ];
   FAQ = [
     { q:'Is 20% really eau de parfum strength?', a:'Yes — 20% parfum oil sits at the top of the eau de parfum band (most sit at 12–15%). It is why the published wear times are 6 to 12 hours rather than 3 to 4, and why two sprays are usually enough.' },
-    { q:'Which cities do you deliver to?', a:'Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad and Sialkot get next-working-day delivery when the order is placed before 15:00 PKT. Gujranwala, Sheikhupura and Multan take two to three working days. Anywhere else in Pakistan, call the atelier and we will quote the freight.' },
+    { q:'Where do you deliver?', a:'All over Pakistan, tracked to your door. Orders placed before 4pm are dispatched the same working day; free delivery over the published threshold.' },
     { q:'What is in the free sample pair?', a:'Two 10 ml atomisers, chosen against what you ordered — buy Sovereign and you will get Triumph and Oud Royale, not two florals. Add a note at checkout if you would rather pick them yourself.' },
-    { q:'Can I pay cash on delivery?', a:'Yes, on every order in the nine serviceable cities. The rider collects the exact amount printed on the packing slip; nothing is charged before the parcel is in your hands. JazzCash, Easypaisa, Raast and card are all available if you prefer to pay in advance.' },
+    { q:'Can I pay cash on delivery?', a:'Yes, on every order, all over Pakistan. The rider collects the exact amount printed on the packing slip; nothing is charged before the parcel is in your hands. JazzCash, Easypaisa, Raast and card are all available if you prefer to pay in advance.' },
     { q:'Can I return a fragrance I have tried?', a:'Unopened flacons come back within 30 days with the prepaid label in the carton. Once a flacon is sprayed we cannot resell it, so try the 10 ml samples or the discovery set first — the discovery set price is credited in full against your first 50 ml.' },
     { q:'Do you take corporate or wholesale orders?', a:'Yes. Use the order request page for anything over ten units, hotel amenity programmes, or engraved gifting. You get a written quote with the volume tier applied and an invoice option at net 14 days.' }
   ];
