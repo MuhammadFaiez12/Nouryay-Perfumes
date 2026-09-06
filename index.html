@@ -135,6 +135,42 @@
     [data-r="herostage"] { aspect-ratio: 5/4 !important; }
     [data-r="heroart"] { background-size: cover !important; background-position: 2% center !important; }
     [data-r="heroarrow"] { display: none !important; }
+
+    /* Announcement bar. The 112px spacer that balances the social icons on a
+       wide screen was still 112px here, eating a third of a 381px bar: it
+       squeezed the message to 136px against 173px of text, so every line was
+       clipped, and it shoved the whole group 43px left of centre. The spacer
+       now matches the icons, the message may wrap rather than truncate, and
+       the tracking tightens so most lines still fit on one. */
+    [data-r="bar"] { min-height: 0 !important; padding-top: 7px !important; padding-bottom: 7px !important; align-items: center; }
+    [data-r="barspacer"] { display: block !important; width: 30px !important; }
+    [data-r="barsocial"] { width: 30px !important; justify-content: flex-start; }
+    [data-r="bar"] > span { width: 26px !important; height: 26px !important; font-size: 17px !important; }
+    [data-r="bar"] > div:not([data-r]) {
+      white-space: normal !important; text-overflow: clip !important;
+      font-size: 9.5px !important; letter-spacing: .06em !important; line-height: 1.35 !important;
+    }
+
+    /* Hero was 305px on an 844px screen — a banner strip rather than a hero.
+       9/10 gives it half the viewport while still showing the logo, headline
+       and button, which all sit inside the left 30% of the artwork. */
+    [data-r="herostage"] { aspect-ratio: 9/10 !important; }
+
+    /* Touch has no hover, so the add-to-bag that rises out of the card image is
+       hidden there; without this the only way to add from a card was a 10.5px
+       text link, well under a comfortable tap target. */
+    [data-r="cardact"] { gap: 10px !important; margin-top: 14px !important; }
+    [data-r="cardact"] > span:first-child {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      min-height: 44px; border: 1px solid var(--rule) !important; border-bottom-color: var(--rule) !important;
+      padding: 0 !important; color: var(--color-text) !important;
+    }
+    [data-r="cardact"] > span:last-child {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 44px; padding: 0 16px !important; border: 1px solid transparent;
+    }
+    /* Comfortable targets for the two header controls. */
+    [data-r="menubtn"] { width: 44px !important; height: 44px !important; }
     /* Nav collapses behind the menu button. */
     nav[data-r="nav"] { display: none !important; }
     [data-r="menubtn"] { display: flex !important; }
@@ -311,7 +347,7 @@
                 </div>
               </div>
               <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">{{ p.family }} · {{ p.hours }} hours</div>
-              <div style="display:flex;gap:22px;margin-top:18px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap">
+              <div data-r="cardact" style="display:flex;gap:22px;margin-top:18px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap">
                 <span onClick="{{ p.quickAdd }}" style="cursor:pointer;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Add 50 ml</span>
                 <span onClick="{{ p.open }}" style="cursor:pointer;color:var(--ink-3);padding-bottom:4px" style-hover="color:var(--color-text)">Notes</span>
               </div>
@@ -432,7 +468,7 @@
             </div>
             <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">{{ p.family }} · {{ p.hours }} hours</div>
             <p style="font-size:13.5px;line-height:1.7;color:var(--ink-3);margin:12px 0 0">{{ p.heart }}</p>
-            <div style="display:flex;gap:22px;margin-top:18px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap">
+            <div data-r="cardact" style="display:flex;gap:22px;margin-top:18px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap">
               <span onClick="{{ p.quickAdd }}" style="cursor:pointer;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Add 50 ml</span>
               <span onClick="{{ p.open }}" style="cursor:pointer;color:var(--ink-3);padding-bottom:4px" style-hover="color:var(--color-text)">Notes</span>
             </div>
