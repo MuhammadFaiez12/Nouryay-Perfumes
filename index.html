@@ -472,19 +472,6 @@
         </sc-for>
       </section>
 
-      <section style="max-width:1320px;margin:0 auto;padding:104px clamp(20px,5vw,40px) 0">
-        <div data-r="bannerauto" style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:52px 0;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center">
-          <div>
-            <div style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)">Ref. NJ-DS</div>
-            <h3 style="font-size:clamp(26px,2.6vw,34px);line-height:1.15;margin:14px 0 0">Discovery set — all nine, 2 ml each</h3>
-            <p style="font-size:15px;line-height:1.75;color:var(--ink-2);margin:14px 0 0;max-width:58ch">Nine atomisers in a foil-stamped sleeve. The full price is credited against your first 50 ml flacon.</p>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:22px;font-variant-numeric:tabular-nums">{{ discoveryPriceLabel }}</div>
-            <button class="btn btn-primary" onClick="{{ addDiscovery }}" style="margin-top:18px">Add to bag</button>
-          </div>
-        </div>
-      </section>
     </div>
   </sc-if>
 
@@ -570,7 +557,7 @@
             <span onClick="{{ pdp.buyNow }}" style="cursor:pointer;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Buy now · cash on delivery</span>
             <span onClick="{{ pdp.request }}" style="cursor:pointer;color:var(--ink-3);padding-bottom:4px" style-hover="color:var(--color-text)">Order request</span>
           </div>
-          <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · delivered all over Pakistan · two 10 ml samples included · 30-day returns on unopened flacons.</div>
+          <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · delivered all over Pakistan · free 10 ml bottle on orders over {{ giftThreshold }} · 30-day returns on unopened flacons.</div>
           <div style="font-size:12.5px;letter-spacing:.04em;color:var(--gold);margin-top:8px">Limited time · free 10 ml gift on orders over {{ giftThreshold }}</div>
         </div>
       </section>
@@ -690,7 +677,7 @@
         <h2 style="font-size:clamp(28px,2.8vw,38px);margin:0 0 44px">How an order runs</h2>
         <div data-r="c4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)">
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)">One</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">You order</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Online with cash on delivery, JazzCash, Raast or card — or send an order request and we invoice.</div></div>
-          <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Two</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">We pack</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Hand-packed in the Gulberg atelier with two 10 ml samples chosen for your order.</div></div>
+          <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Two</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">We pack</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Hand-packed in the Gulberg atelier. Orders over {{ giftThreshold }} include a free 10 ml bottle.</div></div>
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Three</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">TCS moves</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">Next working day in the six metros, 2–4 days elsewhere in Pakistan.</div></div>
           <div style="background:var(--color-bg);padding:34px 30px"><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Four</div><div style="font-family:var(--font-heading);font-size:23px;margin-top:14px">You keep or return</div><div style="font-size:13.5px;line-height:1.75;color:var(--ink-3);margin-top:10px">30 days on unopened flacons, prepaid label in the carton.</div></div>
         </div>
@@ -962,7 +949,7 @@
             <span style="font-family:var(--font-ui);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)">Total</span>
             <span style="font-size:24px;font-variant-numeric:tabular-nums">{{ totalLabel }}</span>
           </div>
-          <div style="font-size:12.5px;line-height:1.75;color:var(--ink-3);margin-top:20px">Two 10 ml samples added free to every order. Questions? {{ phone }}</div>
+          <div style="font-size:12.5px;line-height:1.75;color:var(--ink-3);margin-top:20px">A free 10 ml bottle on orders over {{ giftThreshold }}. Questions? {{ phone }}</div>
         </aside>
       </section>
     </div>
@@ -1089,8 +1076,7 @@
                     <td style="text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px">{{ l.totalLabel }}</td>
                   </tr>
                 </sc-for>
-                <tr><td style="color:var(--ink-3)">2 × 10 ml samples</td><td style="color:var(--ink-3);font-size:13.5px">Sample</td><td style="font-size:13.5px">2</td><td style="text-align:right;color:var(--gold);font-size:13.5px">Free</td></tr>
-                <sc-if value="{{ order.gift }}" hint-placeholder-val="{{ false }}">
+                                <sc-if value="{{ order.gift }}" hint-placeholder-val="{{ false }}">
                   <tr><td style="color:var(--ink-3)">10 ml travel size</td><td style="color:var(--ink-3);font-size:13.5px">Gift</td><td style="font-size:13.5px">1</td><td style="text-align:right;color:var(--gold);font-size:13.5px">Free</td></tr>
                 </sc-if>
               </tbody>
@@ -1119,7 +1105,7 @@
       <div>
         <div style="font-family:var(--font-heading);font-size:30px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);line-height:1">Nouryah</div>
         <div style="font-family:var(--font-ui);font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Perfumes · Lahore, Pakistan</div>
-        <p style="font-size:14.5px;line-height:1.85;color:var(--ink-3);margin:24px 0 0;max-width:36ch">Nine fragrances, published with their materials. Composed, macerated and filled by hand in Gulberg, Lahore.</p>
+        <p style="font-size:14.5px;line-height:1.85;color:var(--ink-3);margin:24px 0 0;max-width:36ch">Nine fragrances, published with their materials. Composed and macerated.</p>
         <div style="margin-top:26px;font-family:var(--font-ui);font-size:11px;letter-spacing:.2em;text-transform:uppercase;line-height:2.2">
           <div style="color:var(--color-text)">{{ phone }}</div>
           <div style="color:var(--ink-3)">Mon–Sat 10:00–19:00 PKT</div>
@@ -1136,7 +1122,6 @@
         <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3)">Shop</div>
         <div style="display:grid;gap:14px;margin-top:22px;font-size:14.5px;color:var(--ink-2)">
           <span onClick="{{ goShop }}" style="cursor:pointer" style-hover="color:var(--color-text)">All nine fragrances</span>
-          <span onClick="{{ goShop }}" style="cursor:pointer" style-hover="color:var(--color-text)">Discovery set</span>
           <span onClick="{{ goFinder }}" style="cursor:pointer" style-hover="color:var(--color-text)">Fragrance finder</span>
           <span onClick="{{ goRequest }}" style="cursor:pointer" style-hover="color:var(--color-text)">Order request</span>
         </div>
@@ -1180,7 +1165,7 @@
         <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
           <div style="padding:72px 34px;text-align:center">
             <div style="font-family:var(--font-heading);font-size:26px">Nothing in the bag</div>
-            <p style="font-size:14.5px;line-height:1.8;color:var(--ink-3);margin:14px 0 30px">Start with the discovery set — nine 2 ml atomisers, credited in full against your first flacon.</p>
+            <p style="font-size:14.5px;line-height:1.8;color:var(--ink-3);margin:14px 0 30px">Nine fragrances, each published with its materials and its hours on skin.</p>
             <button class="btn btn-primary" onClick="{{ shopFromCart }}">Browse the collection</button>
           </div>
         </sc-if>
@@ -1305,7 +1290,6 @@ class Component extends DCLogic {
       desc:'Skin, laundered. The quietest sheet in the set and the one people lean in to identify.' }
   ];
 
-  DISCOVERY = 2900;
   GIFT_THRESHOLD = 3000;
   SHIP = [
     { key:'standard', label:'TCS · nationwide', detail:'Tracked, 2–4 working days, to your door', price:300 },
@@ -1320,9 +1304,9 @@ class Component extends DCLogic {
   FAQ = [
     { q:'Is 20% really eau de parfum strength?', a:'Yes — 20% parfum oil sits at the top of the eau de parfum band (most sit at 12–15%). It is why the published wear times are 6 to 12 hours rather than 3 to 4, and why two sprays are usually enough.' },
     { q:'Where do you deliver?', a:'All over Pakistan, tracked to your door. Orders placed before 4pm are dispatched the same working day; free delivery over the published threshold.' },
-    { q:'What is in the free sample pair?', a:'Two 10 ml atomisers, chosen against what you ordered — buy Sovereign and you will get Triumph and Oud Royale, not two florals. Add a note at checkout if you would rather pick them yourself.' },
+    { q:'How does the free 10 ml gift work?', a:'Spend over the published threshold and a 10 ml bottle is added to your order at no charge. It is chosen against what you ordered — buy Sovereign and you will get something in the same register, not a floral. Add a note at checkout if you would rather pick it yourself.' },
     { q:'Can I pay cash on delivery?', a:'Yes, on every order, all over Pakistan. The rider collects the exact amount printed on the packing slip; nothing is charged before the parcel is in your hands. JazzCash, Easypaisa, Raast and card are all available if you prefer to pay in advance.' },
-    { q:'Can I return a fragrance I have tried?', a:'Unopened flacons come back within 30 days with the prepaid label in the carton. Once a flacon is sprayed we cannot resell it, so try the 10 ml samples or the discovery set first — the discovery set price is credited in full against your first 50 ml.' },
+    { q:'Can I return a fragrance I have tried?', a:'Unopened flacons come back within 30 days with the prepaid label in the carton. Once a flacon is sprayed we cannot resell it, so try a 10 ml travel size first.' },
     { q:'Do you take corporate or wholesale orders?', a:'Yes. Use the order request page for anything over ten units, hotel amenity programmes, or engraved gifting. You get a written quote with the volume tier applied and an invoice option at net 14 days.' }
   ];
 
@@ -1355,8 +1339,6 @@ class Component extends DCLogic {
   };
 
   HERO_SLIDES = [
-    { img:'assets/hero-signature.jpg', bg:'#B3B0AA', go:'shop',
-      alt:'Explore our signature collection — scents for a better you, up to 20% off. Shop now.' },
     { img:'assets/hero-oud.jpg',       bg:'#3D2411', go:'oud-royale',
       alt:'Oud Royale eau de parfum — timeless elegance, a fragrance beyond ordinary.' },
     { img:'assets/hero-blush.jpg',     bg:'#B9918C', go:'blush',
@@ -1381,7 +1363,7 @@ class Component extends DCLogic {
 
   // Categories for the scrolling ticker, drawn from the actual catalogue
   // rather than invented — the nine fragrances span these six families.
-  TICKER = ['Eau de parfum', 'Oud', 'Amber', 'Woody', 'Florals', 'Aquatic', 'Musk', 'Discovery set', 'Travel sprays'];
+  TICKER = ['Eau de parfum', 'Oud', 'Amber', 'Woody', 'Florals', 'Aquatic', 'Musk', 'Travel sprays'];
 
   MENU = [
     { label:'Collection', view:'shop' },
@@ -1521,17 +1503,16 @@ class Component extends DCLogic {
     const hit = cart.find(l => l.pid === pid && l.size === size);
     if (hit) hit.qty += qty; else cart.push({ pid, size, qty });
     this.setState({ cart });
-    this.flash('Added · ' + (pid === 'discovery' ? 'Discovery set' : this.find(pid).name));
+    this.flash('Added · ' + this.find(pid).name);
   }
   lineOf(l, i) {
-    const disc = l.pid === 'discovery';
-    const p = disc ? null : this.find(l.pid);
-    const s = disc ? { name:'9 × 2 ml', price:this.DISCOVERY } : this.sizesFor(p).find(x => x.key === l.size);
+    const p = this.find(l.pid);
+    const s = this.sizesFor(p).find(x => x.key === l.size);
     return {
-      name: disc ? 'Discovery set' : p.name,
-      family: disc ? 'All nine' : p.family,
-      img: disc ? 'assets/box.jpg' : p.img,
-      alt: disc ? 'Nouryah discovery set' : 'Nouryah ' + p.name + ' eau de parfum',
+      name: p.name,
+      family: p.family,
+      img: p.img,
+      alt: 'Nouryah ' + p.name + ' eau de parfum',
       sizeLabel: s.name, qty: l.qty,
       totalLabel: this.fmt(s.price * l.qty),
       inc: () => this.setQty(i, l.qty + 1),
@@ -1571,7 +1552,6 @@ class Component extends DCLogic {
   }
   money() {
     const sub = this.state.cart.reduce((t, l) => {
-      if (l.pid === 'discovery') return t + this.DISCOVERY * l.qty;
       const p = this.find(l.pid);
       return t + this.sizesFor(p).find(x => x.key === l.size).price * l.qty;
     }, 0);
@@ -1780,8 +1760,6 @@ class Component extends DCLogic {
         bd: st.family === fam ? GOLD : 'transparent',
         pick: () => this.setState({ family:fam })
       })),
-      discoveryPriceLabel: this.fmt(this.DISCOVERY),
-      addDiscovery: () => this.add('discovery', 'set', 1),
 
       pdp: {
         name:p.name, ref:p.ref, family:p.family, tagline:p.tagline, desc:p.desc,
