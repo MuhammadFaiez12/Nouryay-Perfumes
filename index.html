@@ -679,11 +679,11 @@
         <div>
           <p style="font-size:17px;line-height:1.9;color:var(--ink-2);margin:0">Nouryah was founded in 2019 in a second-floor atelier in Gulberg, Lahore, by two perfumers who had spent a decade writing formulas nobody outside the lab was allowed to read. The house exists to invert that: every composition is published with its materials, its concentration, and an honest account of how it behaves over ten hours on skin.</p>
           <p style="font-size:17px;line-height:1.9;color:var(--ink-2);margin:24px 0 0">Nine fragrances, no seasonal churn. Each is blended in 400-flacon batches, macerated for six weeks, then filled, labelled and boxed by hand. When a batch sells out it is remade to the same formula — not reformulated.</p>
-          <div data-r="c4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:52px;padding-top:32px;border-top:1px solid var(--rule)">
+          <div data-r="c4" style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:52px;padding-top:32px;border-top:1px solid var(--rule)">
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">2019</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Founded</div></div>
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">400</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Per batch</div></div>
             <div><div style="font-size:26px;font-variant-numeric:tabular-nums">9</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Cities served</div></div>
-            <div><div style="font-size:26px;font-variant-numeric:tabular-nums">−25%</div><div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:8px">Refill</div></div>
+            
           </div>
         </div>
         <div style="overflow:hidden;aspect-ratio:4/5;background:#F1ECE3">
@@ -1151,7 +1151,6 @@
           <span onClick="{{ goShop }}" style="cursor:pointer" style-hover="color:var(--color-text)">Discovery set</span>
           <span onClick="{{ goFinder }}" style="cursor:pointer" style-hover="color:var(--color-text)">Fragrance finder</span>
           <span onClick="{{ goRequest }}" style="cursor:pointer" style-hover="color:var(--color-text)">Order request</span>
-          <span onClick="{{ goStory }}" style="cursor:pointer" style-hover="color:var(--color-text)">Refill programme</span>
         </div>
       </div>
       <div>
@@ -1394,7 +1393,7 @@ class Component extends DCLogic {
 
   // Categories for the scrolling ticker, drawn from the actual catalogue
   // rather than invented — the nine fragrances span these six families.
-  TICKER = ['Eau de parfum', 'Oud', 'Amber', 'Woody', 'Florals', 'Aquatic', 'Musk', 'Discovery set', 'Travel sprays', 'Refill programme'];
+  TICKER = ['Eau de parfum', 'Oud', 'Amber', 'Woody', 'Florals', 'Aquatic', 'Musk', 'Discovery set', 'Travel sprays'];
 
   MENU = [
     { label:'Collection', view:'shop' },
