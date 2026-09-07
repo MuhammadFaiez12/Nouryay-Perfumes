@@ -294,7 +294,7 @@
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div data-screen-label="Home">
       <section data-r="heroslider" aria-roledescription="carousel" style="position:relative;border-bottom:1px solid var(--rule);overflow:hidden">
-        <div data-r="herostage" onClick="{{ heroGo }}" role="link" aria-label="{{ heroAlt }}" style="position:relative;width:100%;aspect-ratio:2/1;cursor:pointer">
+        <div data-r="herostage" onClick="{{ heroGo }}" role="link" aria-label="{{ heroAlt }}" style="position:relative;width:100%;aspect-ratio:5/2;cursor:pointer">
           <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="5">
             <div data-r="heroart" role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;z-index:{{ sl.z }};opacity:{{ sl.opacity }};transition:opacity .8s ease;background-color:{{ sl.bg }};background-image:url({{ sl.img }});background-size:contain;background-position:center;background-repeat:no-repeat"></div>
             <div data-r="heroartm" role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;z-index:{{ sl.z }};opacity:{{ sl.opacity }};transition:opacity .8s ease;background-color:{{ sl.bgM }};background-image:url({{ sl.imgM }});background-size:contain;background-position:center;background-repeat:no-repeat"></div>
@@ -1348,12 +1348,12 @@ class Component extends DCLogic {
   };
 
   HERO_SLIDES = [
-    { img:'assets/hero-blush.jpg',     imgM:'assets/hero-blush-m.jpg',     bg:'#AC7764', bgM:'#D0948C', go:'blush',
-      alt:'Blush eau de parfum — a scent that captures your story. Elegance in every drop.' },
-    { img:'assets/hero-amber-oud.jpg', imgM:'assets/hero-amber-oud-m.jpg', bg:'#64503F', bgM:'#8C7263', go:'shop',
-      alt:'Amber Oud eau de parfum — more than a fragrance, a feeling forever. Explore the collection.' },
-    { img:'assets/hero-sahara.jpg',    imgM:'assets/hero-sahara-m.jpg',    bg:'#8A6F54', bgM:'#9E8575', go:'shop',
-      alt:'Sahara eau de parfum — let your scent tell your story. Bold notes, beautiful moments.' }
+    { img:'assets/hero-legacy.jpg',     imgM:'assets/hero-legacy-m.jpg',     bg:'#705B40', bgM:'#67503E', go:'legacy',
+      alt:'Legacy eau de parfum — more than a fragrance. Bold, refined, timeless.' },
+    { img:'assets/hero-white-musk.jpg', imgM:'assets/hero-white-musk-m.jpg', bg:'#9E7F63', bgM:'#87654A', go:'white-musk',
+      alt:'White Musk eau de parfum — pure elegance, a timeless fragrance for every moment.' },
+    { img:'assets/hero-collection.jpg', imgM:'assets/hero-collection-m.jpg', bg:'#705D51', bgM:'#725740', go:'shop',
+      alt:'A scent for every story — all nine Nouryah fragrances. Explore the collection.' }
   ];
   HERO_INTERVAL = 6000;
 
