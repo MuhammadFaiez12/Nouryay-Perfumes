@@ -571,7 +571,7 @@
             <span onClick="{{ pdp.buyNow }}" style="cursor:pointer;color:var(--ink-2);border-bottom:1px solid var(--rule);padding-bottom:4px" style-hover="color:var(--gold);border-bottom-color:var(--rule-gold)">Buy now · cash on delivery</span>
             <span onClick="{{ pdp.request }}" style="cursor:pointer;color:var(--ink-3);padding-bottom:4px" style-hover="color:var(--color-text)">Order request</span>
           </div>
-          <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · delivered all over Pakistan · free 10 ml bottle on orders over {{ giftThreshold }} · 30-day returns on unopened flacons.</div>
+          <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)">Free tracked delivery over {{ freeShipLabel }} · delivered all over Pakistan · free 10 ml bottle on orders over {{ giftThreshold }}.</div>
           <div style="font-size:12.5px;letter-spacing:.04em;color:var(--gold);margin-top:8px">Limited time · free 10 ml gift on orders over {{ giftThreshold }}</div>
         </div>
       </section>
@@ -917,7 +917,7 @@
                 </div>
                 <div class="field" style="margin-top:20px"><label>Transaction ID / reference number</label><input class="input" value="{{ form.txnId }}" onChange="{{ setF.txnId }}" placeholder="From your bank's transfer receipt"></div>
               </sc-if>
-              <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:36px;max-width:62ch">By placing the order you accept the sale terms and the 30-day return right on unopened flacons. Card and wallet payments are captured on dispatch, never before.</div>
+              <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:36px;max-width:62ch">By placing the order you accept the sale terms. Card and wallet payments are captured on dispatch, never before.</div>
               <div style="display:flex;align-items:center;gap:28px;margin-top:clamp(20px,5vw,40px)">
                 <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" disabled="{{ payInvalid }}" style="flex:1">Place order · {{ totalLabel }}</button>
                 <span onClick="{{ prevStep }}" style="cursor:pointer;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap" style-hover="color:var(--color-text)">Back</span>

@@ -132,7 +132,7 @@ function buildOrderMail(o) {
   // shell() escapes the heading; intro is raw HTML so it escapes its own values.
   const customerHtml = shell(
     `Thank you, ${name}.`,
-    `Your order <strong style="color:#EFEAE0">${esc(o.no)}</strong> is confirmed. Two samples are going in the box, chosen against what you ordered.`,
+    `Your order <strong style="color:#EFEAE0">${esc(o.no)}</strong> is confirmed.`,
     details,
     `Questions? Reply to this email or message us on WhatsApp. This is a confirmation of your request &mdash; we will be in touch to arrange payment and delivery.`
   );
