@@ -78,6 +78,8 @@
   /* Category ticker. The track holds the list twice, so shifting it by half
      its width loops seamlessly. */
   @keyframes nyTicker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  /* Phones get their own artwork; this layer is inert above the breakpoint. */
+  [data-r="heroartm"] { display: none; }
   [data-r="ticktrack"] { animation: nyTicker 38s linear infinite; }
   [data-r="ticker"]:hover [data-r="ticktrack"] { animation-play-state: paused; }
   @media (prefers-reduced-motion: reduce) { [data-r="ticktrack"] { animation: none; } }
@@ -129,11 +131,13 @@
     header > div > div:first-child { margin-right: auto; }
     header > div > div:first-child > div:first-child { font-size: 21px !important; letter-spacing: .18em !important; }
     nav[data-r="nav"] { order: 3; width: 100%; margin-right: 0 !important; flex-wrap: wrap; overflow-x: visible !important; white-space: normal !important; gap: 12px 18px !important; font-size: 11px !important; letter-spacing: .1em !important; }
-    /* A 2:1 banner at phone width is only ~195px tall and its composed
-       lettering becomes unreadable. Crop to the side the logo, headline and
-       call to action sit on, which keeps them legible and the bottle in frame. */
-    [data-r="herostage"] { aspect-ratio: 5/4 !important; }
-    [data-r="heroart"] { background-size: cover !important; background-position: 2% center !important; }
+    /* There is now a portrait file drawn for phones, so the stage takes that
+       artwork's own aspect — 941x1672 — and contain neither crops nor
+       letterboxes it. This replaces cropping a wide banner down, which lost
+       the bottle and shrank the composed lettering. */
+    [data-r="herostage"] { aspect-ratio: 941/1672 !important; }
+    [data-r="heroart"] { display: none !important; }
+    [data-r="heroartm"] { display: block !important; }
     [data-r="heroarrow"] { display: none !important; }
 
     /* Announcement bar. The 112px spacer that balances the social icons on a
@@ -150,11 +154,6 @@
       white-space: normal !important; text-overflow: clip !important;
       font-size: 9.5px !important; letter-spacing: .06em !important; line-height: 1.35 !important;
     }
-
-    /* Hero was 305px on an 844px screen — a banner strip rather than a hero.
-       9/10 gives it half the viewport while still showing the logo, headline
-       and button, which all sit inside the left 30% of the artwork. */
-    [data-r="herostage"] { aspect-ratio: 9/10 !important; }
 
     /* Touch has no hover, so the add-to-bag that rises out of the card image is
        hidden there; without this the only way to add from a card was a 10.5px
@@ -287,6 +286,7 @@
         <div data-r="herostage" onClick="{{ heroGo }}" role="link" aria-label="{{ heroAlt }}" style="position:relative;width:100%;aspect-ratio:2/1;cursor:pointer">
           <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="5">
             <div data-r="heroart" role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;z-index:{{ sl.z }};opacity:{{ sl.opacity }};transition:opacity .8s ease;background-color:{{ sl.bg }};background-image:url({{ sl.img }});background-size:contain;background-position:center;background-repeat:no-repeat"></div>
+            <div data-r="heroartm" role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;z-index:{{ sl.z }};opacity:{{ sl.opacity }};transition:opacity .8s ease;background-color:{{ sl.bgM }};background-image:url({{ sl.imgM }});background-size:contain;background-position:center;background-repeat:no-repeat"></div>
           </sc-for>
         </div>
 
@@ -1339,10 +1339,12 @@ class Component extends DCLogic {
   };
 
   HERO_SLIDES = [
-    { img:'assets/hero-oud.jpg',       bg:'#3D2411', go:'oud-royale',
-      alt:'Oud Royale eau de parfum — timeless elegance, a fragrance beyond ordinary.' },
-    { img:'assets/hero-blush.jpg',     bg:'#B9918C', go:'blush',
-      alt:'Blush eau de parfum — a scent that speaks your story. Soft, feminine, unforgettable.' }
+    { img:'assets/hero-blush.jpg',     imgM:'assets/hero-blush-m.jpg',     bg:'#AC7764', bgM:'#D0948C', go:'blush',
+      alt:'Blush eau de parfum — a scent that captures your story. Elegance in every drop.' },
+    { img:'assets/hero-amber-oud.jpg', imgM:'assets/hero-amber-oud-m.jpg', bg:'#64503F', bgM:'#8C7263', go:'shop',
+      alt:'Amber Oud eau de parfum — more than a fragrance, a feeling forever. Explore the collection.' },
+    { img:'assets/hero-sahara.jpg',    imgM:'assets/hero-sahara-m.jpg',    bg:'#8A6F54', bgM:'#9E8575', go:'shop',
+      alt:'Sahara eau de parfum — let your scent tell your story. Bold notes, beautiful moments.' }
   ];
   HERO_INTERVAL = 6000;
 
@@ -1702,7 +1704,7 @@ class Component extends DCLogic {
       waHref: 'https://wa.me/92' + this.PHONE.replace(/[^0-9]/g, '').replace(/^0/, ''),
 
       heroLayers: this.HERO_SLIDES.map((sl, i) => ({
-        img: sl.img, bg: sl.bg, alt: sl.alt,
+        img: sl.img, imgM: sl.imgM, bg: sl.bg, bgM: sl.bgM, alt: sl.alt,
         opacity: i === st.slide ? '1' : '0',
         z: i === st.slide ? '2' : '1'
       })),
