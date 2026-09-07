@@ -1331,9 +1331,13 @@ class Component extends DCLogic {
   // an icon with an empty string here is simply not rendered. WhatsApp is built
   // from PHONE above, so it works without any extra configuration.
   SOCIAL = {
-    facebook: '',
-    instagram: '',
-    tiktok: ''
+    // The trailing # on the Facebook link as supplied is an empty fragment from
+    // the address bar; it is dropped so the href is the profile itself.
+    facebook: 'https://www.facebook.com/profile.php?id=61593800894475',
+    instagram: 'https://www.instagram.com/nouryahperfumes/',
+    // Placeholder until the house has a TikTok account: the platform's own
+    // home, not an invented handle, so the icon cannot point at someone else.
+    tiktok: 'https://www.tiktok.com/'
   };
 
   HERO_SLIDES = [
