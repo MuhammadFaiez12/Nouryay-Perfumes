@@ -78,8 +78,8 @@
   /* Category ticker. The track holds the list twice, so shifting it by half
      its width loops seamlessly. */
   @keyframes nyTicker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
-  /* Phones get their own artwork; this layer is inert above the breakpoint. */
-  [data-r="heroartm"] { display: none; }
+  /* Phones get their own artwork; these layers are inert above the breakpoint. */
+  [data-r="heroartm"], [data-r="foldartm"] { display: none; }
   [data-r="ticktrack"] { animation: nyTicker 38s linear infinite; }
   [data-r="ticker"]:hover [data-r="ticktrack"] { animation-play-state: paused; }
   @media (prefers-reduced-motion: reduce) { [data-r="ticktrack"] { animation: none; } }
@@ -138,6 +138,10 @@
     [data-r="herostage"] { aspect-ratio: 941/1672 !important; }
     [data-r="heroart"] { display: none !important; }
     [data-r="heroartm"] { display: block !important; }
+    /* The fold takes its phone artwork's own aspect, so nothing is cropped. */
+    [data-r="fold"] { aspect-ratio: 941/1672 !important; }
+    [data-r="foldart"] { display: none !important; }
+    [data-r="foldartm"] { display: block !important; }
     [data-r="heroarrow"] { display: none !important; }
 
     /* Announcement bar. Four icons plus a matching counterweight would take
@@ -389,6 +393,11 @@
           </div>
           <button class="btn btn-secondary" onClick="{{ goStory }}" style="margin-top:38px">Read the house file</button>
         </div>
+      </section>
+
+      <section data-r="fold" onClick="{{ goShop }}" role="link" aria-label="Fragrances that stay with you — discover the signature collection, crafted for every mood" style="position:relative;width:100%;aspect-ratio:1877/838;cursor:pointer;border-bottom:1px solid var(--rule);overflow:hidden">
+        <div data-r="foldart" role="presentation" style="position:absolute;inset:0;background-color:#DFCDB8;background-image:url(assets/fold-signature.jpg);background-size:cover;background-position:center"></div>
+        <div data-r="foldartm" role="presentation" style="position:absolute;inset:0;background-color:#E6D9CA;background-image:url(assets/fold-signature-m.jpg);background-size:cover;background-position:center"></div>
       </section>
 
       <section data-r="sec" style="max-width:1320px;margin:0 auto;padding:112px clamp(20px,5vw,40px)">
