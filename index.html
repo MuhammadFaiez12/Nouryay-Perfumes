@@ -189,9 +189,16 @@
        squeezing "Nine to explore" onto three lines. */
     [data-r="sechead"] { flex-wrap: wrap; align-items: flex-start !important; gap: 16px !important; }
     [data-r="sechead"] > div:first-child { flex: 1 1 100%; }
-    /* One card and a hint of the next, so the row reads as swipeable. */
-    [data-r="collcard"] { flex: 0 0 74vw !important; }
-    [data-r="collrail"] { gap: 16px !important; padding-top: 36px !important; }
+    /* One card on the gutter, a clear slice of the next running off the edge. */
+    [data-r="collcard"] { flex: 0 0 clamp(228px, 62vw, 320px) !important; }
+    [data-r="collrail"] {
+      gap: 14px !important; padding-top: 36px !important;
+      margin-left: calc(-1 * clamp(20px, 5vw, 40px)) !important;
+      margin-right: calc(-1 * clamp(20px, 5vw, 40px)) !important;
+      padding-left: clamp(20px, 5vw, 40px) !important;
+      padding-right: clamp(20px, 5vw, 40px) !important;
+      scroll-padding-left: clamp(20px, 5vw, 40px) !important;
+    }
     /* Touch users swipe; the arrows would only crowd the header. */
     [data-r="railctl"] > div { display: none !important; }
     [data-r="railprog"] { display: block !important; }
