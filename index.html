@@ -514,16 +514,17 @@
           <p style="font-size:16px;line-height:1.85;color:var(--ink-2);margin:26px 0 0;max-width:52ch;text-wrap:pretty">{{ pdp.desc }}</p>
 
           <div style="margin-top:36px">
+            <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">The composition</div>
             <div style="border-top:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:96px 1fr;gap:24px;font-size:14.5px">
-              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);padding-top:3px">Top</div>
+              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);padding-top:3px;display:flex;align-items:baseline;gap:8px"><span style="width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0"></span>Top</div>
               <div>{{ pdp.top }}</div>
             </div>
             <div style="border-top:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:96px 1fr;gap:24px;font-size:14.5px">
-              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);padding-top:3px">Heart</div>
+              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);padding-top:3px;display:flex;align-items:baseline;gap:8px"><span style="width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0"></span>Heart</div>
               <div>{{ pdp.heart }}</div>
             </div>
             <div style="border-top:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:96px 1fr;gap:24px;font-size:14.5px">
-              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);padding-top:3px">Base</div>
+              <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);padding-top:3px;display:flex;align-items:baseline;gap:8px"><span style="width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0"></span>Base</div>
               <div>{{ pdp.base }}</div>
             </div>
             <div style="border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 0;display:grid;grid-template-columns:96px 1fr;gap:24px;font-size:14.5px">
@@ -1261,33 +1262,33 @@ class Component extends DCLogic {
   ];
 
   products = [
-    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Amber', tagline:'Amber & leather', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign-studio.jpg', img2:'assets/sovereign.jpg', rating:4.8, reviews:212,
-      top:'Calabrian bergamot, black pepper', heart:'Leather, cinnamon, Turkish rose', base:'Amber, labdanum, vanilla absolute',
-      desc:'The house signature. A dark amber built on tanned leather and a rose that refuses to sweeten it — the flacon that convinced us to publish the formulas.' },
-    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud & saffron', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale-studio.jpg', img2:'assets/oud-royale.jpg', rating:4.9, reviews:301,
-      top:'Saffron, nutmeg', heart:'Laotian oud, rose damascena, patchouli', base:'Agarwood, amber, white musk',
-      desc:'The most concentrated composition in the house: real Laotian oud carried by saffron, then held for half a day by agarwood and amber. Two sprays is the whole dose.' },
-    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Amber', tagline:'Tobacco & golden amber', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph-studio.jpg', img2:'assets/triumph.jpg', rating:4.7, reviews:158,
-      top:'Grapefruit, cardamom', heart:'Tobacco leaf, honey, davana', base:'Golden amber, tonka bean, cedar',
-      desc:'Honeyed tobacco over a warm amber floor. Worn for the meeting you intend to win — it is read across a room and remembered afterwards.' },
-    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Green fig & vetiver', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy-studio.jpg', img2:'assets/legacy.jpg', rating:4.6, reviews:97,
-      top:'Green fig, bergamot', heart:'Haitian vetiver, iris', base:'Oakmoss, cedar, ambrette',
-      desc:'Cool green woods with the bitter snap of fig leaf. The one to wear five days a week — structured, quiet, never anonymous.' },
-    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Woody', tagline:'Incense & sea mineral', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse-studio.jpg', img2:'assets/eclipse.jpg', rating:4.7, reviews:84,
-      top:'Sea mineral, juniper', heart:'Frankincense, blue cypress', base:'Ambergris, vetiver, oakmoss',
-      desc:'Cold incense over a mineral wash — smoke read through sea air. Composed for the last blue hour before a winter evening turns.' },
-    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Iris & violet', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur-studio.jpg', img2:'assets/fleur.jpg', rating:4.5, reviews:76,
-      top:'Violet leaf, pear', heart:'Florentine iris, peony, orris butter', base:'Sandalwood, musk, benzoin',
-      desc:'Powdered iris with a green violet edge, resting on sandalwood. Floral without a single sugared note.' },
-    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Peony & rose', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush-studio.jpg', img2:'assets/blush.jpg', rating:4.8, reviews:264,
-      top:'Lychee, pink pepper', heart:'Peony, Turkish rose, magnolia', base:'Cashmere wood, white musk',
-      desc:'A bright rose held close to the skin. The easiest first bottle in the house — and the one most often bought twice.' },
-    { id:'azure', ref:'NJ-08', name:'Azure', family:'Aquatic', tagline:'Bergamot & sea salt', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure-studio.jpg', img2:'assets/azure.jpg', rating:4.6, reviews:139,
-      top:'Sicilian bergamot, sea salt', heart:'Neroli, jasmine, sage', base:'White amber, driftwood, moss',
-      desc:'Sea air off the Makran coast in July. Sharp citrus, a clean floral heart, and driftwood underneath so it never turns soapy.' },
-    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Cotton & white musk', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk-studio.jpg', img2:'assets/white-musk.jpg', rating:4.9, reviews:188,
-      top:'Cotton flower, bergamot', heart:'White musk, lily of the valley', base:'Blond cedar, vanilla, ambrette',
-      desc:'Skin, laundered. The quietest sheet in the set and the one people lean in to identify.' }
+    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Woody', tagline:'Woody · Fresh · Spicy · Masculine', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign-studio.jpg', img2:'assets/sovereign.jpg', rating:4.8, reviews:212,
+      top:'Citrus, ginger, black pepper, pine', heart:'Cashmere wood, leather, rosemary', base:'Mahogany wood, patchouli, skin musk',
+      desc:'A confident masculine fragrance combining fresh citrus and spicy notes with refined woods, leather and smooth musk for a sophisticated long-lasting finish.' },
+    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud · Woody · Ambery · Warm', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale-studio.jpg', img2:'assets/oud-royale.jpg', rating:4.9, reviews:301,
+      top:'Saffron, bergamot, pink pepper', heart:'Oud, rose, leather', base:'Agarwood, amber, sandalwood, musk',
+      desc:'A rich and powerful oud fragrance with a luxurious spicy opening, deep woody heart and warm ambery-musk finish.' },
+    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Fresh', tagline:'Fresh · Aquatic · Woody · Aromatic', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph-studio.jpg', img2:'assets/triumph.jpg', rating:4.7, reviews:158,
+      top:'Grapefruit, sea notes, mandarin orange', heart:'Bay leaf, jasmine', base:'Guaiac wood, patchouli, oakmoss, ambergris',
+      desc:'A fresh and powerful masculine fragrance with a sparkling citrus opening, an aquatic aromatic heart, and a warm woody base. Bold, energetic and long-lasting.' },
+    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Woody · Citrus · Spicy', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy-studio.jpg', img2:'assets/legacy.jpg', rating:4.6, reviews:97,
+      top:'Lemon, green cardamom', heart:'Cardamom, spicy aromatic notes', base:'Vetiver, woody notes',
+      desc:'A bold and energetic fragrance blending fresh lemon and spicy cardamom with elegant vetiver for a confident masculine finish.' },
+    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Fresh', tagline:'Fresh · Citrus · Woody', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse-studio.jpg', img2:'assets/eclipse.jpg', rating:4.7, reviews:84,
+      top:'Calabrian bergamot, Sichuan pepper, lemon', heart:'Lavender, elemi, geranium', base:'Ambroxan, cedarwood, patchouli, woody notes',
+      desc:'A fresh and powerful masculine fragrance with sparkling bergamot and spicy pepper, settling into a smooth ambery-woody base.' },
+    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Floral · Fresh · Fruity · Woody', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur-studio.jpg', img2:'assets/fleur.jpg', rating:4.5, reviews:76,
+      top:'Peony, citrus, mandarin orange', heart:'Rose, osmanthus', base:'Sandalwood, patchouli',
+      desc:'A feminine floral fragrance that opens with fresh citrus and delicate peony, followed by a soft floral heart and a warm, elegant woody base.' },
+    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Floral · Fruity · Sweet', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush-studio.jpg', img2:'assets/blush.jpg', rating:4.8, reviews:264,
+      top:'Pink pepper, bergamot, pear', heart:'Rose, jasmine, peony', base:'Vanilla, musk, sandalwood',
+      desc:'A soft and elegant feminine fragrance combining fresh fruity notes with delicate florals and a warm, creamy musk finish.' },
+    { id:'azure', ref:'NJ-08', name:'Azure', family:'Fruity', tagline:'Fruity · Citrus · Woody', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure-studio.jpg', img2:'assets/azure.jpg', rating:4.6, reviews:139,
+      top:'Calabrian bergamot, Sicilian lemon, blackcurrant', heart:'Pineapple, pink pepper, jasmine', base:'Birch, patchouli, musk',
+      desc:'A sophisticated blend of sparkling citrus and juicy pineapple, enriched with smoky birch, patchouli and musk for a bold and refined signature.' },
+    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Woody · Musky · Warm', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk-studio.jpg', img2:'assets/white-musk.jpg', rating:4.9, reviews:188,
+      top:'Fresh green notes, pear, fig, apricot', heart:'Sandalwood, fig tree, soft woody notes', base:'White musk, dry woods, amber, tonka bean',
+      desc:'A smooth and elegant woody fragrance with a fresh fruity opening, creamy woods at the heart, and a warm musky finish. Designed for a sophisticated and long-lasting impression.' }
   ];
 
   GIFT_THRESHOLD = 3000;
@@ -1568,9 +1569,9 @@ class Component extends DCLogic {
     const a = this.state.fAns;
     let s = 0;
     if (a.family === p.family) s += 4;
-    if ((a.family === 'Amber' && p.family === 'Oud') || (a.family === 'Oud' && p.family === 'Amber')) s += 2;
-    if (a.family === 'Woody' && p.family === 'Aquatic') s += 1;
-    if (a.family === 'Floral' && p.family === 'Musk') s += 1;
+    const near = { Woody:['Oud','Musk'], Oud:['Woody'], Musk:['Woody','Floral'],
+      Fresh:['Fruity','Woody'], Fruity:['Fresh','Floral'], Floral:['Fruity','Musk'] };
+    if ((near[a.family] || []).includes(p.family)) s += 2;
     if (a.moment === p.moment) s += 2;
     s += 2 - Math.abs((a.proj || 2) - p.proj);
     return s;
@@ -1594,7 +1595,7 @@ class Component extends DCLogic {
     if (st.sort === 'low') list.sort((a, b) => a.price - b.price);
     if (st.sort === 'high') list.sort((a, b) => b.price - a.price);
     if (st.sort === 'strong') list.sort((a, b) => b.proj - a.proj);
-    const families = ['All', 'Amber', 'Oud', 'Woody', 'Floral', 'Aquatic', 'Musk'];
+    const families = ['All', ...this.products.reduce((a, p) => a.includes(p.family) ? a : a.concat(p.family), [])];
 
     const p = this.find(st.pid);
     const gallery = [
@@ -1607,10 +1608,11 @@ class Component extends DCLogic {
 
     const Q = [
       { title:'Which world do you want to live in?', key:'family', options:[
-        { label:'Warm & resinous', hint:'Amber, leather, tobacco', val:'Amber' },
-        { label:'Deep & spiced', hint:'Real oud, saffron, rose', val:'Oud' },
-        { label:'Cool & wooded', hint:'Vetiver, fig, incense, cedar', val:'Woody' },
-        { label:'Floral or clean', hint:'Iris, peony, sea salt, musk', val:'Floral' }
+        { label:'Fresh & aromatic', hint:'Bergamot, sea notes, lavender', val:'Fresh' },
+        { label:'Deep & spiced', hint:'Oud, saffron, rose, leather', val:'Oud' },
+        { label:'Cool & wooded', hint:'Vetiver, cardamom, sandalwood', val:'Woody' },
+        { label:'Floral', hint:'Rose, peony, jasmine, osmanthus', val:'Floral' },
+        { label:'Fruity & bright', hint:'Pineapple, blackcurrant, pear', val:'Fruity' }
       ]},
       { title:'When will you wear it most?', key:'moment', options:[
         { label:'Evenings out', hint:'Dinner, weddings, the late table', val:'evening' },
