@@ -340,7 +340,7 @@
         <div data-r="collrail" style="display:flex;gap:clamp(18px,2.2vw,34px);padding:56px 0 8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch">
           <sc-for list="{{ railCards }}" as="p" hint-placeholder-count="9">
             <div data-r="collcard" style="flex:0 0 clamp(236px,25vw,296px);display:flex;flex-direction:column;scroll-snap-align:start">
-              <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
+              <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--color-surface);border:1px solid var(--rule)">
                 <img src="{{ p.img }}" alt="{{ p.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)">
                 <div class="pswap" role="presentation" style="position:absolute;inset:0;background-image:url({{ p.img2 }});background-size:cover;background-position:center"></div>
               </div>
@@ -457,7 +457,7 @@
       <section style="max-width:1320px;margin:0 auto;padding:64px clamp(20px,5vw,40px) 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:76px clamp(20px,5vw,40px)">
         <sc-for list="{{ shopList }}" as="p" hint-placeholder-count="9">
           <div style="display:flex;flex-direction:column">
-            <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--color-surface);border:1px solid var(--rule)">
+            <div onClick="{{ p.open }}" data-r="pimg" style="cursor:pointer;position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--color-surface);border:1px solid var(--rule)">
               <img src="{{ p.img }}" alt="{{ p.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)">
               <div class="pswap" role="presentation" style="position:absolute;inset:0;background-image:url({{ p.img2 }});background-size:cover;background-position:center"></div>
               <span onClick="{{ p.quickAdd }}" class="pquick" style="position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:flex;align-items:center;justify-content:center;padding:12px 0;background:var(--color-text);color:var(--color-bg);font-family:var(--font-ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">Add to bag</span>
@@ -497,13 +497,13 @@
       <section data-r="split" style="max-width:1320px;margin:0 auto;padding:44px clamp(20px,5vw,40px) 0;display:grid;grid-template-columns:1.06fr .94fr;gap:72px;align-items:start">
         <div style="display:grid;grid-template-columns:76px 1fr;gap:20px">
           <div style="display:grid;gap:12px;align-content:start">
-            <sc-for list="{{ pdp.gallery }}" as="g" hint-placeholder-count="3">
-              <div onClick="{{ g.pick }}" style="cursor:pointer;overflow:hidden;aspect-ratio:3/4;background:#F1ECE3;opacity:{{ g.op }};transition:opacity .25s" style-hover="opacity:1">
+            <sc-for list="{{ pdp.gallery }}" as="g" hint-placeholder-count="4">
+              <div onClick="{{ g.pick }}" style="cursor:pointer;overflow:hidden;aspect-ratio:1/1;background:#F1ECE3;opacity:{{ g.op }};transition:opacity .25s" style-hover="opacity:1">
                 <img src="{{ g.src }}" alt="{{ g.alt }}" style="width:100%;height:100%;object-fit:cover">
               </div>
             </sc-for>
           </div>
-          <div style="overflow:hidden;aspect-ratio:3/4;background:#F1ECE3">
+          <div style="overflow:hidden;aspect-ratio:1/1;background:#F1ECE3">
             <img src="{{ pdp.activeImg }}" alt="{{ pdp.alt }}" style="width:100%;height:100%;object-fit:cover;animation:nyFade .5s ease">
           </div>
         </div>
@@ -622,7 +622,7 @@
             <h1 style="font-size:clamp(34px,3.8vw,52px);line-height:1.05;margin:20px 0 10px">Your flacon</h1>
             <p style="font-size:15px;color:var(--ink-3);margin:0 0 52px">Matched on family, moment and projection across all nine.</p>
             <div data-r="split2" style="display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start">
-              <div style="overflow:hidden;aspect-ratio:3/4;background:#F1ECE3">
+              <div style="overflow:hidden;aspect-ratio:1/1;background:#F1ECE3">
                 <img src="{{ finder.result.img }}" alt="{{ finder.result.alt }}" style="width:100%;height:100%;object-fit:cover">
               </div>
               <div>
@@ -923,7 +923,7 @@
           <div style="margin-top:26px">
             <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
               <div style="display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;padding-bottom:18px">
-                <div style="overflow:hidden;aspect-ratio:3/4;background:#F1ECE3"><img src="{{ l.img }}" alt="{{ l.alt }}" style="width:100%;height:100%;object-fit:cover"></div>
+                <div style="overflow:hidden;aspect-ratio:1/1;background:#F1ECE3"><img src="{{ l.img }}" alt="{{ l.alt }}" style="width:100%;height:100%;object-fit:cover"></div>
                 <div>
                   <div style="font-family:var(--font-heading);font-size:18px">{{ l.name }}</div>
                   <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-top:4px">{{ l.sizeLabel }} · {{ l.qty }}</div>
@@ -1187,7 +1187,7 @@
             <div style="flex:1;overflow-y:auto;padding:0 30px">
               <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
                 <div style="display:grid;grid-template-columns:74px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid var(--rule)">
-                  <div style="overflow:hidden;aspect-ratio:3/4;background:#F1ECE3"><img src="{{ l.img }}" alt="{{ l.alt }}" style="width:100%;height:100%;object-fit:cover"></div>
+                  <div style="overflow:hidden;aspect-ratio:1/1;background:#F1ECE3"><img src="{{ l.img }}" alt="{{ l.alt }}" style="width:100%;height:100%;object-fit:cover"></div>
                   <div>
                     <div style="display:flex;justify-content:space-between;gap:14px;align-items:baseline">
                       <div style="font-family:var(--font-heading);font-size:21px">{{ l.name }}</div>
@@ -1266,31 +1266,31 @@ class Component extends DCLogic {
   ];
 
   products = [
-    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Woody', tagline:'Woody · Fresh · Spicy · Masculine', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign-studio.jpg', rating:4.8, reviews:212,
+    { id:'sovereign', ref:'NJ-01', name:'Sovereign', family:'Woody', tagline:'Woody · Fresh · Spicy · Masculine', price:3864, compareAt:4200, hours:'9–10', proj:3, moment:'evening', img:'assets/sovereign-studio.jpg', photo:'assets/sovereign-photo.jpg', rating:4.8, reviews:212,
       top:'Citrus, ginger, black pepper, pine', heart:'Cashmere wood, leather, rosemary', base:'Mahogany wood, patchouli, skin musk',
       desc:'A confident masculine fragrance combining fresh citrus and spicy notes with refined woods, leather and smooth musk for a sophisticated long-lasting finish.' },
-    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud · Woody · Ambery · Warm', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale-studio.jpg', rating:4.9, reviews:301,
+    { id:'oud-royale', ref:'NJ-02', name:'Oud Royale', family:'Oud', tagline:'Oud · Woody · Ambery · Warm', price:3864, compareAt:4200, hours:'10–12', proj:3, moment:'evening', img:'assets/oud-royale-studio.jpg', photo:'assets/oud-royale-photo.jpg', rating:4.9, reviews:301,
       top:'Saffron, bergamot, pink pepper', heart:'Oud, rose, leather', base:'Agarwood, amber, sandalwood, musk',
       desc:'A rich and powerful oud fragrance with a luxurious spicy opening, deep woody heart and warm ambery-musk finish.' },
-    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Fresh', tagline:'Fresh · Aquatic · Woody · Aromatic', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph-studio.jpg', rating:4.7, reviews:158,
+    { id:'triumph', ref:'NJ-03', name:'Triumph', family:'Fresh', tagline:'Fresh · Aquatic · Woody · Aromatic', price:3240, compareAt:3600, hours:'8–10', proj:3, moment:'evening', img:'assets/triumph-studio.jpg', photo:'assets/triumph-photo.jpg', rating:4.7, reviews:158,
       top:'Grapefruit, sea notes, mandarin orange', heart:'Bay leaf, jasmine', base:'Guaiac wood, patchouli, oakmoss, ambergris',
       desc:'A fresh and powerful masculine fragrance with a sparkling citrus opening, an aquatic aromatic heart, and a warm woody base. Bold, energetic and long-lasting.' },
-    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Woody · Citrus · Spicy', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy-studio.jpg', rating:4.6, reviews:97,
+    { id:'legacy', ref:'NJ-04', name:'Legacy', family:'Woody', tagline:'Woody · Citrus · Spicy', price:3330, compareAt:3700, hours:'7–9', proj:2, moment:'daily', img:'assets/legacy-studio.jpg', photo:'assets/legacy-photo.jpg', rating:4.6, reviews:97,
       top:'Lemon, green cardamom', heart:'Cardamom, spicy aromatic notes', base:'Vetiver, woody notes',
       desc:'A bold and energetic fragrance blending fresh lemon and spicy cardamom with elegant vetiver for a confident masculine finish.' },
-    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Fresh', tagline:'Fresh · Citrus · Woody', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse-studio.jpg', rating:4.7, reviews:84,
+    { id:'eclipse', ref:'NJ-05', name:'Eclipse', family:'Fresh', tagline:'Fresh · Citrus · Woody', price:3321, compareAt:3690, hours:'8–9', proj:2, moment:'evening', img:'assets/eclipse-studio.jpg', photo:'assets/eclipse-photo.jpg', rating:4.7, reviews:84,
       top:'Calabrian bergamot, Sichuan pepper, lemon', heart:'Lavender, elemi, geranium', base:'Ambroxan, cedarwood, patchouli, woody notes',
       desc:'A fresh and powerful masculine fragrance with sparkling bergamot and spicy pepper, settling into a smooth ambery-woody base.' },
-    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Floral · Fresh · Fruity · Woody', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur-studio.jpg', rating:4.5, reviews:76,
+    { id:'fleur', ref:'NJ-06', name:'Fleur', family:'Floral', tagline:'Floral · Fresh · Fruity · Woody', price:3150, compareAt:3500, hours:'7–8', proj:2, moment:'evening', img:'assets/fleur-studio.jpg', photo:'assets/fleur-photo.jpg', rating:4.5, reviews:76,
       top:'Peony, citrus, mandarin orange', heart:'Rose, osmanthus', base:'Sandalwood, patchouli',
       desc:'A feminine floral fragrance that opens with fresh citrus and delicate peony, followed by a soft floral heart and a warm, elegant woody base.' },
-    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Floral · Fruity · Sweet', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush-studio.jpg', rating:4.8, reviews:264,
+    { id:'blush', ref:'NJ-07', name:'Blush', family:'Floral', tagline:'Floral · Fruity · Sweet', price:3150, compareAt:3500, hours:'6–8', proj:1, moment:'daylight', img:'assets/blush-studio.jpg', photo:'assets/blush-photo.jpg', rating:4.8, reviews:264,
       top:'Pink pepper, bergamot, pear', heart:'Rose, jasmine, peony', base:'Vanilla, musk, sandalwood',
       desc:'A soft and elegant feminine fragrance combining fresh fruity notes with delicate florals and a warm, creamy musk finish.' },
-    { id:'azure', ref:'NJ-08', name:'Azure', family:'Fruity', tagline:'Fruity · Citrus · Woody', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure-studio.jpg', rating:4.6, reviews:139,
+    { id:'azure', ref:'NJ-08', name:'Azure', family:'Fruity', tagline:'Fruity · Citrus · Woody', price:3150, compareAt:3500, hours:'6–7', proj:1, moment:'daylight', img:'assets/azure-studio.jpg', photo:'assets/azure-photo.jpg', rating:4.6, reviews:139,
       top:'Calabrian bergamot, Sicilian lemon, blackcurrant', heart:'Pineapple, pink pepper, jasmine', base:'Birch, patchouli, musk',
       desc:'A sophisticated blend of sparkling citrus and juicy pineapple, enriched with smoky birch, patchouli and musk for a bold and refined signature.' },
-    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Woody · Musky · Warm', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk-studio.jpg', rating:4.9, reviews:188,
+    { id:'white-musk', ref:'NJ-09', name:'White Musk', family:'Musk', tagline:'Woody · Musky · Warm', price:3772, compareAt:4100, hours:'6–8', proj:1, moment:'daily', img:'assets/white-musk-studio.jpg', photo:'assets/white-musk-photo.jpg', rating:4.9, reviews:188,
       top:'Fresh green notes, pear, fig, apricot', heart:'Sandalwood, fig tree, soft woody notes', base:'White musk, dry woods, amber, tonka bean',
       desc:'A smooth and elegant woody fragrance with a fresh fruity opening, creamy woods at the heart, and a warm musky finish. Designed for a sophisticated and long-lasting impression.' }
   ];
@@ -1607,6 +1607,7 @@ class Component extends DCLogic {
     const p = this.find(st.pid);
     const gallery = [
       { src:p.img, alt:'Nouryah ' + p.name + ' flacon' },
+      { src:p.photo, alt:'Nouryah ' + p.name + ', the bottle photographed' },
       { src:'assets/box.jpg', alt:'Nouryah carton, front' },
       { src:'assets/box-angle.jpg', alt:'Nouryah carton, three-quarter' }
     ];
