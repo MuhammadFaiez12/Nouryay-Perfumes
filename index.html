@@ -534,17 +534,9 @@
             </div>
           </div>
 
-          <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3);margin:38px 0 14px">Format</div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <sc-for list="{{ pdp.sizes }}" as="s" hint-placeholder-count="3">
-              <div onClick="{{ s.pick }}" style="cursor:pointer;padding:14px 22px;border:1px solid {{ s.bd }};color:{{ s.fg }};background:{{ s.bg }};transition:all .25s" style-hover="border-color:var(--rule-gold)">
-                <div style="font-family:var(--font-ui);font-size:12px;letter-spacing:.16em;text-transform:uppercase">{{ s.label }}</div>
-                <div style="font-size:13px;font-variant-numeric:tabular-nums;opacity:.72;margin-top:4px;display:flex;gap:6px">
-                  <sc-if value="{{ s.compareAtLabel }}" hint-placeholder-val="{{ false }}"><span style="text-decoration:line-through">{{ s.compareAtLabel }}</span></sc-if>
-                  <span>{{ s.priceLabel }}</span>
-                </div>
-              </div>
-            </sc-for>
+          <div style="margin:34px 0 0;display:flex;align-items:baseline;gap:16px;font-family:var(--font-ui);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase">
+            <span style="color:var(--ink-3)">Format</span>
+            <span style="color:var(--color-text);letter-spacing:.18em">50 ml flacon</span>
           </div>
 
           <div style="display:flex;align-items:stretch;gap:14px;margin-top:32px">
@@ -1308,7 +1300,7 @@ class Component extends DCLogic {
     { q:'Where do you deliver?', a:'All over Pakistan, tracked to your door. Orders placed before 4pm are dispatched the same working day; free delivery over the published threshold.' },
     { q:'How does the free 10 ml gift work?', a:'Spend over the published threshold and a 10 ml bottle is added to your order at no charge. It is chosen against what you ordered — buy Sovereign and you will get something in the same register, not a floral. Add a note at checkout if you would rather pick it yourself.' },
     { q:'Can I pay cash on delivery?', a:'Yes, on every order, all over Pakistan. The rider collects the exact amount printed on the packing slip; nothing is charged before the parcel is in your hands. JazzCash, Easypaisa, Raast and card are all available if you prefer to pay in advance.' },
-    { q:'Can I return a fragrance I have tried?', a:'Unopened flacons come back within 30 days with the prepaid label in the carton. Once a flacon is sprayed we cannot resell it, so try a 10 ml travel size first.' },
+    { q:'Can I return a fragrance I have tried?', a:'Unopened flacons come back within 30 days with the prepaid label in the carton. Once a flacon is sprayed we cannot resell it, so every fragrance lists its full top, heart and base before you order.' },
     { q:'Do you take corporate or wholesale orders?', a:'Yes. Use the order request page for anything over ten units, hotel amenity programmes, or engraved gifting. You get a written quote with the volume tier applied and an invoice option at net 14 days.' }
   ];
 
@@ -1491,8 +1483,7 @@ class Component extends DCLogic {
   find(id) { return this.products.find(p => p.id === id) || this.products[0]; }
   sizesFor(p) {
     return [
-      { key:'50', label:'50 ml', price:p.price, name:'50 ml flacon' },
-      { key:'10', label:'10 ml', price:Math.round(p.price * 0.34 / 100) * 100, name:'10 ml travel' }
+      { key:'50', label:'50 ml', price:p.price, name:'50 ml flacon' }
     ];
   }
   projLabel(n) { return n >= 3 ? 'Strong' : n === 2 ? 'Moderate' : 'Intimate'; }
@@ -1778,14 +1769,6 @@ class Component extends DCLogic {
         projectionLabel:this.projLabel(p.proj), stockLabel:'In stock · batch 07',
         activeImg:gallery[st.gi].src, alt:'Nouryah ' + p.name + ' eau de parfum, 50 ml',
         gallery:gallery.map((g, i) => ({ src:g.src, alt:g.alt, op: i === st.gi ? 1 : 0.42, pick: () => this.setState({ gi:i }) })),
-        sizes:sizes.map(s => ({
-          label:s.label, priceLabel:this.fmt(s.price),
-          compareAtLabel: s.key === '50' ? this.fmt(p.compareAt) : null,
-          bd: st.size === s.key ? GOLD : 'rgba(26,23,18,.22)',
-          fg: st.size === s.key ? GOLD : TEXT,
-          bg: st.size === s.key ? 'rgba(201,160,92,.07)' : 'transparent',
-          pick: () => this.setState({ size:s.key })
-        })),
         compareAtLabel:this.fmt(p.compareAt), discountLabel:Math.round((1 - p.price / p.compareAt) * 100) + '%',
         qty:st.qty,
         inc: () => this.setState({ qty:st.qty + 1 }),
