@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://nouryahperfumes.com/</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/sovereign-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/oud-royale-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/triumph-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/legacy-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/eclipse-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/fleur-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/blush-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/azure-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/white-musk-studio.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/og-card.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/fold-signature.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/hero-legacy.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/hero-white-musk.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nouryahperfumes.com/assets/hero-collection.jpg</image:loc>
+    </image:image>
   </url>
 </urlset>
