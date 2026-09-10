@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/((?!\\.well-known/).*)",
+      "has": [{ "type": "host", "value": "www.nouryahperfumes.com" }],
+      "destination": "https://nouryahperfumes.com/$1",
+      "permanent": true
+    }
+  ]
+}
