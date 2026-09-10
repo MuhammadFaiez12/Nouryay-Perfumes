@@ -26,9 +26,9 @@ environment variables below and redeploy.
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `RESEND_API_KEY` | yes | From <https://resend.com/api-keys>. Without it the endpoint returns 500 and no mail is sent. |
-| `ORDER_FROM_EMAIL` | recommended | Sender, e.g. `Nouryah <orders@nouryah.pk>`. The domain must be verified in Resend. Defaults to Resend's shared `onboarding@resend.dev`, which works for testing but is far more likely to land in spam. |
+| `ORDER_FROM_EMAIL` | recommended | Sender, e.g. `Nouryah <orders@nouryahperfumes.com>`. **Verify the domain in Resend and set this before taking real orders.** The default is Resend's shared `onboarding@resend.dev`, and on that address Resend delivers only to the account owner's own verified address — the shop copy arrives, the customer's receipt is rejected. That failure looks like success unless you check both. |
 | `SHOP_NOTIFY_EMAIL` | no | Where shop notifications go. Defaults to the address in `api/order.js`. |
-| `ALLOWED_ORIGIN` | recommended | e.g. `https://nouryah.pk`. Rejects posts from other origins. Leave unset to allow any. |
+| `ALLOWED_ORIGIN` | recommended | e.g. `https://nouryahperfumes.com` — the live origin, exactly. Rejects posts from anywhere else. Set it to the wrong host and every order returns 403 and nothing is sent, so leave it unset rather than guess. |
 
 Set these in the Vercel project under Settings → Environment Variables. Never
 put the API key in `index.html` — anything in that file is public.

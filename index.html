@@ -1982,6 +1982,24 @@ class Component extends DCLogic {
         window.scrollTo(0, 0);
         this.mailOrder(order);
       },
+      // Only once the send has actually reported back, so this never flashes
+      // while the request is still open.
+      orderMailFailed: !!(st.order && st.order.mailChecked && !st.order.emailSent),
+      // The order, ready to send to the house by hand if the receipt failed.
+      orderWaHref: (() => {
+        const o = st.order || {};
+        const items = (o.lines || []).map(l => l.name + ' · ' + l.sizeLabel + ' × ' + l.qty).join(', ');
+        const msg = [
+          'Nouryah order ' + (o.no || ''),
+          [o.first, o.last].filter(Boolean).join(' '),
+          items,
+          'Total ' + (o.totalLabel || ''),
+          o.pay || '',
+          [o.address, o.city].filter(Boolean).join(', ')
+        ].filter(Boolean).join('\n');
+        return 'https://wa.me/92' + this.PHONE.replace(/[^0-9]/g, '').replace(/^0/, '')
+          + '?text=' + encodeURIComponent(msg);
+      })(),
       order: st.order || { no:'', trackingCode:'', first:'', last:'', email:'', phone:'', address:'', zip:'', city:'', province:'', shipName:'', pay:'', totalLabel:'', lines:[], eta:'', gift:false, giftWrap:false, emailSent:false },
       // In-app tracking. The old link pointed at https://nouryah.pk/track/… —
       // a domain that does not resolve, so it could never have worked.
