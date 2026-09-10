@@ -10,7 +10,7 @@
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 
-const SHOP_EMAIL = process.env.SHOP_NOTIFY_EMAIL || 'Muhammadfaiez979@gmail.com';
+const SHOP_EMAIL = process.env.SHOP_NOTIFY_EMAIL || 'nouryahperfumes@gmail.com';
 // resend.dev is Resend's shared sender; it works without a verified domain but
 // lands in spam more often. Point ORDER_FROM_EMAIL at your own domain for real use.
 const FROM = process.env.ORDER_FROM_EMAIL || 'Nouryah <onboarding@resend.dev>';
@@ -114,11 +114,24 @@ function readRequest(body) {
   };
 }
 
+// Pakistan time, so the date on the invoice is the date the customer ordered.
+function orderStamp() {
+  try {
+    return new Date().toLocaleString('en-GB', {
+      timeZone: 'Asia/Karachi', day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    }).replace(',', '') + ' PKT';
+  } catch (e) {
+    return new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  }
+}
+
 function buildOrderMail(o) {
   const name = o.first || 'there';
   const ship = [o.address, o.city, o.province, o.zip].filter(Boolean).join(', ');
   const details =
     detailRow('Order', o.no) +
+    detailRow('Date', orderStamp()) +
     lineRows(o.lines) +
     detailRow('Total', o.totalLabel) +
     detailRow('Payment', o.pay) +
@@ -132,9 +145,9 @@ function buildOrderMail(o) {
   // shell() escapes the heading; intro is raw HTML so it escapes its own values.
   const customerHtml = shell(
     `Thank you, ${name}.`,
-    `Your order <strong style="color:#EFEAE0">${esc(o.no)}</strong> is confirmed.`,
+    `Your order <strong style="color:#EFEAE0">${esc(o.no)}</strong> is confirmed. This email is your invoice.`,
     details,
-    `Questions? Reply to this email or message us on WhatsApp. This is a confirmation of your request &mdash; we will be in touch to arrange payment and delivery.`
+    `Keep this email as your invoice. Questions? Reply to it, or message us on WhatsApp at 0334 820 0192.`
   );
 
   const shopHtml = shell(

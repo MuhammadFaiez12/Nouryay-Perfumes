@@ -27,7 +27,7 @@ environment variables below and redeploy.
 | --- | --- | --- |
 | `RESEND_API_KEY` | yes | From <https://resend.com/api-keys>. Without it the endpoint returns 500 and no mail is sent. |
 | `ORDER_FROM_EMAIL` | recommended | Sender, e.g. `Nouryah <orders@nouryahperfumes.com>`. **Verify the domain in Resend and set this before taking real orders.** The default is Resend's shared `onboarding@resend.dev`, and on that address Resend delivers only to the account owner's own verified address — the shop copy arrives, the customer's receipt is rejected. That failure looks like success unless you check both. |
-| `SHOP_NOTIFY_EMAIL` | no | Where shop notifications go. Defaults to the address in `api/order.js`. |
+| `SHOP_NOTIFY_EMAIL` | no | Where the shop copy goes. Defaults to `nouryahperfumes@gmail.com`. It is also the reply-to on the customer's invoice, so a customer replying reaches the shop. |
 | `ALLOWED_ORIGIN` | recommended | e.g. `https://nouryahperfumes.com` — the live origin, exactly. Rejects posts from anywhere else. Set it to the wrong host and every order returns 403 and nothing is sent, so leave it unset rather than guess. |
 
 Set these in the Vercel project under Settings → Environment Variables. Never
@@ -46,6 +46,33 @@ failure never affects the order or the emails — it is only logged.
 | `WHATSAPP_PHONE_NUMBER_ID` | for WhatsApp | The sending number's ID from the Meta app dashboard. Not the phone number itself. |
 | `WHATSAPP_TEMPLATE_NAME` | in practice yes | Approved template for customer messages. Without it the code sends plain text, which Meta only delivers to people who messaged the business in the last 24 hours — so real customers will not receive it. |
 | `WHATSAPP_SHOP_TEMPLATE_NAME` | no | Separate template for the business notification. Falls back to `WHATSAPP_TEMPLATE_NAME`. |
+
+### The templates Meta has to approve
+
+A business-initiated WhatsApp message must use a template approved in advance,
+so these have to exist in the Meta dashboard before anything sends. Each takes
+four body variables, and the code fills them in this order.
+
+Customer template — `WHATSAPP_TEMPLATE_NAME`, variables: name, order number,
+total, expected delivery:
+
+> Thank you {{1}}. Your Nouryah order {{2}} is confirmed. Total {{3}}.
+> Expected {{4}}. We will message you when it is on the way.
+
+Shop template — `WHATSAPP_SHOP_TEMPLATE_NAME`, variables: order number,
+customer name, total, city:
+
+> New order {{1}} from {{2}}. Total {{3}}. Delivering to {{4}}.
+
+Both are transactional in nature, so submit them under the utility category.
+If `WHATSAPP_SHOP_TEMPLATE_NAME` is left unset the shop message reuses the
+customer template, which will read oddly because the variables mean different
+things in each — worth the two minutes to create both.
+
+The customer's number is taken from the checkout and normalised to E.164
+(`0301 2345678`, `+92 301 …` and `301 …` all become `923012345678`). A number
+that cannot be recognised with confidence is skipped and logged rather than
+guessed at, and the email still goes.
 | `WHATSAPP_TEMPLATE_LANG` | no | Template language code. Defaults to `en`. |
 | `WHATSAPP_SHOP_NUMBER` | no | Business number in E.164 digits. Defaults to `923348200192`. |
 | `WHATSAPP_API_VERSION` | no | Graph API version. Defaults to `v21.0`. |
