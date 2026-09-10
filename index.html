@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nouryah — Perfumes, Pakistan</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Nouryah Perfumes — nine eau de parfum fragrances in 50 ml flacons, delivered all over Pakistan. Cash on delivery, free delivery over PKR 5,000.">
+<link rel="canonical" href="https://nouryahperfumes.com/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#FBF9F5">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nouryah Perfumes">
+<meta property="og:title" content="Nouryah Perfumes — fragrances that stay with you">
+<meta property="og:description" content="Nouryah Perfumes — nine eau de parfum fragrances in 50 ml flacons, delivered all over Pakistan. Cash on delivery, free delivery over PKR 5,000.">
+<meta property="og:url" content="https://nouryahperfumes.com/">
+<meta property="og:image" content="https://nouryahperfumes.com/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A Nouryah Fleur flacon held in the hand, beside the words Fragrances that stay with you">
+<meta property="og:locale" content="en_PK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nouryah Perfumes — fragrances that stay with you">
+<meta name="twitter:description" content="Nouryah Perfumes — nine eau de parfum fragrances in 50 ml flacons, delivered all over Pakistan. Cash on delivery, free delivery over PKR 5,000.">
+<meta name="twitter:image" content="https://nouryahperfumes.com/assets/og-card.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Store","@id":"https://nouryahperfumes.com/#store","name":"Nouryah Perfumes","alternateName":["Nouryah","Nouryah Perfume"],"url":"https://nouryahperfumes.com/","image":"https://nouryahperfumes.com/assets/og-card.jpg","logo":"https://nouryahperfumes.com/favicon.svg","description":"Nouryah Perfumes — nine eau de parfum fragrances in 50 ml flacons, delivered all over Pakistan. Cash on delivery, free delivery over PKR 5,000.","telephone":"+923348200192","address":{"@type":"PostalAddress","addressLocality":"Lahore","addressCountry":"PK"},"areaServed":{"@type":"Country","name":"Pakistan"},"currenciesAccepted":"PKR","paymentAccepted":"Cash on delivery, JazzCash, Easypaisa, Raast, Visa, Mastercard","sameAs":["https://www.instagram.com/nouryahperfumes/","https://www.facebook.com/profile.php?id=61593800894475"]},
+{"@type":"WebSite","@id":"https://nouryahperfumes.com/#website","name":"Nouryah Perfumes","alternateName":"Nouryah","url":"https://nouryahperfumes.com/","inLanguage":"en","publisher":{"@id":"https://nouryahperfumes.com/#store"}}
+]}
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -43,6 +67,7 @@
   a { color: var(--color-text); text-decoration: none; }
   a:hover { color: var(--gold); }
   img { display: block; max-width: 100%; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .btn { border-radius: 0; border-width: 1px; font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; min-height: 0; padding: 15px 26px; transition: background .25s ease, color .25s ease, border-color .25s ease; }
   .btn-primary { background: var(--gold); color: #FFFFFF; border-color: var(--gold); }
   .btn-primary:hover { background: #7F5D22; border-color: #7F5D22; }
@@ -297,6 +322,7 @@
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div data-screen-label="Home">
+      <h1 class="sr-only">Nouryah Perfumes — eau de parfum fragrances, delivered all over Pakistan</h1>
       <section data-r="heroslider" aria-roledescription="carousel" style="position:relative;border-bottom:1px solid var(--rule);overflow:hidden">
         <div data-r="herostage" onClick="{{ heroGo }}" role="link" aria-label="{{ heroAlt }}" style="position:relative;width:100%;aspect-ratio:5/2;cursor:pointer">
           <sc-for list="{{ heroLayers }}" as="sl" hint-placeholder-count="5">
