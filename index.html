@@ -828,14 +828,7 @@
       <section data-r="split" style="max-width:1220px;margin:0 auto;padding:80px clamp(20px,5vw,40px) 128px;display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start">
         <div>
           <h1 style="font-size:clamp(36px,4vw,52px);line-height:1;margin:0">Checkout</h1>
-          <div style="display:flex;align-items:center;margin:48px 0 56px;border-top:1px solid var(--rule)">
-            <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
-              <div onClick="{{ s.go }}" style="cursor:pointer;flex:1;padding:18px 0;display:flex;align-items:center;gap:12px;border-bottom:1px solid {{ s.bd }}">
-                <span style="width:5px;height:5px;background:{{ s.dot }}"></span>
-                <span style="font-family:var(--font-ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:{{ s.fg }}">{{ s.label }}</span>
-              </div>
-            </sc-for>
-          </div>
+          <div style="margin:40px 0 48px;border-top:1px solid var(--rule)"></div>
 
           <sc-if value="{{ atStep1 }}" hint-placeholder-val="{{ true }}">
             <div style="animation:nyFade .35s ease">
@@ -860,101 +853,26 @@
                 </div>
                 <div class="field"><label>Postcode</label><input class="input" value="{{ form.zip }}" onChange="{{ setF.zip }}" placeholder="54660"></div>
               </div>
-              <div style="display:flex;align-items:center;gap:24px;margin-top:48px;flex-wrap:wrap">
-                <button class="btn btn-primary btn-lg" onClick="{{ nextStep }}" disabled="{{ step1Invalid }}">Continue to delivery</button>
-                <span style="font-size:13px;color:var(--ink-3)">{{ step1Hint }}</span>
+              <div style="margin-top:44px;border:1px solid var(--rule);background:var(--color-surface);padding:24px 26px">
+                <div style="display:grid;grid-template-columns:104px 1fr;gap:14px 22px;font-size:14.5px;line-height:1.6">
+                  <div style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:2px">Delivery</div>
+                  <div>To your door in <strong style="font-weight:600">2–4 working days</strong>, all over Pakistan.</div>
+                  <div style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:2px">Payment</div>
+                  <div><strong style="font-weight:600">Cash on delivery</strong> — pay the rider when the parcel reaches you. Nothing is charged now.</div>
+                </div>
+                <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-2)">
+                  Questions, or want to follow your order? Message us on WhatsApp at <a href="{{ waHref }}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;font-weight:500">{{ phone }}</a>.
+                </div>
               </div>
+              <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:28px;max-width:62ch">By placing the order you accept the sale terms.</div>
+              <div style="display:flex;align-items:center;gap:24px;margin-top:28px;flex-wrap:wrap">
+                <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" disabled="{{ step1Invalid }}" style="flex:1">Place order · {{ totalLabel }}</button>
+              </div>
+              <div style="font-size:13px;color:var(--ink-3);margin-top:12px">{{ step1Hint }}</div>
             </div>
           </sc-if>
 
-          <sc-if value="{{ atStep2 }}" hint-placeholder-val="{{ false }}">
-            <div style="animation:nyFade .35s ease">
-              <h2 style="font-size:28px;margin:0 0 32px">Delivery method</h2>
-              <div>
-                <sc-for list="{{ shipOptions }}" as="s" hint-placeholder-count="3">
-                  <div onClick="{{ s.pick }}" style="cursor:pointer;display:grid;grid-template-columns:16px 1fr auto;gap:20px;align-items:center;padding:24px 0;border-top:1px solid {{ s.bd }};transition:border-color .25s">
-                    <span style="width:5px;height:5px;background:{{ s.dot }};margin-left:5px"></span>
-                    <div>
-                      <div style="font-family:var(--font-heading);font-size:22px">{{ s.label }}</div>
-                      <div style="font-size:13.5px;color:var(--ink-3);margin-top:4px">{{ s.detail }}</div>
-                    </div>
-                    <div style="font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;color:{{ s.fg }}">{{ s.priceLabel }}</div>
-                  </div>
-                </sc-for>
-                <div style="border-top:1px solid var(--rule)"></div>
-              </div>
-              <div class="field" style="margin-top:36px"><label>Delivery note for the rider (optional)</label><input class="input" value="{{ form.note }}" onChange="{{ setF.note }}" placeholder="Call on arrival — gate code 4402"></div>
-              <label class="radio" style="margin-top:28px;color:var(--ink-2)"><input type="checkbox" checked="{{ form.gift }}" onChange="{{ setF.gift }}"><span class="dot"></span><span style="font-size:14px">Gift order — foil-stamped sleeve, price omitted from the packing slip</span></label>
-              <div style="display:flex;align-items:center;gap:28px;margin-top:44px">
-                <button class="btn btn-primary btn-lg" onClick="{{ nextStep }}">Continue to payment</button>
-                <span onClick="{{ prevStep }}" style="cursor:pointer;font-family:var(--font-ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)" style-hover="color:var(--color-text)">Back</span>
-              </div>
             </div>
-          </sc-if>
-
-          <sc-if value="{{ atStep3 }}" hint-placeholder-val="{{ false }}">
-            <div style="animation:nyFade .35s ease">
-              <h2 style="font-size:28px;margin:0 0 32px">Payment</h2>
-              <div>
-                <sc-for list="{{ payOptions }}" as="p" hint-placeholder-count="4">
-                  <div onClick="{{ p.pick }}" style="cursor:pointer;display:grid;grid-template-columns:16px 1fr auto;gap:20px;align-items:center;padding:24px 0;border-top:1px solid {{ p.bd }};transition:border-color .25s">
-                    <span style="width:5px;height:5px;background:{{ p.dot }};margin-left:5px"></span>
-                    <div>
-                      <div style="font-family:var(--font-heading);font-size:22px">{{ p.label }}</div>
-                      <div style="font-size:13.5px;color:var(--ink-3);margin-top:4px">{{ p.detail }}</div>
-                    </div>
-                    <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:{{ p.badgeFg }};white-space:nowrap">{{ p.badge }}</div>
-                  </div>
-                </sc-for>
-                <div style="border-top:1px solid var(--rule)"></div>
-              </div>
-              <sc-if value="{{ cardSelected }}" hint-placeholder-val="{{ false }}">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
-                  <div class="field"><label>Name on card</label><input class="input" value="{{ form.cardName }}" onChange="{{ setF.cardName }}" placeholder="Ayesha Tariq"></div>
-                  <div class="field"><label>Card number</label><input class="input" value="{{ form.card }}" onChange="{{ setF.card }}" placeholder="4242 4242 4242 4242" maxlength="19"></div>
-                </div>
-                <div data-r="c3sm" style="display:grid;grid-template-columns:1fr 130px 130px;gap:32px;margin-top:20px">
-                  <div></div>
-                  <div class="field"><label>Expiry</label><input class="input" value="{{ form.exp }}" onChange="{{ setF.exp }}" placeholder="09 / 29"></div>
-                  <div class="field"><label>CVC</label><input class="input" value="{{ form.cvc }}" onChange="{{ setF.cvc }}" placeholder="123" maxlength="4"></div>
-                </div>
-              </sc-if>
-              <sc-if value="{{ walletSelected }}" hint-placeholder-val="{{ false }}">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
-                  <div class="field"><label>Wallet</label>
-                    <select class="input" value="{{ form.wallet }}" onChange="{{ setF.wallet }}">
-                      <option value="JazzCash">JazzCash</option>
-                      <option value="Easypaisa">Easypaisa</option>
-                    </select>
-                  </div>
-                  <div class="field"><label>Wallet mobile number</label><input class="input" value="{{ form.walletNumber }}" onChange="{{ setF.walletNumber }}" placeholder="03XX XXXXXXX"></div>
-                </div>
-                <div style="font-size:13px;line-height:1.75;color:var(--ink-3);margin-top:16px">We will contact you on this number to settle the {{ form.wallet }} transfer before the parcel is dispatched.</div>
-              </sc-if>
-              <sc-if value="{{ bankSelected }}" hint-placeholder-val="{{ false }}">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px">
-                  <div class="field"><label>Your bank</label>
-                    <select class="input" value="{{ form.bankName }}" onChange="{{ setF.bankName }}">
-                      <option value="HBL">HBL</option><option value="UBL">UBL</option><option value="Meezan Bank">Meezan Bank</option><option value="Allied Bank">Allied Bank</option><option value="Bank Alfalah">Bank Alfalah</option><option value="MCB">MCB</option><option value="Other">Other</option>
-                    </select>
-                  </div>
-                  <div class="field"><label>Account title</label><input class="input" value="{{ form.bankTitle }}" onChange="{{ setF.bankTitle }}" placeholder="Ayesha Tariq"></div>
-                </div>
-                <div style="margin-top:20px;padding:18px 20px;border:1px solid var(--rule)">
-                  <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Transfer to</div>
-                  <div style="font-size:14.5px;line-height:1.9;margin-top:10px">Nouryah Perfumes (Pvt) Ltd<br>IBAN: PK36 MEZN 0001 2300 4567 890<br>Meezan Bank, Gulberg Branch, Lahore</div>
-                </div>
-                <div class="field" style="margin-top:20px"><label>Transaction ID / reference number</label><input class="input" value="{{ form.txnId }}" onChange="{{ setF.txnId }}" placeholder="From your bank's transfer receipt"></div>
-              </sc-if>
-              <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:36px;max-width:62ch">By placing the order you accept the sale terms. Card and wallet payments are captured on dispatch, never before.</div>
-              <div style="display:flex;align-items:center;gap:28px;margin-top:clamp(20px,5vw,40px)">
-                <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" disabled="{{ payInvalid }}" style="flex:1">Place order · {{ totalLabel }}</button>
-                <span onClick="{{ prevStep }}" style="cursor:pointer;font-family:var(--font-ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap" style-hover="color:var(--color-text)">Back</span>
-              </div>
-              <div style="font-size:12.5px;color:var(--ink-3);margin-top:12px">{{ payHint }}</div>
-            </div>
-          </sc-if>
-        </div>
 
         <aside style="border:1px solid var(--rule);padding:32px 30px;position:sticky;top:110px">
           <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Order summary</div>
@@ -986,7 +904,7 @@
           <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--rule);display:grid;gap:12px;font-size:14px">
             <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">Subtotal</span><span style="font-variant-numeric:tabular-nums">{{ subtotalLabel }}</span></div>
             <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">Discount</span><span style="font-variant-numeric:tabular-nums">{{ discountLabel }}</span></div>
-            <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--ink-3)">Delivery · {{ shipName }}</span><span style="font-variant-numeric:tabular-nums;white-space:nowrap">{{ shipLabel }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--ink-3)">Delivery</span><span style="font-variant-numeric:tabular-nums;white-space:nowrap">{{ shipLabel }}</span></div>
           </div>
           <div style="margin-top:22px;padding-top:20px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline">
             <span style="font-family:var(--font-ui);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Total</span>
@@ -1089,10 +1007,10 @@
           </div>
         </sc-if>
         <sc-if value="{{ order.emailSent }}" hint-placeholder-val="{{ true }}">
-          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }} — track it any time with your order number.</p>
+          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack your order and deliver to {{ order.city }} in 2–4 working days — track it any time with your order number.</p>
         </sc-if>
         <sc-if value="{{ orderMailFailed }}" hint-placeholder-val="{{ false }}">
-          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">Your order is recorded. We pack in the Gulberg atelier and hand over to {{ order.shipName }} for {{ order.city }}.</p>
+          <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">Your order is recorded. We pack it and deliver to {{ order.city }} in 2–4 working days.</p>
           <div style="margin-top:22px;border:1px solid var(--rule-gold);background:rgba(201,160,92,.07);padding:18px 22px;max-width:60ch">
             <div style="font-family:var(--font-ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)">One more step</div>
             <p style="font-size:14.5px;line-height:1.75;color:var(--ink-2);margin:9px 0 0">We could not email your receipt just now. Send us the order below on WhatsApp and we will confirm it by hand — your order number is {{ order.no }}.</p>
@@ -1333,14 +1251,10 @@ class Component extends DCLogic {
 
   GIFT_THRESHOLD = 3000;
   SHIP = [
-    { key:'standard', label:'TCS · nationwide', detail:'Tracked, 2–4 working days, to your door', price:300 },
-    { key:'express', label:'Leopards · next day', detail:'Next working day, all over Pakistan', price:650 }
+    { key:'standard', label:'Standard delivery', detail:'2–4 working days, to your door', price:300 }
   ];
   PAY = [
-    { key:'Cash on delivery', label:'Cash on delivery', detail:'Pay the rider when the parcel reaches you', badge:'Most used' },
-    { key:'JazzCash / Easypaisa', label:'JazzCash / Easypaisa', detail:'Confirm in the app with your mobile number', badge:'Mobile wallet' },
-    { key:'Bank transfer', label:'Bank transfer · Raast', detail:'Instant IBFT from any Pakistani bank account', badge:'Bank' },
-    { key:'Card', label:'Card', detail:'Visa, Mastercard — 3-D Secure via 1LINK', badge:'Secure' }
+    { key:'Cash on delivery', label:'Cash on delivery', detail:'Pay the rider when the parcel reaches you', badge:'Most used' }
   ];
   FAQ = [
     { q:'Is 20% really eau de parfum strength?', a:'Yes — 20% parfum oil sits at the top of the eau de parfum band (most sit at 12–15%). It is why the published wear times are 6 to 12 hours rather than 3 to 4, and why two sprays are usually enough.' },
@@ -1974,7 +1888,7 @@ class Component extends DCLogic {
           first:f.first || 'friend', last:f.last, email:f.email, phone:f.phone || this.PHONE,
           address:f.address, zip:f.zip, city:f.city, province:f.province,
           shipName:m.opt.label, pay:st.pay, totalLabel:this.fmt(m.total), lines, gift:giftOn, giftWrap:!!f.gift,
-          eta: st.ship === 'express' ? 'Tomorrow' : 'Within 4 days',
+          eta: '2–4 working days',
           emailSent:false
         };
         this.saveOrder(order);
