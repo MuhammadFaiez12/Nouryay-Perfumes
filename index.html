@@ -152,6 +152,62 @@
     [data-r="footer"] { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
     h1 { max-width: 100% !important; }
   }
+
+  /* ---------- checkout ---------- */
+  [data-r="ckform"] { display: grid; gap: 20px; align-content: start; }
+  .ck-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+  .ck-eyebrow svg { width: 13px; height: 13px; }
+  .ck-sub { font-size: 15px; line-height: 1.7; color: var(--ink-2); margin: 12px 0 0; max-width: 52ch; }
+  .ck-card { background: var(--color-surface); border: 1px solid var(--rule); border-radius: 14px; padding: 26px 26px 28px; }
+  .ck-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .ck-num { width: 26px; height: 26px; flex: none; border-radius: 50%; background: var(--gold); color: #FFFFFF; font-family: var(--font-ui); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .ck-card-head h2 { font-size: 17px; letter-spacing: -.005em; }
+  .ck-note { margin-left: auto; font-family: var(--font-ui); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-align: right; }
+  [data-r="ckform"] .field > label { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+  [data-r="ckform"] .input { background: var(--color-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 0 14px; min-height: 52px; font-size: 15px; transition: border-color .16s ease, box-shadow .16s ease, background .16s ease; }
+  [data-r="ckform"] select.input { appearance: none; -webkit-appearance: none; padding-right: 38px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23726C62' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.75L6 6.25L11 1.75'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  [data-r="ckform"] .input:hover { border-color: rgba(26,23,18,.26); }
+  [data-r="ckform"] .input:focus, [data-r="ckform"] .input:focus-visible { outline: none; background: var(--color-surface); border-color: var(--gold); box-shadow: 0 0 0 3px rgba(146,108,41,.15); }
+  .ck-tick { margin-left: auto; display: inline-flex; align-items: center; color: var(--gold); }
+  .ck-tick svg { width: 14px; height: 14px; display: block; }
+  .ck-warn { font-family: var(--font-ui); font-size: 12px; line-height: 1.55; color: #A8412E; margin-top: 7px; }
+  .ck-lock { display: flex; align-items: flex-start; gap: 13px; padding: 16px 18px; border: 1px solid var(--rule); border-radius: 11px; background: var(--color-bg); }
+  .ck-lock + .ck-lock { margin-top: 12px; }
+  .ck-lock > svg { width: 19px; height: 19px; flex: none; margin-top: 1px; color: var(--gold); }
+  .ck-lock > div { flex: 1; min-width: 0; }
+  .ck-lock-r { display: flex; align-items: center; gap: 12px; }
+  .ck-lock-t { font-family: var(--font-ui); font-size: 13.5px; font-weight: 600; color: var(--color-text); }
+  .ck-lock-d { font-size: 13.5px; line-height: 1.6; color: var(--ink-2); margin-top: 4px; }
+  .ck-lock-tag { margin-left: auto; flex: none; font-family: var(--font-ui); font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--rule-gold); border-radius: 100px; padding: 5px 10px; }
+  .ck-trust { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 26px; padding-top: 24px; border-top: 1px solid var(--rule); }
+  .ck-trust > div { display: flex; align-items: center; gap: 10px; font-family: var(--font-ui); font-size: 12px; line-height: 1.4; color: var(--ink-2); }
+  .ck-trust svg { width: 17px; height: 17px; flex: none; color: var(--gold); }
+  .ck-summary { border: 1px solid var(--rule); border-radius: 14px; background: var(--color-surface); padding: 26px 26px 28px; position: sticky; top: 104px; box-shadow: 0 1px 2px rgba(26,23,18,.03), 0 14px 34px -24px rgba(26,23,18,.30); }
+  .ck-thumb { position: relative; flex: none; }
+  .ck-thumb > div { overflow: hidden; border-radius: 9px; aspect-ratio: 1/1; background: #F1ECE3; border: 1px solid var(--rule); }
+  .ck-qty { position: absolute; top: -8px; right: -8px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--gold); color: #FFFFFF; font-family: var(--font-ui); font-size: 10.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .ck-gift { flex: none; display: block; }
+  .ck-gift svg { width: 17px; height: 17px; display: block; }
+  .ck-promo { display: flex; gap: 8px; }
+  .ck-promo .input { flex: 1; min-width: 0; background: var(--color-bg); border: 1px solid var(--rule); border-radius: 9px; padding: 0 12px; min-height: 44px; font-size: 13px; transition: border-color .16s ease, box-shadow .16s ease; }
+  .ck-promo .input:focus, .ck-promo .input:focus-visible { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(146,108,41,.15); }
+  .ck-apply { flex: none; display: flex; align-items: center; border: 1px solid var(--rule); border-radius: 9px; padding: 0 17px; min-height: 44px; cursor: pointer; font-family: var(--font-ui); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); transition: border-color .16s ease, color .16s ease; }
+  .ck-apply:hover { border-color: var(--gold); color: var(--gold); }
+  .ck-bar { display: none; }
+  @media (max-width: 1040px) { .ck-trust { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 860px) {
+    [data-r="cksplit"] { grid-template-columns: 1fr !important; gap: 34px !important; padding-top: 40px !important; padding-bottom: 124px !important; }
+    [data-r="cksplit"] > aside { order: 2; }
+    .ck-summary { position: static !important; box-shadow: none; }
+    .ck-card { padding: 22px 20px 24px; border-radius: 12px; }
+    .ck-place { display: none; }
+    .ck-trust { grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
+    .ck-bar { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: rgba(255,255,255,.97); border-top: 1px solid var(--rule); padding: 11px 16px calc(11px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px -22px rgba(26,23,18,.7); }
+    body:has(.ck-bar) { padding-bottom: 104px; }
+    .ck-bar .btn { width: 100%; padding: 17px 20px; }
+    .ck-bar-hint { font-family: var(--font-ui); font-size: 11.5px; color: var(--ink-3); text-align: center; margin-top: 8px; }
+  }
+
   @media (max-width: 760px) {
     /* Brand and bag share row one; the links take a full row below and wrap,
        so no nav item hides behind a sideways scroll. */
@@ -825,94 +881,140 @@
 
   <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Checkout">
-      <section data-r="split" style="max-width:1220px;margin:0 auto;padding:80px clamp(20px,5vw,40px) 128px;display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start">
-        <div>
-          <h1 style="font-size:clamp(27px,2.9vw,37px);line-height:1;margin:0">Checkout</h1>
-          <div style="margin:40px 0 48px;border-top:1px solid var(--rule)"></div>
+      <section data-r="cksplit" style="max-width:1220px;margin:0 auto;padding:60px clamp(20px,5vw,40px) 128px;display:grid;grid-template-columns:1.18fr .82fr;gap:60px;align-items:start">
+        <div data-r="ckform">
+          <div>
+            <div class="ck-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7.2a4 4 0 0 1 8 0v3.3"/></svg> Secure checkout</div>
+            <h1 style="font-size:clamp(27px,2.9vw,37px);line-height:1.05;margin:14px 0 0">Checkout</h1>
+            <p class="ck-sub">Delivered anywhere in Pakistan, paid to the rider at your door. Nothing is charged now.</p>
+          </div>
 
           <sc-if value="{{ atStep1 }}" hint-placeholder-val="{{ true }}">
-            <div style="animation:nyFade .35s ease">
-              <h2 style="font-size:28px;margin:0 0 36px">Contact &amp; delivery address</h2>
-              <div data-r="c2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
-                <div class="field"><label>Email</label><input class="input" type="email" value="{{ form.email }}" onChange="{{ setF.email }}" placeholder="name@email.pk"></div>
-                <div class="field"><label>Mobile · for WhatsApp confirmation</label><input class="input" type="tel" value="{{ form.phone }}" onChange="{{ setF.phone }}" placeholder="0300 000 0000"></div>
-                <div class="field"><label>First name</label><input class="input" value="{{ form.first }}" onChange="{{ setF.first }}" placeholder="Ayesha"></div>
-                <div class="field"><label>Last name</label><input class="input" value="{{ form.last }}" onChange="{{ setF.last }}" placeholder="Tariq"></div>
+            <div style="display:grid;gap:20px;animation:nyFade .35s ease">
+
+              <div class="ck-card">
+                <div class="ck-card-head"><span class="ck-num">1</span><h2>Contact</h2><span class="ck-note">Your confirmation</span></div>
+                <div data-r="c2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                  <div class="field"><label>Email<sc-if value="{{ okEmail }}" hint-placeholder-val="{{ false }}"><span class="ck-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span></sc-if></label><input class="input" type="email" value="{{ form.email }}" onChange="{{ setF.email }}" placeholder="name@email.pk"></div>
+                  <div class="field"><label>Mobile<sc-if value="{{ okPhone }}" hint-placeholder-val="{{ false }}"><span class="ck-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span></sc-if></label><input class="input" type="tel" value="{{ form.phone }}" onChange="{{ setF.phone }}" placeholder="0300 000 0000">
+                    <sc-if value="{{ badPhone }}" hint-placeholder-val="{{ false }}">
+                      <div class="ck-warn">That does not look like a Pakistani mobile number.</div>
+                    </sc-if>
+                    <div style="font-family:var(--font-ui);font-size:12px;line-height:1.5;color:var(--ink-3);margin-top:7px">We send the confirmation here on WhatsApp.</div>
+                  </div>
+                </div>
               </div>
-              <div class="field" style="margin-top:32px"><label>Street address</label><input class="input" value="{{ form.address }}" onChange="{{ setF.address }}" placeholder="House 24-C, Block M, Gulberg III"></div>
-              <div data-r="c3sm" style="display:grid;grid-template-columns:1fr 1fr 150px;gap:32px;margin-top:32px">
-                <div class="field"><label>City</label>
-                  <select class="input" value="{{ form.city }}" onChange="{{ setF.city }}">
-                    <sc-for list="{{ cityOptions }}" as="c" hint-placeholder-count="9"><option value="{{ c.name }}">{{ c.name }}</option></sc-for>
-                  </select>
+
+              <div class="ck-card">
+                <div class="ck-card-head"><span class="ck-num">2</span><h2>Delivery address</h2><span class="ck-note">Where it goes</span></div>
+                <div data-r="c2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                  <div class="field"><label>First name<sc-if value="{{ okFirst }}" hint-placeholder-val="{{ false }}"><span class="ck-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span></sc-if></label><input class="input" value="{{ form.first }}" onChange="{{ setF.first }}" placeholder="Ayesha"></div>
+                  <div class="field"><label>Last name<sc-if value="{{ okLast }}" hint-placeholder-val="{{ false }}"><span class="ck-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span></sc-if></label><input class="input" value="{{ form.last }}" onChange="{{ setF.last }}" placeholder="Tariq"></div>
                 </div>
-                <div class="field"><label>Province</label>
-                  <select class="input" value="{{ form.province }}" onChange="{{ setF.province }}">
-                    <option value="Punjab">Punjab</option><option value="Sindh">Sindh</option><option value="Islamabad Capital Territory">Islamabad Capital Territory</option><option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option><option value="Balochistan">Balochistan</option>
-                  </select>
+                <div class="field" style="margin-top:20px"><label>Street address<sc-if value="{{ okAddress }}" hint-placeholder-val="{{ false }}"><span class="ck-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span></sc-if></label><input class="input" value="{{ form.address }}" onChange="{{ setF.address }}" placeholder="House 24-C, Block M, Gulberg III"></div>
+                <div data-r="c3sm" style="display:grid;grid-template-columns:1fr 1fr 130px;gap:20px;margin-top:20px">
+                  <div class="field"><label>City</label>
+                    <select class="input" value="{{ form.city }}" onChange="{{ setF.city }}">
+                      <sc-for list="{{ cityOptions }}" as="c" hint-placeholder-count="9"><option value="{{ c.name }}">{{ c.name }}</option></sc-for>
+                    </select>
+                  </div>
+                  <div class="field"><label>Province</label>
+                    <select class="input" value="{{ form.province }}" onChange="{{ setF.province }}">
+                      <option value="Punjab">Punjab</option><option value="Sindh">Sindh</option><option value="Islamabad Capital Territory">Islamabad Capital Territory</option><option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option><option value="Balochistan">Balochistan</option>
+                    </select>
+                  </div>
+                  <div class="field"><label>Postcode</label><input class="input" value="{{ form.zip }}" onChange="{{ setF.zip }}" placeholder="54660"></div>
                 </div>
-                <div class="field"><label>Postcode</label><input class="input" value="{{ form.zip }}" onChange="{{ setF.zip }}" placeholder="54660"></div>
               </div>
-              <div style="margin-top:44px;border:1px solid var(--rule);background:var(--color-surface);padding:24px 26px">
-                <div style="display:grid;grid-template-columns:104px 1fr;gap:14px 22px;font-size:14.5px;line-height:1.6">
-                  <div style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:2px">Delivery</div>
-                  <div>To your door in <strong style="font-weight:600">2–4 working days</strong>, all over Pakistan.</div>
-                  <div style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:2px">Payment</div>
-                  <div><strong style="font-weight:600">Cash on delivery</strong> — pay the rider when the parcel reaches you. Nothing is charged now.</div>
+
+              <div class="ck-card">
+                <div class="ck-card-head"><span class="ck-num">3</span><h2>Delivery &amp; payment</h2></div>
+                <div class="ck-lock">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h11v10H2z"/><path d="M13 10h4l3 3.2v3.3h-7z"/><circle cx="6.5" cy="18.8" r="1.8"/><circle cx="17" cy="18.8" r="1.8"/></svg>
+                  <div>
+                    <div class="ck-lock-r"><span class="ck-lock-t">Standard delivery</span><span class="ck-lock-tag">{{ shipLabel }}</span></div>
+                    <div class="ck-lock-d">To your door in 2–4 working days, tracked, all over Pakistan.</div>
+                  </div>
                 </div>
-                <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-2)">
+                <div class="ck-lock">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h11A2.5 2.5 0 0 1 19 7.5v.5"/><rect x="3" y="7.5" width="18" height="12" rx="2.5"/><circle cx="16.5" cy="13.5" r="1.3"/></svg>
+                  <div>
+                    <div class="ck-lock-r"><span class="ck-lock-t">Cash on delivery</span><span class="ck-lock-tag">Selected</span></div>
+                    <div class="ck-lock-d">Pay the rider when the parcel reaches you. Nothing is charged now.</div>
+                  </div>
+                </div>
+                <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--rule);font-size:13.5px;line-height:1.7;color:var(--ink-2)">
                   Questions, or want to follow your order? Message us on WhatsApp at <a href="{{ waHref }}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;font-weight:500">{{ phone }}</a>.
                 </div>
               </div>
-              <div style="font-size:13.5px;line-height:1.8;color:var(--ink-3);margin-top:28px;max-width:62ch">By placing the order you accept the sale terms.</div>
-              <div style="display:flex;align-items:center;gap:24px;margin-top:28px;flex-wrap:wrap">
-                <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" disabled="{{ step1Invalid }}" style="flex:1">Place order · {{ totalLabel }}</button>
+
+              <div class="ck-place">
+                <button class="btn btn-primary btn-lg" onClick="{{ placeOrder }}" disabled="{{ step1Invalid }}" style="width:100%">Place order · {{ totalLabel }}</button>
+                <div style="font-family:var(--font-ui);font-size:12.5px;line-height:1.6;color:var(--ink-3);margin-top:12px;text-align:center">{{ step1Hint }} By placing the order you accept the sale terms.</div>
               </div>
-              <div style="font-size:13px;color:var(--ink-3);margin-top:12px">{{ step1Hint }}</div>
+
+              <div class="ck-trust">
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7.2a4 4 0 0 1 8 0v3.3"/></svg><span>No card details, ever</span></div>
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h11v10H2z"/><path d="M13 10h4l3 3.2v3.3h-7z"/><circle cx="6.5" cy="18.8" r="1.8"/><circle cx="17" cy="18.8" r="1.8"/></svg><span>Tracked, 2–4 working days</span></div>
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a7.9 7.9 0 0 1-11.7 6.9L3.5 20l1.6-5A7.9 7.9 0 1 1 20.5 11.6z"/></svg><span>WhatsApp support on {{ phone }}</span></div>
+              </div>
             </div>
           </sc-if>
+        </div>
 
-            </div>
-
-        <aside style="border:1px solid var(--rule);padding:32px 30px;position:sticky;top:110px">
-          <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Order summary</div>
-          <div style="margin-top:26px">
+        <aside class="ck-summary">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+            <div style="font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Order summary</div>
+            <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)">{{ cartCount }} items</div>
+          </div>
+          <div style="margin-top:22px;display:grid;gap:16px">
             <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
-              <div style="display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;padding-bottom:18px">
-                <div style="overflow:hidden;aspect-ratio:1/1;background:#F1ECE3"><img src="{{ l.img }}" alt="{{ l.alt }}" style="width:100%;height:100%;object-fit:cover"></div>
-                <div>
-                  <div style="font-family:var(--font-heading);font-size:15px">{{ l.name }}</div>
-                  <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:4px">{{ l.sizeLabel }} · {{ l.qty }}</div>
+              <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center">
+                <div class="ck-thumb">
+                  <div><img src="{{ l.img }}" alt="{{ l.alt }}" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+                  <span class="ck-qty">{{ l.qty }}</span>
                 </div>
-                <div style="font-size:13px;font-variant-numeric:tabular-nums">{{ l.totalLabel }}</div>
+                <div>
+                  <div style="font-family:var(--font-heading);font-size:15px;font-weight:600;line-height:1.3">{{ l.name }}</div>
+                  <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:5px">{{ l.sizeLabel }}</div>
+                </div>
+                <div style="font-size:13.5px;font-variant-numeric:tabular-nums">{{ l.totalLabel }}</div>
               </div>
             </sc-for>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-end;padding-top:8px;border-top:1px solid var(--rule)">
-            <input class="input" value="{{ promoInput }}" onChange="{{ setPromo }}" placeholder="Promo code" style="font-size:13px">
-            <span onClick="{{ applyPromo }}" style="cursor:pointer;font-family:var(--font-ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;padding-bottom:12px" style-hover="color:var(--gold)">Apply</span>
+          <div class="ck-promo" style="margin-top:24px;padding-top:22px;border-top:1px solid var(--rule)">
+            <input class="input" value="{{ promoInput }}" onChange="{{ setPromo }}" placeholder="Promo code">
+            <span class="ck-apply" onClick="{{ applyPromo }}">Apply</span>
           </div>
           <sc-if value="{{ promoShown }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:12.5px;color:var(--gold);margin-top:10px">{{ promoMsg }}</div>
           </sc-if>
           <sc-if value="{{ giftEligible }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:22px;padding:14px 16px;border:1px solid var(--rule-gold);background:rgba(201,160,92,.06);font-size:13px;color:var(--gold)">Free 10 ml travel size included with this order</div>
+            <div style="margin-top:20px;display:flex;align-items:center;gap:11px;padding:13px 15px;border:1px solid var(--rule-gold);border-radius:10px;background:rgba(201,160,92,.07);font-size:13px;line-height:1.5;color:var(--gold)">
+              <span class="ck-gift"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9.5" width="18" height="11" rx="1.6"/><path d="M2.5 9.5h19M12 9.5v11"/><path d="M12 9.5S10.6 4 8.2 4a2.1 2.1 0 0 0 0 5.5zM12 9.5S13.4 4 15.8 4a2.1 2.1 0 0 1 0 5.5z"/></svg></span>
+              <span>Free 10 ml travel size included</span>
+            </div>
           </sc-if>
           <sc-if value="{{ giftClose }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:22px;font-size:12.5px;color:var(--ink-3)">Add {{ giftRemain }} more for a free 10 ml gift</div>
+            <div style="margin-top:20px;font-size:12.5px;color:var(--ink-3)">Add {{ giftRemain }} more for a free 10 ml gift</div>
           </sc-if>
-          <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--rule);display:grid;gap:12px;font-size:14px">
-            <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">Subtotal</span><span style="font-variant-numeric:tabular-nums">{{ subtotalLabel }}</span></div>
-            <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-3)">Discount</span><span style="font-variant-numeric:tabular-nums">{{ discountLabel }}</span></div>
+          <div style="margin-top:24px;padding-top:22px;border-top:1px solid var(--rule);display:grid;gap:13px;font-size:14px">
+            <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--ink-3)">Subtotal</span><span style="font-variant-numeric:tabular-nums">{{ subtotalLabel }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--ink-3)">Discount</span><span style="font-variant-numeric:tabular-nums">{{ discountLabel }}</span></div>
             <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--ink-3)">Delivery</span><span style="font-variant-numeric:tabular-nums;white-space:nowrap">{{ shipLabel }}</span></div>
           </div>
-          <div style="margin-top:22px;padding-top:20px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline">
-            <span style="font-family:var(--font-ui);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Total</span>
-            <span style="font-size:24px;font-variant-numeric:tabular-nums">{{ totalLabel }}</span>
+          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+            <span style="font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Total</span>
+            <span style="font-size:26px;font-weight:600;font-variant-numeric:tabular-nums">{{ totalLabel }}</span>
           </div>
-          <div style="font-size:12.5px;line-height:1.75;color:var(--ink-3);margin-top:20px">A free 10 ml bottle on orders over {{ giftThreshold }}. Questions? {{ phone }}</div>
+          <div style="font-family:var(--font-ui);font-size:12px;line-height:1.7;color:var(--ink-3);margin-top:14px">Payable in cash when the parcel arrives. A free 10 ml bottle on orders over {{ giftThreshold }}.</div>
         </aside>
       </section>
+
+      <div class="ck-bar">
+        <button class="btn btn-primary" onClick="{{ placeOrder }}" disabled="{{ step1Invalid }}">Place order · {{ totalLabel }}</button>
+        <div class="ck-bar-hint">{{ step1Hint }}</div>
+      </div>
     </div>
   </sc-if>
 
@@ -1887,8 +1989,14 @@ class Component extends DCLogic {
       form:f, setF,
       steps:stepMeta,
       atStep1: st.step === 1, atStep2: st.step === 2, atStep3: st.step === 3,
+      okEmail: /.+@.+\..+/.test(f.email),
+      okPhone: phoneOk,
+      badPhone: !phoneOk && !!(f.phone || '').trim(),
+      okFirst: !!(f.first || '').trim(),
+      okLast: !!(f.last || '').trim(),
+      okAddress: !!(f.address || '').trim(),
       step1Invalid: !step1ok,
-      step1Hint: step1ok ? 'Your confirmation goes to your email and your WhatsApp.' : (!phoneOk && (f.phone || '').trim() ? 'That mobile number does not look like a Pakistani number — we send the confirmation to it on WhatsApp.' : 'Email, mobile, name, street and city are required.'),
+      step1Hint: step1ok ? 'Your confirmation goes to your email and your WhatsApp.' : 'Email, mobile, name, street and city are required.',
       nextStep: () => { if (st.step === 1 && !step1ok) return; if (st.cart.length === 0) { this.nav('shop'); return; } this.setState({ step:Math.min(3, st.step + 1) }); window.scrollTo(0, 0); },
       prevStep: () => this.setState({ step:Math.max(1, st.step - 1) }),
       shipOptions: this.SHIP.map(s => {
