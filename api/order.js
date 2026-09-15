@@ -83,6 +83,9 @@ function readOrder(body) {
     province: clip(body.province, 80),
     shipName: clip(body.shipName, 80),
     pay: clip(body.pay, 80),
+    subtotalLabel: clip(body.subtotalLabel, 40),
+    discountLabel: clip(body.discountLabel, 40),
+    shipLabel: clip(body.shipLabel, 40),
     totalLabel: clip(body.totalLabel, 40),
     eta: clip(body.eta, 80),
     giftWrap: !!body.giftWrap,
@@ -133,6 +136,9 @@ function buildOrderMail(o) {
     detailRow('Order', o.no) +
     detailRow('Date', orderStamp()) +
     lineRows(o.lines) +
+    (o.subtotalLabel ? detailRow('Subtotal', o.subtotalLabel) : '') +
+    (o.discountLabel && o.discountLabel !== '—' ? detailRow('Discount', o.discountLabel) : '') +
+    (o.shipLabel ? detailRow('Delivery charge', o.shipLabel) : '') +
     detailRow('Total', o.totalLabel) +
     detailRow('Payment', o.pay) +
     detailRow('Delivery', o.shipName) +
