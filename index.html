@@ -835,7 +835,7 @@
               <h2 style="font-size:28px;margin:0 0 36px">Contact &amp; delivery address</h2>
               <div data-r="c2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
                 <div class="field"><label>Email</label><input class="input" type="email" value="{{ form.email }}" onChange="{{ setF.email }}" placeholder="name@email.pk"></div>
-                <div class="field"><label>Mobile</label><input class="input" value="{{ form.phone }}" onChange="{{ setF.phone }}" placeholder="0300 000 0000"></div>
+                <div class="field"><label>Mobile · for WhatsApp confirmation</label><input class="input" type="tel" value="{{ form.phone }}" onChange="{{ setF.phone }}" placeholder="0300 000 0000"></div>
                 <div class="field"><label>First name</label><input class="input" value="{{ form.first }}" onChange="{{ setF.first }}" placeholder="Ayesha"></div>
                 <div class="field"><label>Last name</label><input class="input" value="{{ form.last }}" onChange="{{ setF.last }}" placeholder="Tariq"></div>
               </div>
@@ -1005,6 +1005,18 @@
             <span style="width:6px;height:6px;background:var(--gold);border-radius:50%"></span>
             Confirmation sent to {{ order.email }}
           </div>
+          <sc-if value="{{ order.waSent }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2)">
+              <span style="width:6px;height:6px;background:var(--gold);border-radius:50%"></span>
+              Also sent to your WhatsApp on {{ order.phone }}
+            </div>
+          </sc-if>
+          <sc-if value="{{ order.waNotOnWhatsApp }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3)">
+              <span style="width:6px;height:6px;background:var(--ink-3);border-radius:50%"></span>
+              {{ order.phone }} is not on WhatsApp, so the confirmation went by email only.
+            </div>
+          </sc-if>
         </sc-if>
         <sc-if value="{{ order.emailSent }}" hint-placeholder-val="{{ true }}">
           <p style="font-size:17px;line-height:1.85;color:var(--ink-2);margin:0;max-width:60ch">A receipt is on its way to {{ order.email }}. We pack your order and deliver to {{ order.city }} in 2–4 working days — track it any time with your order number.</p>
@@ -1520,7 +1532,8 @@ class Component extends DCLogic {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
       body: JSON.stringify(payload)
-    }).then(r => r.ok).catch(() => false);
+    }).then(r => r.json().then(j => ({ ok: r.ok, ...j })).catch(() => ({ ok: r.ok })))
+      .catch(() => ({ ok: false }));
   }
   // The confirmation screen only claims a receipt was sent once the send confirms.
   mailOrder(order) {
@@ -1533,9 +1546,15 @@ class Component extends DCLogic {
       subtotalLabel:order.subtotalLabel, discountLabel:order.discountLabel, shipLabel:order.shipLabel,
       eta:order.eta, giftWrap:order.giftWrap,
       lines:order.lines.map(l => ({ name:l.name, sizeLabel:l.sizeLabel, qty:l.qty, totalLabel:l.totalLabel }))
-    }).then(ok => {
+    }).then(res => {
       const cur = this.state.order;
-      if (cur && cur.no === order.no) this.setState({ order:{ ...cur, emailSent: !!ok, mailChecked: true } });
+      if (!cur || cur.no !== order.no) return;
+      const wa = res && res.whatsapp;
+      this.setState({ order:{ ...cur,
+        emailSent: !!(res && res.ok), mailChecked: true,
+        waSent: !!(wa && wa.customer === true),
+        waNotOnWhatsApp: !!(wa && wa.customer === 'not-registered')
+      } });
     });
   }
   money() {
@@ -1625,7 +1644,9 @@ class Component extends DCLogic {
     const reqSelectedLabel = reqPicks.length ? reqPicks.map(id => this.find(id).name).join(', ') : 'None selected';
 
     const f = st.form;
-    const step1ok = /.+@.+\..+/.test(f.email) && f.first.trim() && f.last.trim() && f.address.trim() && f.city.trim();
+    // Matches toE164Pk on the server: the forms it can turn into a WhatsApp address.
+    const phoneOk = /^(?:\+?92|0)?3\d{9}$/.test((f.phone || '').replace(/[\s-()]/g, ''));
+    const step1ok = /.+@.+\..+/.test(f.email) && f.first.trim() && f.last.trim() && f.address.trim() && f.city.trim() && phoneOk;
 
     const setF = {};
     ['email','phone','first','last','address','zip','city','province','note','card','exp','cvc','cardName','wallet','walletNumber','bankName','bankTitle','txnId'].forEach(k => {
@@ -1867,7 +1888,7 @@ class Component extends DCLogic {
       steps:stepMeta,
       atStep1: st.step === 1, atStep2: st.step === 2, atStep3: st.step === 3,
       step1Invalid: !step1ok,
-      step1Hint: step1ok ? 'City checked against the courier’s serviceable list.' : 'Email, name, street and city are required.',
+      step1Hint: step1ok ? 'Your confirmation goes to your email and your WhatsApp.' : (!phoneOk && (f.phone || '').trim() ? 'That mobile number does not look like a Pakistani number — we send the confirmation to it on WhatsApp.' : 'Email, mobile, name, street and city are required.'),
       nextStep: () => { if (st.step === 1 && !step1ok) return; if (st.cart.length === 0) { this.nav('shop'); return; } this.setState({ step:Math.min(3, st.step + 1) }); window.scrollTo(0, 0); },
       prevStep: () => this.setState({ step:Math.max(1, st.step - 1) }),
       shipOptions: this.SHIP.map(s => {
@@ -1917,7 +1938,7 @@ class Component extends DCLogic {
         const trackingCode = no + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
         const order = {
           no, trackingCode,
-          first:f.first || 'friend', last:f.last, email:f.email, phone:f.phone || this.PHONE,
+          first:f.first || 'friend', last:f.last, email:f.email, phone:f.phone,
           address:f.address, zip:f.zip, city:f.city, province:f.province,
           shipName:m.opt.label, pay:st.pay, totalLabel:this.fmt(m.total), lines, gift:giftOn, giftWrap:!!f.gift,
           subtotalLabel:this.fmt(m.sub), discountLabel: m.discount ? '−' + this.fmt(m.discount) : '—', hasDiscount: m.discount > 0,

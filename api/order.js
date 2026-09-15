@@ -299,7 +299,10 @@ async function sendWhatsApp({ to, template, params, text }) {
 
   if (!r.ok) {
     const detail = await r.text().catch(() => '');
-    throw new Error(`WhatsApp ${r.status}: ${detail.slice(0, 300)}`);
+    // 131047: not a WhatsApp user. 131026: undeliverable to that number.
+    const err = new Error(`WhatsApp ${r.status}: ${detail.slice(0, 300)}`);
+    err.notRegistered = /131047|131026/.test(detail);
+    throw err;
   }
   return true;
 }
@@ -403,7 +406,10 @@ module.exports = async function handler(req, res) {
     results.forEach((r, i) => {
       const key = jobs[i][0];
       if (r.status === 'fulfilled') whatsapp[key] = true;
-      else console.error(`WhatsApp to ${key} failed:`, r.reason);
+      else if (r.reason && r.reason.notRegistered) {
+        whatsapp[key] = 'not-registered';
+        console.warn(`WhatsApp to ${key}: that number is not on WhatsApp — email only.`);
+      } else console.error(`WhatsApp to ${key} failed:`, r.reason);
     });
   }
 
