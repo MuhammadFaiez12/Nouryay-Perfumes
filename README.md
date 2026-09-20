@@ -1,7 +1,13 @@
-# Nouryay-Perfumes
+# Nouryah Perfumes
 
-The Nouryah storefront: a single static page (`index.html`) plus one serverless
-endpoint (`api/order.js`) that emails order confirmations.
+**Nouryah Perfumes** is a perfume house in Lahore, Pakistan, selling nine eau de
+parfum fragrances in 50 ml flacons, with cash on delivery anywhere in Pakistan.
+
+**Live site: <https://nouryahperfumes.com>**
+
+This repository holds the Nouryah Perfumes storefront: a single static page
+(`index.html`) plus one serverless endpoint (`api/order.js`) that emails order
+confirmations.
 
 ## Order email
 
