@@ -8,6 +8,16 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    { "source": "/fragrance/:id", "destination": "/index.html" },
+    { "source": "/collection", "destination": "/index.html" },
+    { "source": "/the-house", "destination": "/index.html" },
+    { "source": "/fragrance-finder", "destination": "/index.html" },
+    { "source": "/order-request", "destination": "/index.html" },
+    { "source": "/checkout", "destination": "/index.html" },
+    { "source": "/order-confirmed", "destination": "/index.html" },
+    { "source": "/track", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
